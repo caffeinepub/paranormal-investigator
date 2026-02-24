@@ -1,8 +1,11 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 11,
-  "summary": "Paranormal investigating website",
-  "architectural_notes": [],
+  "projectStateVersion": 15,
+  "summary": "Paranormal investigating website serving Oklahoma only, founded 2025",
+  "architectural_notes": [
+    "Service area is explicitly limited to Oklahoma only",
+    "Company founding year is 2025"
+  ],
   "known_issues": [],
   "isFixRequest": true,
   "existing_features": [
@@ -125,6 +128,86 @@
         "REQ-16"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-the-hero-section-on-the-home-page-to-prominently-display-that-the-paranormal-investigation-service-operates-exclusively-in-oklahoma",
+      "title": "Update the hero section on the Home page to prominently display that the paranormal investigation service operates exclusively in Oklahoma",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-about-the-investigation-team-section-on-the-home-page-to-explicitly-state-the-team-only-investigates-cases-within-oklahoma",
+      "title": "Update the 'About the Investigation Team' section on the Home page to explicitly state the team only investigates cases within Oklahoma",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-services-phenomena-type-cards-on-the-home-page-to-include-text-indicating-these-services-are-available-only-in-oklahoma",
+      "title": "Update the services/phenomena type cards on the Home page to include text indicating these services are available only in Oklahoma",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-prominent-notice-on-the-case-submission-form-submitcase-tsx-stating-that-only-cases-within-oklahoma-will-be-accepted",
+      "title": "Add a prominent notice on the Case Submission form (SubmitCase.tsx) stating that only cases within Oklahoma will be accepted",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-case-gallery-page-casegallery-tsx-to-display-a-header-or-banner-stating-that-all-displayed-cases-are-from-oklahoma-investigations",
+      "title": "Update the Case Gallery page (CaseGallery.tsx) to display a header or banner stating that all displayed cases are from Oklahoma investigations",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-resources-page-resources-tsx-to-include-introductory-text-stating-the-resources-are-specifically-for-paranormal-investigation-in-oklahoma",
+      "title": "Update the Resources page (Resources.tsx) to include introductory text stating the resources are specifically for paranormal investigation in Oklahoma",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-footer-in-the-layout-component-to-display-serving-oklahoma-since-2025-or-similar-text-that-combines-both-the-geographic-area-and-founding-year",
+      "title": "Update the footer in the Layout component to display 'Serving Oklahoma Since 2025' or similar text that combines both the geographic area and founding year",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-header-navigation-area-in-the-layout-component-to-include-a-tagline-or-subtitle-mentioning-oklahoma-s-paranormal-investigators-or-similar-text-that-reinforces-the-oklahoma-only-service-area",
+      "title": "Update the header/navigation area in the Layout component to include a tagline or subtitle mentioning 'Oklahoma's Paranormal Investigators' or similar text that reinforces the Oklahoma-only service area",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-html-document-title-in-index-html-to-include-oklahoma-and-reflect-the-geographic-focus-of-the-paranormal-investigation-service",
+      "title": "Update the HTML document title in index.html to include 'Oklahoma' and reflect the geographic focus of the paranormal investigation service",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-footer-text-in-the-layout-component-frontend-src-components-layout-tsx-to-change-serving-oklahoma-since-2025-to-founded-in-oklahoma-2025-or-similar-text-that-clarifies-oklahoma-as-the-location-where-the-business-was-founded-while-maintaining-the-founding-year-of-2025",
+      "title": "Update the footer text in the Layout component (frontend/src/components/Layout.tsx) to change 'Serving Oklahoma Since 2025' to 'Founded in Oklahoma, 2025' or similar text that clarifies Oklahoma as the location where the business was founded, while maintaining the founding year of 2025",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -140,6 +223,12 @@
       "reqIds": [
         "REQ-4"
       ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Update all website content to emphasize Oklahoma-only service area and 2025 founding year",
+      "reqIds": [],
       "status": "pending"
     }
   ],

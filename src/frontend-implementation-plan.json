@@ -1,50 +1,22 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Remove Meet the Team page",
+  "title": "Update footer to show Oklahoma as location founded, not service area only",
   "requirements": [
     {
-      "id": "REQ-14",
-      "summary": "Remove the '/team' route from the App.tsx router configuration",
+      "id": "REQ-26",
+      "summary": "Update footer text to clarify Oklahoma as the founding location rather than exclusively a service area",
       "acceptanceCriteria": [
-        "The '/team' route is no longer defined in App.tsx",
-        "Navigating to '/team' results in a 404 or redirects appropriately"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Remove the '/team' route configuration from the TanStack Router setup. Delete the route object that maps to the Team page component, ensuring the router no longer recognizes '/team' as a valid path."
-        }
-      ]
-    },
-    {
-      "id": "REQ-15",
-      "summary": "Remove the 'Team' or 'Meet the Team' navigation link from the Layout component header menu",
-      "acceptanceCriteria": [
-        "The Team navigation link is removed from both desktop and mobile navigation menus",
-        "No broken links remain in the header"
+        "Footer displays 'Founded in Oklahoma, 2025' or equivalent text",
+        "Text clearly indicates Oklahoma as the founding location rather than exclusively a service area",
+        "The year 2025 remains visible in the footer",
+        "Footer styling and layout remain consistent with the current design"
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/Layout.tsx",
           "operation": "modify",
-          "description": "Remove the Team navigation link from both the desktop navigation menu and the mobile navigation menu in the header. Ensure all remaining navigation items (Home, Submit Case, Cases, Resources) continue to function correctly."
-        }
-      ]
-    },
-    {
-      "id": "REQ-16",
-      "summary": "Delete the frontend/src/pages/Team.tsx file",
-      "acceptanceCriteria": [
-        "The Team.tsx file no longer exists in the pages directory",
-        "No import errors occur from removing this file"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/Team.tsx",
-          "operation": "delete",
-          "description": "Delete the Team.tsx file that displays the paranormal investigation team members. This file is no longer needed after removing the route and navigation links."
+          "description": "Update the footer text from 'Serving Oklahoma Since 2025' to 'Founded in Oklahoma, 2025' to clarify Oklahoma as the founding location while maintaining the year 2025, existing footer structure, contact information, and dark ethereal theme styling"
         }
       ]
     }

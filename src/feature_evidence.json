@@ -2,27 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-remove-the-team-route-from-the-app-tsx-router-configuration",
-      "featureTitle": "Remove the '/team' route from the App.tsx router configuration",
-      "files": [
-        "frontend/src/App.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-14"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-remove-the-team-or-meet-the-team-navigation-link-from-the-layout-component-header-menu",
-      "featureTitle": "Remove the 'Team' or 'Meet the Team' navigation link from the Layout component header menu",
+      "featureId": "feature-update-the-footer-text-in-the-layout-component-frontend-src-components-layout-tsx-to-change-serving-oklahoma-since-2025-to-founded-in-oklahoma-2025-or-similar-text-that-clarifies-oklahoma-as-the-location-where-the-business-was-founded-while-maintaining-the-founding-year-of-2025",
+      "featureTitle": "Update the footer text in the Layout component (frontend/src/components/Layout.tsx) to change 'Serving Oklahoma Since 2025' to 'Founded in Oklahoma, 2025' or similar text that clarifies Oklahoma as the location where the business was founded, while maintaining the founding year of 2025",
       "files": [
         "frontend/src/components/Layout.tsx"
       ],
@@ -35,26 +16,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-15"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-delete-the-frontend-src-pages-team-tsx-file",
-      "featureTitle": "Delete the frontend/src/pages/Team.tsx file",
-      "files": [
-        "frontend/src/pages/Team.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-16"
+        "REQ-26"
       ],
       "confidence": "high"
     }

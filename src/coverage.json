@@ -1,46 +1,24 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-24T02:34:15.712Z",
+  "generatedAt": "2026-02-24T02:49:34.112Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 3,
-    "implemented": 3,
+    "total": 1,
+    "implemented": 1,
     "items": [
       {
-        "id": "REQ-14",
-        "summary": "Remove the '/team' route from the App.tsx router configuration",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/App.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/App.tsx"
-        ]
-      },
-      {
-        "id": "REQ-15",
-        "summary": "Remove the 'Team' or 'Meet the Team' navigation link from the Layout component header menu",
+        "id": "REQ-26",
+        "summary": "Update the footer text in the Layout component (frontend/src/components/Layout.tsx) to change 'Serving Oklahoma Since 2025' to 'Founded in Oklahoma, 2025' or similar text that clarifies Oklahoma as the location where the business was founded, while maintaining the founding year of 2025",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/components/Layout.tsx"
         ],
         "matchedFiles": [
           "frontend/src/components/Layout.tsx"
-        ]
-      },
-      {
-        "id": "REQ-16",
-        "summary": "Delete the frontend/src/pages/Team.tsx file",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/Team.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/Team.tsx"
         ]
       }
     ]
@@ -50,9 +28,7 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/App.tsx",
     "frontend/src/components/Layout.tsx",
-    "frontend/src/pages/Team.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

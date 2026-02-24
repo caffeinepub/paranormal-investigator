@@ -30,7 +30,7 @@ export default function Layout() {
                 <span className="font-display text-lg font-bold tracking-tight text-ethereal">
                   Spectral Investigations
                 </span>
-                <span className="text-xs text-muted-foreground font-mono">Founded 2025</span>
+                <span className="text-xs text-muted-foreground font-mono">Oklahoma's Paranormal Investigators</span>
               </div>
             </Link>
 
@@ -97,7 +97,7 @@ export default function Layout() {
                 Spectral Investigations
               </h3>
               <p className="text-sm text-muted-foreground">
-                Documenting the unexplained since 1892. We investigate paranormal phenomena with scientific rigor and an open mind.
+                Founded in Oklahoma, 2025. We investigate paranormal phenomena exclusively within Oklahoma with scientific rigor and an open mind.
               </p>
             </div>
 
@@ -122,7 +122,7 @@ export default function Layout() {
             <div>
               <h3 className="font-display text-lg font-bold mb-3 text-ethereal">Contact</h3>
               <p className="text-sm text-muted-foreground mb-2">
-                Have a paranormal experience to report?
+                Have a paranormal experience in Oklahoma to report?
               </p>
               <button
                 onClick={() => navigate({ to: '/submit-case' })}
@@ -135,7 +135,7 @@ export default function Layout() {
 
           <div className="mt-8 pt-6 border-t border-border/40 text-center text-sm text-muted-foreground">
             <p>
-              © {new Date().getFullYear()} Spectral Investigations. Built with love using{' '}
+              © {new Date().getFullYear()} Spectral Investigations - Founded in Oklahoma, 2025. Built with love using{' '}
               <a
                 href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
                 target="_blank"

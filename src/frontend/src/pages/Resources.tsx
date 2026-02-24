@@ -114,10 +114,10 @@ export default function Resources() {
     <div className="container px-4 py-12">
       <div className="mb-8">
         <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
-          Investigation <span className="text-ethereal">Resources</span>
+          Oklahoma Investigation <span className="text-ethereal">Resources</span>
         </h1>
         <p className="text-muted-foreground max-w-2xl">
-          Comprehensive guides and information for understanding and investigating paranormal phenomena. Learn about different types of activity, equipment, and best practices.
+          Comprehensive guides and information for understanding and investigating paranormal phenomena in Oklahoma. Learn about different types of activity, equipment, and best practices for Oklahoma investigations.
         </p>
       </div>
 
@@ -147,10 +147,10 @@ export default function Resources() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <BookOpen className="h-5 w-5 text-ethereal" />
-                Types of Paranormal Phenomena
+                Types of Paranormal Phenomena in Oklahoma
               </CardTitle>
               <CardDescription>
-                Understanding different categories of paranormal activity and their characteristics
+                Understanding different categories of paranormal activity and their characteristics in Oklahoma investigations
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -194,7 +194,7 @@ export default function Resources() {
                 Investigation Equipment
               </CardTitle>
               <CardDescription>
-                Essential tools for detecting and documenting paranormal activity
+                Essential tools for detecting and documenting paranormal activity in Oklahoma
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -227,28 +227,25 @@ export default function Resources() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="h-5 w-5 text-ethereal" />
-                Evidence Documentation Guidelines
+                Documentation Guidelines
               </CardTitle>
               <CardDescription>
-                Best practices for recording and preserving paranormal evidence
+                Best practices for recording and preserving evidence during Oklahoma investigations
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-3">
+              <ul className="space-y-3">
                 {documentation.map((item, index) => (
-                  <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 border border-border/40">
-                    <span className="flex-shrink-0 h-6 w-6 rounded-full bg-ethereal/20 text-ethereal flex items-center justify-center text-sm font-semibold">
-                      {index + 1}
-                    </span>
-                    <p className="text-sm text-muted-foreground pt-0.5">{item}</p>
-                  </div>
+                  <li key={index} className="flex items-start gap-3">
+                    <div className="flex-shrink-0 mt-1">
+                      <div className="h-6 w-6 rounded-full bg-ethereal/10 flex items-center justify-center">
+                        <span className="text-xs font-bold text-ethereal">{index + 1}</span>
+                      </div>
+                    </div>
+                    <p className="text-muted-foreground">{item}</p>
+                  </li>
                 ))}
-              </div>
-              <div className="mt-6 p-4 rounded-lg bg-ethereal/5 border border-ethereal/20">
-                <p className="text-sm text-muted-foreground">
-                  <strong className="text-ethereal">Remember:</strong> Thorough documentation is crucial for credible paranormal research. The more detailed your records, the more valuable your evidence becomes for analysis and verification.
-                </p>
-              </div>
+              </ul>
             </CardContent>
           </Card>
         </TabsContent>
@@ -262,22 +259,17 @@ export default function Resources() {
                 Safety Precautions
               </CardTitle>
               <CardDescription>
-                Essential safety guidelines for paranormal investigations
+                Essential safety guidelines for paranormal investigations in Oklahoma
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
                 {safety.map((item, index) => (
-                  <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 border border-border/40">
-                    <AlertTriangle className="flex-shrink-0 h-5 w-5 text-ethereal mt-0.5" />
+                  <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-background/50 border border-border/40">
+                    <AlertTriangle className="h-5 w-5 text-ethereal flex-shrink-0 mt-0.5" />
                     <p className="text-sm text-muted-foreground">{item}</p>
                   </div>
                 ))}
-              </div>
-              <div className="mt-6 p-4 rounded-lg bg-destructive/10 border border-destructive/30">
-                <p className="text-sm text-destructive-foreground">
-                  <strong className="text-destructive">Warning:</strong> Paranormal investigation can involve physical risks from unstable structures, environmental hazards, and psychological stress. Always prioritize your safety and well-being above gathering evidence.
-                </p>
               </div>
             </CardContent>
           </Card>

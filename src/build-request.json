@@ -1,67 +1,38 @@
 {
   "kind": "build_request",
-  "title": "Remove Meet the Team page",
+  "title": "Update footer to show Oklahoma as location founded, not service area only",
+  "projectName": "Spectral Investigations",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-14",
-      "text": "Remove the '/team' route from the App.tsx router configuration",
+      "id": "REQ-26",
+      "text": "Update the footer text in the Layout component (frontend/src/components/Layout.tsx) to change 'Serving Oklahoma Since 2025' to 'Founded in Oklahoma, 2025' or similar text that clarifies Oklahoma as the location where the business was founded, while maintaining the founding year of 2025",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-final"
+          "msg-user-final"
         ],
         "quotes": [
-          "okay remove the meet the team page"
+          "the location dfounded is oklahoma not only"
         ]
       },
       "acceptanceCriteria": [
-        "The '/team' route is no longer defined in App.tsx",
-        "Navigating to '/team' results in a 404 or redirects appropriately"
-      ]
-    },
-    {
-      "id": "REQ-15",
-      "text": "Remove the 'Team' or 'Meet the Team' navigation link from the Layout component header menu",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-final"
-        ],
-        "quotes": [
-          "okay remove the meet the team page"
-        ]
-      },
-      "acceptanceCriteria": [
-        "The Team navigation link is removed from both desktop and mobile navigation menus",
-        "No broken links remain in the header"
-      ]
-    },
-    {
-      "id": "REQ-16",
-      "text": "Delete the frontend/src/pages/Team.tsx file",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-final"
-        ],
-        "quotes": [
-          "okay remove the meet the team page"
-        ]
-      },
-      "acceptanceCriteria": [
-        "The Team.tsx file no longer exists in the pages directory",
-        "No import errors occur from removing this file"
+        "Footer displays 'Founded in Oklahoma, 2025' or equivalent text",
+        "Text clearly indicates Oklahoma as the founding location rather than exclusively a service area",
+        "The year 2025 remains visible in the footer",
+        "Footer styling and layout remain consistent with the current design"
       ]
     }
   ],
   "constraints": [
-    "Do not modify the backend or any other pages",
-    "Ensure all remaining navigation links continue to function correctly"
+    "Do not modify the header tagline 'Oklahoma's Paranormal Investigators'",
+    "Maintain the existing footer structure and contact information",
+    "Keep the dark, ethereal theme styling intact"
   ],
   "nonGoals": [
-    "Removing team member information from other pages",
-    "Modifying the footer or other layout sections"
+    "Changing other Oklahoma references throughout the site",
+    "Modifying service area descriptions on other pages",
+    "Updating the founding year from 2025"
   ],
   "imageRequirements": {
     "required": [],

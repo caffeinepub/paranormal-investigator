@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
-import { Upload, Loader2, CheckCircle2 } from 'lucide-react';
+import { Upload, Loader2, CheckCircle2, AlertCircle, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useSubmitCase } from '@/hooks/useQueries';
 import { PhenomenaType } from '@/backend';
 import { ExternalBlob } from '@/backend';
@@ -63,7 +64,7 @@ export default function SubmitCase() {
         photo: photoBlob,
       });
 
-      toast.success('Case submitted successfully!', {
+      toast.success('Oklahoma case submitted successfully!', {
         description: `Case ID: ${caseId}`,
       });
 
@@ -91,40 +92,53 @@ export default function SubmitCase() {
     <div className="container px-4 py-12 max-w-3xl mx-auto">
       <div className="mb-8 text-center">
         <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
-          Report <span className="text-ethereal">Paranormal Activity</span>
+          Report <span className="text-ethereal">Oklahoma Paranormal Activity</span>
         </h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Share your experience with our investigation team. All submissions are reviewed and may be investigated based on the nature of the phenomena.
+          Share your Oklahoma experience with our investigation team. All submissions are reviewed and may be investigated based on the nature of the phenomena.
         </p>
       </div>
 
+      {/* Oklahoma Only Notice */}
+      <Alert className="mb-6 border-ethereal/30 bg-ethereal/5">
+        <MapPin className="h-4 w-4 text-ethereal" />
+        <AlertTitle className="text-ethereal">Oklahoma Cases Only</AlertTitle>
+        <AlertDescription>
+          We exclusively investigate paranormal activity within Oklahoma state boundaries. Please ensure your case location is within Oklahoma before submitting.
+        </AlertDescription>
+      </Alert>
+
       <Card className="border-border/40 bg-card/50 backdrop-blur">
         <CardHeader>
-          <CardTitle>Case Submission Form</CardTitle>
+          <CardTitle>Oklahoma Case Submission Form</CardTitle>
           <CardDescription>
-            Please provide as much detail as possible. All fields marked with * are required.
+            Provide detailed information about your paranormal experience in Oklahoma. All fields marked with * are required.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Location */}
             <div className="space-y-2">
-              <Label htmlFor="location">Location *</Label>
+              <Label htmlFor="location">
+                Location (Oklahoma) <span className="text-destructive">*</span>
+              </Label>
               <Input
                 id="location"
-                placeholder="e.g., 123 Elm Street, Salem, MA"
+                placeholder="e.g., Tulsa, OK or Oklahoma City, OK"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 required
               />
               <p className="text-xs text-muted-foreground">
-                Provide the address or general location where the activity occurred
+                Please include city and state (must be in Oklahoma)
               </p>
             </div>
 
             {/* Phenomena Type */}
             <div className="space-y-2">
-              <Label htmlFor="phenomenaType">Type of Phenomena *</Label>
+              <Label htmlFor="phenomenaType">
+                Type of Phenomena <span className="text-destructive">*</span>
+              </Label>
               <Select value={phenomenaType} onValueChange={(value) => setPhenomenaType(value as PhenomenaType)}>
                 <SelectTrigger id="phenomenaType">
                   <SelectValue placeholder="Select phenomena type" />
@@ -140,119 +154,85 @@ export default function SubmitCase() {
 
             {/* Description */}
             <div className="space-y-2">
-              <Label htmlFor="description">Description of Events *</Label>
+              <Label htmlFor="description">
+                Detailed Description <span className="text-destructive">*</span>
+              </Label>
               <Textarea
                 id="description"
-                placeholder="Describe what you experienced in detail. Include dates, times, and any patterns you've noticed..."
+                placeholder="Describe your experience in detail. Include dates, times, frequency, and any patterns you've noticed..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={6}
                 required
               />
-              <p className="text-xs text-muted-foreground">
-                Include as many details as possible: dates, times, witnesses, environmental conditions, etc.
-              </p>
             </div>
 
-            {/* Contact Information */}
+            {/* Contact Info */}
             <div className="space-y-2">
-              <Label htmlFor="contactInfo">Contact Information *</Label>
+              <Label htmlFor="contactInfo">
+                Contact Information <span className="text-destructive">*</span>
+              </Label>
               <Input
                 id="contactInfo"
-                placeholder="Email or phone number"
+                type="email"
+                placeholder="your.email@example.com"
                 value={contactInfo}
                 onChange={(e) => setContactInfo(e.target.value)}
                 required
               />
               <p className="text-xs text-muted-foreground">
-                We'll use this to follow up on your case
+                We'll use this to follow up on your Oklahoma case
               </p>
             </div>
 
             {/* Photo Upload */}
             <div className="space-y-2">
-              <Label htmlFor="photo">Evidence Photo (Optional)</Label>
-              <div className="border-2 border-dashed border-border/40 rounded-lg p-6 hover:border-ethereal/30 transition-colors">
-                <input
+              <Label htmlFor="photo">Photo Evidence (Optional)</Label>
+              <div className="flex items-center gap-4">
+                <Input
                   id="photo"
                   type="file"
                   accept="image/*"
                   onChange={handlePhotoChange}
-                  className="hidden"
+                  className="cursor-pointer"
                 />
-                <label
-                  htmlFor="photo"
-                  className="flex flex-col items-center justify-center cursor-pointer"
-                >
-                  {photoPreview ? (
-                    <div className="relative w-full">
-                      <img
-                        src={photoPreview}
-                        alt="Preview"
-                        className="max-h-64 mx-auto rounded-lg"
-                      />
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        className="mt-4"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setPhotoFile(null);
-                          setPhotoPreview(null);
-                        }}
-                      >
-                        Remove Photo
-                      </Button>
-                    </div>
-                  ) : (
-                    <>
-                      <Upload className="h-10 w-10 text-muted-foreground mb-2" />
-                      <p className="text-sm text-muted-foreground text-center">
-                        Click to upload a photo of the location or evidence
-                      </p>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        PNG, JPG up to 10MB
-                      </p>
-                    </>
-                  )}
-                </label>
               </div>
+              {photoPreview && (
+                <div className="mt-4">
+                  <img
+                    src={photoPreview}
+                    alt="Preview"
+                    className="max-w-full h-auto rounded-lg border border-border/40"
+                  />
+                </div>
+              )}
               {uploadProgress > 0 && uploadProgress < 100 && (
-                <div className="space-y-1">
-                  <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>Uploading...</span>
-                    <span>{uploadProgress}%</span>
-                  </div>
-                  <div className="h-2 bg-muted rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-ethereal transition-all duration-300"
-                      style={{ width: `${uploadProgress}%` }}
-                    />
+                <div className="mt-2">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Uploading: {uploadProgress}%
                   </div>
                 </div>
               )}
             </div>
 
             {/* Submit Button */}
-            <div className="pt-4">
+            <div className="flex gap-4 pt-4">
               <Button
                 type="submit"
-                className="w-full bg-ethereal hover:bg-ethereal/90 text-background font-semibold"
+                className="flex-1 bg-ethereal hover:bg-ethereal/90 text-background"
                 disabled={submitCaseMutation.isPending}
               >
                 {submitCaseMutation.isPending ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Submitting Case...
-                  </>
-                ) : submitCaseMutation.isSuccess ? (
-                  <>
-                    <CheckCircle2 className="mr-2 h-4 w-4" />
-                    Case Submitted!
+                    Submitting...
                   </>
                 ) : (
-                  'Submit Case Report'
+                  <>
+                    <CheckCircle2 className="mr-2 h-4 w-4" />
+                    Submit Oklahoma Case
+                  </>
                 )}
               </Button>
             </div>

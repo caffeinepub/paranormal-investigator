@@ -1,11 +1,9 @@
 # Specification
 
 ## Summary
-**Goal:** Remove the Meet the Team page from the application.
+**Goal:** Update footer text to clarify Oklahoma as the founding location rather than just a service area.
 
 **Planned changes:**
-- Remove the '/team' route from the router configuration
-- Remove the Team navigation link from the header menu
-- Delete the Team.tsx page file
+- Change footer text from "Serving Oklahoma Since 2025" to "Founded in Oklahoma, 2025" in the Layout component
 
-**User-visible outcome:** The Meet the Team page is no longer accessible, and the navigation menu no longer displays a Team link.
+**User-visible outcome:** The footer will display "Founded in Oklahoma, 2025" (or similar wording), clearly indicating Oklahoma as the location where the business was founded while maintaining the founding year.

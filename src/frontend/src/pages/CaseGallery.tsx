@@ -70,10 +70,10 @@ export default function CaseGallery() {
     <div className="container px-4 py-12">
       <div className="mb-8">
         <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
-          Case <span className="text-ethereal">Gallery</span>
+          Oklahoma Case <span className="text-ethereal">Gallery</span>
         </h1>
         <p className="text-muted-foreground max-w-2xl">
-          Browse our collection of documented paranormal cases. Each investigation is carefully catalogued and analyzed by our team.
+          Browse our collection of documented paranormal cases from across Oklahoma. Each investigation is carefully catalogued and analyzed by our team. All cases displayed are from Oklahoma locations.
         </p>
       </div>
 
@@ -82,9 +82,9 @@ export default function CaseGallery() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Filter className="h-5 w-5" />
-            Filter Cases
+            Filter Oklahoma Cases
           </CardTitle>
-          <CardDescription>Narrow down cases by phenomena type or location</CardDescription>
+          <CardDescription>Narrow down cases by phenomena type or Oklahoma location</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -108,10 +108,10 @@ export default function CaseGallery() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="location">Location</Label>
+              <Label htmlFor="location">Oklahoma Location</Label>
               <Input
                 id="location"
-                placeholder="Search by location..."
+                placeholder="Search by Oklahoma city..."
                 value={locationFilter}
                 onChange={(e) => {
                   setLocationFilter(e.target.value);
@@ -142,7 +142,7 @@ export default function CaseGallery() {
         <Card className="border-border/40 bg-card/50 backdrop-blur">
           <CardContent className="py-12 text-center">
             <Eye className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <p className="text-muted-foreground">No cases found matching your filters.</p>
+            <p className="text-muted-foreground">No Oklahoma cases found matching your filters.</p>
           </CardContent>
         </Card>
       ) : (
