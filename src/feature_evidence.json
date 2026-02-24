@@ -2,11 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-create-a-home-page-that-introduces-the-paranormal-investigation-service-with-sections-for-hero-introduction-about-the-investigation-team-services-offered-and-contact-information",
-      "featureTitle": "Create a home page that introduces the paranormal investigation service with sections for: hero introduction, about the investigation team, services offered, and contact information",
+      "featureId": "feature-remove-the-team-route-from-the-app-tsx-router-configuration",
+      "featureTitle": "Remove the '/team' route from the App.tsx router configuration",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/pages/Home.tsx"
+        "frontend/src/App.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -17,16 +16,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-1"
+        "REQ-14"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-implement-a-case-submission-form-where-users-can-report-paranormal-activity-including-fields-for-location-type-of-phenomena-description-of-events-contact-details-and-optional-photo-upload-capability",
-      "featureTitle": "Implement a case submission form where users can report paranormal activity including fields for: location, type of phenomena, description of events, contact details, and optional photo upload capability",
+      "featureId": "feature-remove-the-team-or-meet-the-team-navigation-link-from-the-layout-component-header-menu",
+      "featureTitle": "Remove the 'Team' or 'Meet the Team' navigation link from the Layout component header menu",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/pages/SubmitCase.tsx"
+        "frontend/src/components/Layout.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -37,17 +35,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-2"
+        "REQ-15"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-create-a-case-gallery-page-displaying-submitted-paranormal-cases-with-filtering-options-by-phenomena-type-e-g-apparitions-unexplained-sounds-objects-moving-electromagnetic-anomalies-and-location",
-      "featureTitle": "Create a case gallery page displaying submitted paranormal cases with filtering options by phenomena type (e.g., apparitions, unexplained sounds, objects moving, electromagnetic anomalies) and location",
+      "featureId": "feature-delete-the-frontend-src-pages-team-tsx-file",
+      "featureTitle": "Delete the frontend/src/pages/Team.tsx file",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/pages/CaseDetail.tsx",
-        "frontend/src/pages/CaseGallery.tsx"
+        "frontend/src/pages/Team.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -58,69 +54,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-3"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-create-an-investigation-resources-page-with-information-about-types-of-paranormal-phenomena-investigation-equipment-and-methods-evidence-documentation-guidelines-and-safety-precautions",
-      "featureTitle": "Create an investigation resources page with information about: types of paranormal phenomena, investigation equipment and methods, evidence documentation guidelines, and safety precautions",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/pages/Resources.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-5"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-apply-a-mysterious-atmospheric-visual-design-with-a-dark-color-scheme-using-deep-purples-midnight-blues-and-ethereal-greens-combined-with-vintage-investigation-aesthetics-including-distressed-textures-ghostly-typography-and-subtle-animated-effects-that-evoke-the-paranormal-theme",
-      "featureTitle": "Apply a mysterious, atmospheric visual design with a dark color scheme using deep purples, midnight blues, and ethereal greens, combined with vintage investigation aesthetics including distressed textures, ghostly typography, and subtle animated effects that evoke the paranormal theme",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/Layout.tsx",
-        "frontend/src/index.css",
-        "frontend/tailwind.config.js"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-6"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-render-generated-images-as-static-assets-in-frontend-public-assets-generated-including-the-paranormal-investigation-hero-background-and-investigation-team-logo",
-      "featureTitle": "Render generated images as static assets in frontend/public/assets/generated including the paranormal investigation hero background and investigation team logo",
-      "files": [
-        "frontend/src/components/Layout.tsx",
-        "frontend/src/pages/Home.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-7"
+        "REQ-16"
       ],
       "confidence": "high"
     }

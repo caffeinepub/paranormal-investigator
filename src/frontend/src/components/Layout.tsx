@@ -30,7 +30,7 @@ export default function Layout() {
                 <span className="font-display text-lg font-bold tracking-tight text-ethereal">
                   Spectral Investigations
                 </span>
-                <span className="text-xs text-muted-foreground font-mono">Est. 1892</span>
+                <span className="text-xs text-muted-foreground font-mono">Founded 2025</span>
               </div>
             </Link>
 

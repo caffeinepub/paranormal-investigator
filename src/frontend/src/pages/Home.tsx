@@ -31,7 +31,7 @@ export default function Home() {
     {
       icon: Shield,
       title: 'Professional Investigation',
-      description: 'Over 130 years of experience in paranormal research and documentation.',
+      description: '1 year of dedicated experience in paranormal research and documentation.',
     },
     {
       icon: BookOpen,
@@ -63,7 +63,7 @@ export default function Home() {
             <div className="inline-block">
               <span className="inline-flex items-center gap-2 rounded-full border border-ethereal/30 bg-ethereal/10 px-4 py-1.5 text-sm font-medium text-ethereal backdrop-blur">
                 <Ghost className="h-4 w-4" />
-                Since 1892
+                Since 2025
               </span>
             </div>
             
@@ -133,10 +133,10 @@ export default function Home() {
               </h2>
               <div className="space-y-4 text-muted-foreground">
                 <p>
-                  Founded in 1892, Spectral Investigations has been at the forefront of paranormal research for over a century. Our team combines traditional investigative techniques with cutting-edge technology to document and analyze unexplained phenomena.
+                  Founded in 2025, Spectral Investigations is a startup paranormal investigation service with a passionate team of 2+ dedicated investigators. We're building our expertise by combining traditional investigative techniques with cutting-edge technology to document and analyze unexplained phenomena.
                 </p>
                 <p>
-                  We approach each case with scientific rigor, maintaining detailed records and using calibrated equipment to capture evidence. Our investigators are trained in both historical research and modern detection methods.
+                  With 1 year of hands-on experience, we approach each case with scientific rigor, maintaining detailed records and using calibrated equipment to capture evidence. Our investigators are trained in both historical research and modern detection methods.
                 </p>
                 <p>
                   Whether you're experiencing unexplained sounds, seeing apparitions, or witnessing objects move on their own, we're here to help you understand what's happening and provide documentation of your experiences.
