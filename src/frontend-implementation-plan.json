@@ -1,0 +1,158 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Paranormal Investigation Website Frontend",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Create home page with hero, about, services, and contact sections",
+      "acceptanceCriteria": [
+        "Home page displays a compelling hero section introducing paranormal investigation services",
+        "About section describes the investigation team and their expertise",
+        "Services section lists different types of paranormal investigations offered",
+        "Contact section provides ways to reach the investigation team"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Home.tsx",
+          "operation": "create",
+          "description": "Create home page component with hero section using the generated hero background image from frontend/public/assets/generated/hero-paranormal.dim_1920x1080.png, about section describing the investigation team, services section listing paranormal investigation types (apparitions, unexplained sounds, moving objects, electromagnetic anomalies), and contact section with contact information"
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the Home page component into the router as the root path and update navigation to include links to all main pages"
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Implement case submission form with photo upload capability",
+      "acceptanceCriteria": [
+        "Form includes required fields for location, phenomena type, event description, and contact information",
+        "Form validates all required fields before submission",
+        "Users can optionally upload photos of paranormal evidence",
+        "Form submissions are stored in the backend",
+        "Users receive confirmation after successful submission"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/SubmitCase.tsx",
+          "operation": "create",
+          "description": "Create case submission form page with fields for location (text input), phenomena type (select dropdown with options: apparitions, unexplained sounds, moving objects, electromagnetic anomalies), description (textarea), contact information (text input), and optional photo upload. Use the blob-storage component's ExternalBlob class to handle photo uploads. Include form validation for required fields and call backend.submitCase() on form submission. Display success confirmation after submission. Verify the blob-storage component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add route for /submit-case path and include navigation link to the case submission page"
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Create case gallery page with filtering by phenomena type and location",
+      "acceptanceCriteria": [
+        "Gallery displays all submitted cases in a grid or list layout",
+        "Each case shows: title, location, phenomena type, brief description, and date",
+        "Users can filter cases by phenomena type",
+        "Users can filter cases by location",
+        "Clicking a case opens detailed view with full description and photos"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/CaseGallery.tsx",
+          "operation": "create",
+          "description": "Create case gallery page that fetches cases using backend.getAllCases(), displays them in a grid layout with case cards showing location, phenomena type, brief description, and timestamp. Include filter controls for phenomena type and location that call backend.filterCasesByType() and backend.filterCasesByLocation(). Each case card should be clickable to navigate to the case detail page. Use the blob-storage component's ExternalBlob.getDirectURL() method to display case photos when available. Verify the blob-storage component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/CaseDetail.tsx",
+          "operation": "create",
+          "description": "Create case detail page that fetches a specific case using backend.getCaseById() based on URL parameter. Display full case information including location, phenomena type, complete description, contact information, submission timestamp, investigation status, and photo if available. Use the blob-storage component's ExternalBlob.getDirectURL() method to display the full-size photo. Verify the blob-storage component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add routes for /cases path (gallery) and /cases/:caseId path (detail view), and include navigation link to the case gallery page"
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Create investigation resources page with paranormal phenomena information",
+      "acceptanceCriteria": [
+        "Resources page is organized into clear sections with navigation",
+        "Page describes different types of paranormal phenomena with examples",
+        "Page lists common investigation equipment and their purposes",
+        "Page provides guidelines for documenting evidence",
+        "Page includes safety tips for paranormal investigations"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Resources.tsx",
+          "operation": "create",
+          "description": "Create resources page with organized sections covering: types of paranormal phenomena (apparitions, unexplained sounds, moving objects, electromagnetic anomalies) with descriptions and examples; common investigation equipment (EMF meters, thermal cameras, audio recorders, etc.) and their uses; evidence documentation best practices; and safety precautions for paranormal investigations. Use Shadcn UI components like Tabs or Accordion for section navigation"
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add route for /resources path and include navigation link to the resources page"
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Apply mysterious atmospheric visual design with dark color scheme",
+      "acceptanceCriteria": [
+        "Color scheme uses dark, moody colors (deep purples, midnight blues, ethereal greens)",
+        "Typography has a vintage or mysterious character appropriate for paranormal investigation",
+        "UI includes subtle atmospheric effects like shadows, glows, or gentle animations",
+        "Overall aesthetic balances professionalism with supernatural mystery",
+        "Design is consistent across all pages"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Update global styles with dark color scheme using deep purples, midnight blues, and ethereal greens as primary colors. Apply vintage-inspired typography with mysterious character. Add CSS variables for the paranormal theme colors and define base text, background, and accent colors"
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend Tailwind configuration with custom color palette for the paranormal theme (deep purple, midnight blue, ethereal green shades). Add custom font families with vintage/mysterious character. Configure subtle animation utilities for atmospheric effects like glows, shadows, and gentle movements"
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "create",
+          "description": "Create layout wrapper component that includes header with the investigation team logo from frontend/public/assets/generated/logo-investigation-team.dim_256x256.png, main navigation menu, and footer. Apply atmospheric styling with subtle effects consistent with the paranormal theme. This layout will wrap all pages for consistent design"
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wrap all routes with the Layout component to ensure consistent header, navigation, and footer across all pages"
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Render generated images as static assets in the application",
+      "acceptanceCriteria": [
+        "Generated images are stored in frontend/public/assets/generated directory",
+        "Hero background image is displayed on the home page",
+        "Investigation team logo is displayed in the header/navigation",
+        "Images load correctly and enhance the paranormal theme"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Home.tsx",
+          "operation": "modify",
+          "description": "Update hero section to use the generated paranormal investigation background image from frontend/public/assets/generated/hero-paranormal.dim_1920x1080.png as a background image with appropriate styling for atmospheric effect"
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Update header to display the investigation team logo from frontend/public/assets/generated/logo-investigation-team.dim_256x256.png in the navigation bar with appropriate sizing and styling"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "frontend/src/App.tsx": "Main application component with TanStack Router setup, defining all routes (home, submit case, case gallery, case detail, resources) and wrapping the app with ThemeProvider and Toaster for notifications.",
+  "frontend/src/components/Layout.tsx": "Layout wrapper component with sticky header featuring the investigation team logo, responsive navigation menu, main content outlet, and footer with attribution and quick links.",
+  "frontend/src/pages/Home.tsx": "Home page with hero section using the generated paranormal background image, services showcase for different phenomena types, about section describing the investigation team, and call-to-action for case submission.",
+  "frontend/src/pages/SubmitCase.tsx": "Case submission form page with fields for location, phenomena type, description, contact info, and optional photo upload using ExternalBlob with upload progress tracking and form validation.",
+  "frontend/src/pages/CaseGallery.tsx": "Case gallery page displaying all submitted cases in a grid layout with filtering capabilities by phenomena type and location, using navigate function for dynamic routing to case details instead of Link component to fix TypeScript strict typing issues.",
+  "frontend/src/pages/CaseDetail.tsx": "Detailed case view page showing full case information including location, phenomena type, complete description, contact info, submission timestamp, investigation status, and full-size photo if available.",
+  "frontend/src/pages/Resources.tsx": "Resources page with tabbed interface covering paranormal phenomena types, investigation equipment, documentation guidelines, and safety precautions for paranormal investigations.",
+  "frontend/src/hooks/useQueries.ts": "Custom React Query hooks for all backend operations including fetching all cases, filtering by type/location, getting case by ID, submitting new cases, and updating case status with proper cache invalidation.",
+  "frontend/src/index.css": "Global styles with OKLCH color system defining a dark paranormal theme using deep purples, midnight blues, and ethereal greens with custom glow effects and vintage typography.",
+  "frontend/tailwind.config.js": "Tailwind configuration extended with custom paranormal theme colors (ethereal green, midnight blue), vintage display fonts, glow shadows, and custom animations for atmospheric effects."
+}

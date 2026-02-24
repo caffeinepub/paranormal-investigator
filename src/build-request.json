@@ -1,0 +1,144 @@
+{
+  "kind": "build_request",
+  "title": "Create paranormal investigating website",
+  "projectName": "Paranormal Investigator",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a home page that introduces the paranormal investigation service with sections for: hero introduction, about the investigation team, services offered, and contact information",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Home page displays a compelling hero section introducing paranormal investigation services",
+        "About section describes the investigation team and their expertise",
+        "Services section lists different types of paranormal investigations offered",
+        "Contact section provides ways to reach the investigation team"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement a case submission form where users can report paranormal activity including fields for: location, type of phenomena, description of events, contact details, and optional photo upload capability",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Form includes required fields for location, phenomena type, event description, and contact information",
+        "Form validates all required fields before submission",
+        "Users can optionally upload photos of paranormal evidence",
+        "Form submissions are stored in the backend",
+        "Users receive confirmation after successful submission"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Create a case gallery page displaying submitted paranormal cases with filtering options by phenomena type (e.g., apparitions, unexplained sounds, objects moving, electromagnetic anomalies) and location",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Gallery displays all submitted cases in a grid or list layout",
+        "Each case shows: title, location, phenomena type, brief description, and date",
+        "Users can filter cases by phenomena type",
+        "Users can filter cases by location",
+        "Clicking a case opens detailed view with full description and photos"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Build backend data models and storage for paranormal cases including: case ID, submission timestamp, location, phenomena type, description, reporter contact information, investigation status, and associated photo references",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend defines Motoko types for paranormal cases with all specified fields",
+        "Cases are stored in stable storage to persist across upgrades",
+        "Backend provides query methods to retrieve cases with filtering",
+        "Backend provides update methods to change investigation status",
+        "Case IDs are unique and automatically generated"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Create an investigation resources page with information about: types of paranormal phenomena, investigation equipment and methods, evidence documentation guidelines, and safety precautions",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Resources page is organized into clear sections with navigation",
+        "Page describes different types of paranormal phenomena with examples",
+        "Page lists common investigation equipment and their purposes",
+        "Page provides guidelines for documenting evidence",
+        "Page includes safety tips for paranormal investigations"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Apply a mysterious, atmospheric visual design with a dark color scheme using deep purples, midnight blues, and ethereal greens, combined with vintage investigation aesthetics including distressed textures, ghostly typography, and subtle animated effects that evoke the paranormal theme",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Color scheme uses dark, moody colors (deep purples, midnight blues, ethereal greens)",
+        "Typography has a vintage or mysterious character appropriate for paranormal investigation",
+        "UI includes subtle atmospheric effects like shadows, glows, or gentle animations",
+        "Overall aesthetic balances professionalism with supernatural mystery",
+        "Design is consistent across all pages"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Render generated images as static assets in frontend/public/assets/generated including the paranormal investigation hero background and investigation team logo",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Generated images are stored in frontend/public/assets/generated directory",
+        "Hero background image is displayed on the home page",
+        "Investigation team logo is displayed in the header/navigation",
+        "Images load correctly and enhance the paranormal theme"
+      ]
+    }
+  ],
+  "constraints": [
+    "Must use single-actor Motoko backend architecture",
+    "Frontend must use React with TypeScript, Tailwind CSS, and Shadcn UI components",
+    "Do not modify immutable paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui"
+  ],
+  "nonGoals": [
+    "Real-time chat or messaging features",
+    "Third-party authentication beyond Internet Identity",
+    "Integration with external paranormal databases or APIs",
+    "Mobile app development",
+    "Video upload or streaming capabilities"
+  ],
+  "imageRequirements": {
+    "required": [
+      "Atmospheric paranormal investigation hero background with misty, moonlit abandoned building and mysterious shadows (hero-paranormal.dim_1920x1080.png)",
+      "Vintage-style paranormal investigation team badge logo with ethereal elements and classic detective aesthetics (logo-investigation-team.dim_256x256.png)"
+    ],
+    "edits": []
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Paranormal investigating website",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Atmospheric paranormal investigation hero background with misty, moonlit abandoned building and mysterious shadows (hero-paranormal.dim_1920x1080.png)\n- Vintage-style paranormal investigation team badge logo with ethereal elements and classic detective aesthetics (logo-investigation-team.dim_256x256.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-a-home-page-that-introduces-the-paranormal-investigation-service-with-sections-for-hero-introduction-about-the-investigation-team-services-offered-and-contact-information",
+      "title": "Create a home page that introduces the paranormal investigation service with sections for: hero introduction, about the investigation team, services offered, and contact information",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-case-submission-form-where-users-can-report-paranormal-activity-including-fields-for-location-type-of-phenomena-description-of-events-contact-details-and-optional-photo-upload-capability",
+      "title": "Implement a case submission form where users can report paranormal activity including fields for: location, type of phenomena, description of events, contact details, and optional photo upload capability",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-case-gallery-page-displaying-submitted-paranormal-cases-with-filtering-options-by-phenomena-type-e-g-apparitions-unexplained-sounds-objects-moving-electromagnetic-anomalies-and-location",
+      "title": "Create a case gallery page displaying submitted paranormal cases with filtering options by phenomena type (e.g., apparitions, unexplained sounds, objects moving, electromagnetic anomalies) and location",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-investigation-resources-page-with-information-about-types-of-paranormal-phenomena-investigation-equipment-and-methods-evidence-documentation-guidelines-and-safety-precautions",
+      "title": "Create an investigation resources page with information about: types of paranormal phenomena, investigation equipment and methods, evidence documentation guidelines, and safety precautions",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-mysterious-atmospheric-visual-design-with-a-dark-color-scheme-using-deep-purples-midnight-blues-and-ethereal-greens-combined-with-vintage-investigation-aesthetics-including-distressed-textures-ghostly-typography-and-subtle-animated-effects-that-evoke-the-paranormal-theme",
+      "title": "Apply a mysterious, atmospheric visual design with a dark color scheme using deep purples, midnight blues, and ethereal greens, combined with vintage investigation aesthetics including distressed textures, ghostly typography, and subtle animated effects that evoke the paranormal theme",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-render-generated-images-as-static-assets-in-frontend-public-assets-generated-including-the-paranormal-investigation-hero-background-and-investigation-team-logo",
+      "title": "Render generated images as static assets in frontend/public/assets/generated including the paranormal investigation hero background and investigation team logo",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create paranormal investigating site",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Build backend data models and storage for paranormal cases including: case ID, submission timestamp, location, phenomena type, description, reporter contact information, investigation status, and associated photo references",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Paranormal Investigator",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}
