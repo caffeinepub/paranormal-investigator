@@ -10,6 +10,29 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
+export interface AdminCredentials { 'pin' : string, 'email' : string }
+export interface Case {
+  'id' : string,
+  'ownerEmail' : string,
+  'resolved' : boolean,
+  'contactInfo' : string,
+  'description' : string,
+  'timestamp' : Time,
+  'photo' : [] | [ExternalBlob],
+  'location' : string,
+  'phenomenaType' : string,
+}
+export interface CaseLookupResult {
+  'hasCase' : boolean,
+  'caseSummaries' : Array<CaseSummary>,
+}
+export interface CaseSummary {
+  'status' : string,
+  'caseId' : string,
+  'location' : string,
+  'phenomenaType' : string,
+}
+export type ExternalBlob = Uint8Array;
 export interface Investigation {
   'status' : string,
   'title' : string,
@@ -24,6 +47,7 @@ export interface Testimonial {
   'author' : string,
 }
 export type Time = bigint;
+export interface UserProfile { 'name' : string, 'email' : string }
 export type UserRole = { 'admin' : null } |
   { 'user' : null } |
   { 'guest' : null };
@@ -59,30 +83,34 @@ export interface _SERVICE {
   'createInvestigation' : ActorMethod<[string, Investigation], undefined>,
   'createTeamMember' : ActorMethod<[string, TeamMember], undefined>,
   'createTestimonial' : ActorMethod<[string, Testimonial], undefined>,
+  'deleteCase' : ActorMethod<[string], boolean>,
   'deleteInvestigation' : ActorMethod<[string], undefined>,
   'deleteTeamMember' : ActorMethod<[string], undefined>,
   'deleteTestimonial' : ActorMethod<[string], undefined>,
-  'getAggregatedAnalytics' : ActorMethod<
-    [],
-    {
-      'submissions' : Array<[string, bigint]>,
-      'pageVisits' : Array<[string, bigint]>,
-    }
-  >,
-  'getAllInvestigations' : ActorMethod<[], Array<Investigation>>,
+  'getAdminCredentials' : ActorMethod<[], AdminCredentials>,
+  'getAllCases' : ActorMethod<[], Array<Case>>,
+  'getAllInvestigationCases' : ActorMethod<[], Array<Investigation>>,
   'getAllTeamMembers' : ActorMethod<[], Array<TeamMember>>,
   'getAllTestimonials' : ActorMethod<[], Array<Testimonial>>,
+  'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
+  'getCasesForUser' : ActorMethod<[string], CaseLookupResult>,
   'getInvestigation' : ActorMethod<[string], [] | [Investigation]>,
   'getTeamMember' : ActorMethod<[string], [] | [TeamMember]>,
   'getTestimonial' : ActorMethod<[string], [] | [Testimonial]>,
+  'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
-  'recordFormSubmission' : ActorMethod<[string], undefined>,
-  'recordPageVisit' : ActorMethod<[string], undefined>,
+  'markCaseResolved' : ActorMethod<[string], boolean>,
+  'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
+  'submitCase' : ActorMethod<
+    [string, string, string, string, [] | [ExternalBlob], string],
+    string
+  >,
   'updateInvestigation' : ActorMethod<[string, Investigation], undefined>,
   'updateTeamMember' : ActorMethod<[string, TeamMember], undefined>,
   'updateTestimonial' : ActorMethod<[string, Testimonial], undefined>,
   'verifyAdmin' : ActorMethod<[], boolean>,
+  'verifyAdminCredentials' : ActorMethod<[string, string], boolean>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

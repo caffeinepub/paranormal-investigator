@@ -8,6 +8,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useActor } from '../hooks/useActor';
+import { ExternalBlob } from '../backend';
 import { useAnalytics } from '../hooks/useAnalytics';
 
 const PHENOMENA_TYPES = [
@@ -42,10 +44,12 @@ const EMPTY_FORM: FormState = {
 
 export default function SubmitCase() {
   const { trackPageVisit, trackFormSubmission } = useAnalytics();
+  const { actor } = useActor();
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   useEffect(() => {
     trackPageVisit('SubmitCase');
@@ -67,16 +71,51 @@ export default function SubmitCase() {
     if (!form.contactName.trim()) { setError('Please enter your name.'); return; }
     if (!form.contactEmail.trim()) { setError('Please enter your email address.'); return; }
 
+    if (!actor) {
+      setError('Unable to connect to the backend. Please try again.');
+      return;
+    }
+
     setIsSubmitting(true);
+    setUploadProgress(0);
+
     try {
-      // Simulate submission delay (replace with actual backend call if needed)
-      await new Promise(resolve => setTimeout(resolve, 1200));
+      // Build contact info string combining name, email, and optional phone
+      const contactInfo = [
+        form.contactName.trim(),
+        form.contactEmail.trim(),
+        form.contactPhone.trim() ? form.contactPhone.trim() : null,
+      ].filter(Boolean).join(' | ');
+
+      // Handle optional photo upload
+      let photoBlob: ExternalBlob | null = null;
+      if (form.photo) {
+        const arrayBuffer = await form.photo.arrayBuffer();
+        const bytes = new Uint8Array(arrayBuffer);
+        photoBlob = ExternalBlob.fromBytes(bytes).withUploadProgress((pct) => {
+          setUploadProgress(pct);
+        });
+      }
+
+      // Pass ownerEmail (contactEmail) as the 6th required argument
+      await actor.submitCase(
+        form.location.trim(),
+        form.phenomenaType,
+        form.description.trim(),
+        contactInfo,
+        photoBlob,
+        form.contactEmail.trim().toLowerCase(),
+      );
+
       trackFormSubmission('case_submission');
       setSubmitted(true);
-    } catch {
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      console.error('Case submission error:', message);
       setError('Something went wrong. Please try again or contact us directly by email.');
     } finally {
       setIsSubmitting(false);
+      setUploadProgress(0);
     }
   };
 
@@ -250,10 +289,14 @@ export default function SubmitCase() {
                 <div className="flex items-center gap-3 p-3 rounded-lg border border-ethereal/30 bg-ethereal/5">
                   <Upload className="h-4 w-4 text-ethereal flex-shrink-0" />
                   <span className="text-sm text-foreground flex-1 truncate">{form.photo.name}</span>
+                  {isSubmitting && uploadProgress > 0 && (
+                    <span className="text-xs text-ethereal">{uploadProgress}%</span>
+                  )}
                   <button
                     type="button"
                     onClick={() => setForm(f => ({ ...f, photo: null }))}
                     className="text-muted-foreground hover:text-destructive transition-colors"
+                    disabled={isSubmitting}
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -282,7 +325,7 @@ export default function SubmitCase() {
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  Submitting Case...
+                  {uploadProgress > 0 ? `Uploading... ${uploadProgress}%` : 'Submitting Case...'}
                 </>
               ) : (
                 <>

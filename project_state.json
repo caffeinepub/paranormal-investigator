@@ -1,85 +1,24 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "Paranormal investigation site with admin panel, password-protected login (email-based access for owner only), content management for investigations/testimonials/team members, and analytics/monitoring dashboard.",
-  "architectural_notes": [
-    "Admin access is restricted to a single owner email; no multi-user roles needed",
-    "Admin panel is password/email protected and separate from public-facing pages"
+  "summary": "New project",
+  "architectural_notes": [],
+  "known_issues": [
+    "PIN authentication gets stuck on 'verifying access' screen and never resolves"
   ],
-  "known_issues": [],
-  "isFixRequest": false,
+  "isFixRequest": true,
   "existing_features": [
     {
-      "id": "feature-add-a-protected-admin-login-page-at-route-admin-the-page-displays-an-email-input-form-on-submission-it-calls-the-backend-authentication-function-with-the-entered-email-if-the-email-matches-the-owner-email-the-user-is-granted-an-admin-session-stored-in-react-state-context-and-is-redirected-to-the-admin-dashboard-if-the-email-does-not-match-an-error-message-is-shown-no-password-is-required-email-alone-is-the-access-credential",
-      "title": "Add a protected admin login page at route /admin. The page displays an email input form. On submission, it calls the backend authentication function with the entered email. If the email matches the owner email, the user is granted an admin session stored in React state/context and is redirected to the admin dashboard. If the email does not match, an error message is shown. No password is required — email alone is the access credential.",
-      "reqIds": [
-        "REQ-4"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-build-an-admin-dashboard-page-at-admin-dashboard-accessible-only-to-authenticated-admins-the-dashboard-must-include-1-a-content-management-section-with-tabbed-panels-for-investigations-testimonials-and-team-members-each-showing-a-list-of-existing-records-with-edit-and-delete-buttons-and-a-form-to-add-new-records-2-an-analytics-section-displaying-page-visit-counts-per-page-and-total-form-submission-counts-fetched-from-the-backend",
-      "title": "Build an admin dashboard page at /admin/dashboard, accessible only to authenticated admins. The dashboard must include: (1) a Content Management section with tabbed panels for Investigations, Testimonials, and Team Members — each showing a list of existing records with Edit and Delete buttons, and a form to add new records; (2) an Analytics section displaying page visit counts per page and total form submission counts fetched from the backend.",
-      "reqIds": [
-        "REQ-5"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-instrument-the-existing-frontend-pages-home-resources-casegallery-submitcase-team-to-report-a-page-visit-event-to-the-backend-analytics-function-each-time-those-pages-are-rendered-also-report-a-form-submission-event-from-submitcase-when-a-case-is-submitted",
-      "title": "Instrument the existing frontend pages (Home, Resources, CaseGallery, SubmitCase, Team) to report a page visit event to the backend analytics function each time those pages are rendered. Also report a form submission event from SubmitCase when a case is submitted.",
-      "reqIds": [
-        "REQ-6"
-      ],
-      "version": 1
-    }
-  ],
-  "new_feature_requests": [
-    {
-      "id": "AR-1",
-      "summary": "Admin dashboard with protected login restricted to owner's email",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-2",
-      "summary": "Content management for investigations, testimonials, and team members",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-3",
-      "summary": "Analytics view to monitor page visits and form submissions",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-4",
-      "summary": "Add a backend data store and admin authentication system that restricts admin access to a single hardcoded owner email address. The backend must expose a login/verification function that checks the provided email against the stored owner email and returns a session token or access flag. No other email should be granted admin access.",
+      "id": "feature-fix-the-supernaturalpinlogin-page-so-that-pin-authentication-does-not-get-stuck-on-verifying-access-the-page-must-perform-purely-client-side-pin-validation-against-the-hardcoded-pin-022025-call-the-admincontext-login-function-on-success-and-immediately-redirect-to-the-admin-dashboard-without-waiting-on-any-internet-identity-principal-check-or-async-backend-call-that-could-hang",
+      "title": "Fix the SupernaturalPinLogin page so that PIN authentication does not get stuck on 'verifying access'. The page must perform purely client-side PIN validation against the hardcoded PIN '022025', call the AdminContext login function on success, and immediately redirect to the admin dashboard without waiting on any Internet Identity principal check or async backend call that could hang.",
       "reqIds": [
         "REQ-1"
       ],
-      "status": "pending"
-    },
-    {
-      "id": "AR-5",
-      "summary": "Add a backend-stored, mutable data model for: (1) investigations/cases (title, description, date, location, status), (2) testimonials (author, quote, date), and (3) team members (name, role, bio). Expose CRUD functions for each entity, all protected so only an authenticated admin session can create, update, or delete records. Public read access is allowed.",
-      "reqIds": [
-        "REQ-2"
-      ],
-      "status": "pending"
-    },
-    {
-      "id": "AR-6",
-      "summary": "Add backend analytics tracking: record a page visit event (with page name and timestamp) whenever the frontend reports a visit, and record form submission events (type and timestamp) for case submissions. Expose an admin-only query function that returns aggregated visit counts per page and submission counts.",
-      "reqIds": [
-        "REQ-3"
-      ],
-      "status": "pending"
+      "version": 1
     }
   ],
-  "gameProjectType": "none",
-  "projectName": "Paranormal Investigation Site",
+  "new_feature_requests": [],
+  "projectName": "Oklahoma Paranormal Investigations",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

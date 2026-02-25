@@ -1,147 +1,125 @@
-import { useEffect } from 'react';
-import { useNavigate } from '@tanstack/react-router';
-import { Ghost, LogOut, BarChart3, FileSearch, Users, MessageSquare, ShieldCheck } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import React, { useState } from 'react';
+import { useInternetIdentity } from '../hooks/useInternetIdentity';
+import { useQueryClient } from '@tanstack/react-query';
+import { Link } from '@tanstack/react-router';
+import ProtectedRoute from '../components/ProtectedRoute';
+import { UserRole } from '../backend';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
-import { useAdmin } from '../hooks/useAdmin';
-import InvestigationsManager from '../components/admin/InvestigationsManager';
-import TestimonialsManager from '../components/admin/TestimonialsManager';
-import TeamManager from '../components/admin/TeamManager';
-import AnalyticsPanel from '../components/admin/AnalyticsPanel';
+import { Button } from '@/components/ui/button';
+import { Shield, LogOut, FileText, Search, MessageSquare, BarChart3 } from 'lucide-react';
+import CasesManager from '../components/admin/CasesManager';
+
+function InvestigationsTab() {
+  return (
+    <div className="py-8 text-center text-muted-foreground">
+      <Search className="h-12 w-12 mx-auto mb-4 opacity-40" />
+      <p>Investigations management coming soon.</p>
+    </div>
+  );
+}
+
+function TestimonialsTab() {
+  return (
+    <div className="py-8 text-center text-muted-foreground">
+      <MessageSquare className="h-12 w-12 mx-auto mb-4 opacity-40" />
+      <p>Testimonials management coming soon.</p>
+    </div>
+  );
+}
+
+function AnalyticsTab() {
+  return (
+    <div className="py-8 text-center text-muted-foreground">
+      <BarChart3 className="h-12 w-12 mx-auto mb-4 opacity-40" />
+      <p>Analytics coming soon.</p>
+    </div>
+  );
+}
 
 export default function AdminDashboard() {
-  const { isAdmin, adminEmail, logout } = useAdmin();
-  const navigate = useNavigate();
+  const { identity, clear } = useInternetIdentity();
+  const queryClient = useQueryClient();
+  const [activeTab, setActiveTab] = useState('cases');
 
-  useEffect(() => {
-    if (!isAdmin) {
-      navigate({ to: '/admin' });
-    }
-  }, [isAdmin, navigate]);
-
-  if (!isAdmin) return null;
-
-  const handleLogout = () => {
-    logout();
-    navigate({ to: '/admin' });
+  const handleLogout = async () => {
+    await clear();
+    queryClient.clear();
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Dashboard Header */}
-      <div className="border-b border-border/50 bg-card/30 backdrop-blur-xl sticky top-0 z-40">
-        <div className="container mx-auto px-4 lg:px-6 py-4">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-ethereal/10 border border-ethereal/20 flex items-center justify-center">
-                <ShieldCheck className="h-5 w-5 text-ethereal" />
+    <ProtectedRoute requiredRole={UserRole.admin}>
+      <div className="min-h-screen bg-background">
+        {/* Admin Header */}
+        <div className="border-b border-border/50 bg-card/50 backdrop-blur-sm sticky top-0 z-40">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between h-14">
+              <div className="flex items-center gap-3">
+                <Shield className="h-5 w-5 text-primary" />
+                <span className="font-display font-semibold text-foreground">Admin Dashboard</span>
+                {identity && (
+                  <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-primary/10 text-primary border border-primary/20">
+                    Admin
+                  </span>
+                )}
               </div>
-              <div>
-                <h1 className="font-display text-xl font-bold text-foreground">Admin Dashboard</h1>
-                <p className="text-xs text-muted-foreground">Oklahoma Paranormal Investigations</p>
+              <div className="flex items-center gap-2">
+                <Link to="/admin/cases">
+                  <Button variant="ghost" size="sm" className="flex items-center gap-1">
+                    <FileText className="h-4 w-4" />
+                    <span className="hidden sm:inline">Case Files</span>
+                  </Button>
+                </Link>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleLogout}
+                  className="flex items-center gap-1"
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span className="hidden sm:inline">Logout</span>
+                </Button>
               </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <Badge variant="outline" className="border-ethereal/40 bg-ethereal/10 text-ethereal hidden sm:flex">
-                <Ghost className="h-3 w-3 mr-1" />
-                {adminEmail}
-              </Badge>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleLogout}
-                className="border-border/60 hover:border-destructive/50 hover:text-destructive transition-colors"
-              >
-                <LogOut className="h-4 w-4 mr-1" />
-                Logout
-              </Button>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Dashboard Content */}
-      <div className="container mx-auto px-4 lg:px-6 py-8">
-        {/* Atmospheric background */}
-        <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-ethereal/3 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-spectral/3 rounded-full blur-3xl" />
+        {/* Dashboard Content */}
+        <div className="container mx-auto px-4 py-8">
+          <Tabs value={activeTab} onValueChange={setActiveTab}>
+            <TabsList className="mb-6">
+              <TabsTrigger value="cases" className="flex items-center gap-1">
+                <FileText className="h-4 w-4" />
+                Cases
+              </TabsTrigger>
+              <TabsTrigger value="investigations" className="flex items-center gap-1">
+                <Search className="h-4 w-4" />
+                Investigations
+              </TabsTrigger>
+              <TabsTrigger value="testimonials" className="flex items-center gap-1">
+                <MessageSquare className="h-4 w-4" />
+                Testimonials
+              </TabsTrigger>
+              <TabsTrigger value="analytics" className="flex items-center gap-1">
+                <BarChart3 className="h-4 w-4" />
+                Analytics
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="cases">
+              <CasesManager />
+            </TabsContent>
+            <TabsContent value="investigations">
+              <InvestigationsTab />
+            </TabsContent>
+            <TabsContent value="testimonials">
+              <TestimonialsTab />
+            </TabsContent>
+            <TabsContent value="analytics">
+              <AnalyticsTab />
+            </TabsContent>
+          </Tabs>
         </div>
-
-        <Tabs defaultValue="investigations" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 h-auto bg-card/50 backdrop-blur-sm p-1 border border-border/50">
-            <TabsTrigger
-              value="investigations"
-              className="gap-2 data-[state=active]:bg-ethereal/20 data-[state=active]:text-ethereal py-3"
-            >
-              <FileSearch className="h-4 w-4" />
-              <span className="hidden sm:inline">Investigations</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="testimonials"
-              className="gap-2 data-[state=active]:bg-ethereal/20 data-[state=active]:text-ethereal py-3"
-            >
-              <MessageSquare className="h-4 w-4" />
-              <span className="hidden sm:inline">Testimonials</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="team"
-              className="gap-2 data-[state=active]:bg-ethereal/20 data-[state=active]:text-ethereal py-3"
-            >
-              <Users className="h-4 w-4" />
-              <span className="hidden sm:inline">Team</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="analytics"
-              className="gap-2 data-[state=active]:bg-ethereal/20 data-[state=active]:text-ethereal py-3"
-            >
-              <BarChart3 className="h-4 w-4" />
-              <span className="hidden sm:inline">Analytics</span>
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="investigations">
-            <div className="space-y-4">
-              <div>
-                <h2 className="font-display text-2xl font-bold text-foreground">Investigations</h2>
-                <p className="text-sm text-muted-foreground mt-1">Manage all paranormal investigation records</p>
-              </div>
-              <InvestigationsManager />
-            </div>
-          </TabsContent>
-
-          <TabsContent value="testimonials">
-            <div className="space-y-4">
-              <div>
-                <h2 className="font-display text-2xl font-bold text-foreground">Testimonials</h2>
-                <p className="text-sm text-muted-foreground mt-1">Manage client testimonials and reviews</p>
-              </div>
-              <TestimonialsManager />
-            </div>
-          </TabsContent>
-
-          <TabsContent value="team">
-            <div className="space-y-4">
-              <div>
-                <h2 className="font-display text-2xl font-bold text-foreground">Team Members</h2>
-                <p className="text-sm text-muted-foreground mt-1">Manage your investigation team roster</p>
-              </div>
-              <TeamManager />
-            </div>
-          </TabsContent>
-
-          <TabsContent value="analytics">
-            <div className="space-y-4">
-              <div>
-                <h2 className="font-display text-2xl font-bold text-foreground">Analytics</h2>
-                <p className="text-sm text-muted-foreground mt-1">Monitor site visits and form submissions</p>
-              </div>
-              <AnalyticsPanel />
-            </div>
-          </TabsContent>
-        </Tabs>
       </div>
-    </div>
+    </ProtectedRoute>
   );
 }

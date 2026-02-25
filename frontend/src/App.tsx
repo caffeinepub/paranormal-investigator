@@ -1,27 +1,40 @@
-import { RouterProvider, createRouter, createRoute, createRootRoute } from '@tanstack/react-router';
+import { RouterProvider, createRouter, createRoute, createRootRoute, Outlet } from '@tanstack/react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ThemeProvider } from 'next-themes';
-import { Toaster } from '@/components/ui/sonner';
-import { AdminProvider } from './contexts/AdminContext';
+import { useEffect, useRef } from 'react';
+import { useInternetIdentity } from './hooks/useInternetIdentity';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Resources from './pages/Resources';
-import Team from './pages/Team';
 import SubmitCase from './pages/SubmitCase';
+import CaseGallery from './pages/CaseGallery';
+import CaseDetail from './pages/CaseDetail';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import CaseFiles from './pages/CaseFiles';
+import MyCase from './pages/MyCase';
+import SupernaturalPinLogin from './pages/SupernaturalPinLogin';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
+const queryClient = new QueryClient();
+
+function PostLoginRedirect() {
+  const { identity } = useInternetIdentity();
+  const hasRedirected = useRef(false);
+
+  useEffect(() => {
+    if (identity && !hasRedirected.current) {
+      hasRedirected.current = true;
+    }
+  }, [identity]);
+
+  return <Outlet />;
+}
 
 const rootRoute = createRootRoute({
-  component: Layout,
+  component: () => (
+    <Layout>
+      <PostLoginRedirect />
+    </Layout>
+  ),
 });
 
 const indexRoute = createRoute({
@@ -36,21 +49,33 @@ const resourcesRoute = createRoute({
   component: Resources,
 });
 
-const teamRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/team',
-  component: Team,
-});
-
 const submitCaseRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/submit-case',
   component: SubmitCase,
 });
 
+const caseGalleryRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/cases',
+  component: CaseGallery,
+});
+
+const caseDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/cases/$caseId',
+  component: CaseDetail,
+});
+
+const myCaseRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/my-case',
+  component: MyCase,
+});
+
 const adminLoginRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/admin',
+  path: '/admin/login',
   component: AdminLogin,
 });
 
@@ -60,13 +85,30 @@ const adminDashboardRoute = createRoute({
   component: AdminDashboard,
 });
 
+const adminCasesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin/cases',
+  component: CaseFiles,
+});
+
+// Secret admin access route — not linked in any navigation
+const supernaturalRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/supernatural',
+  component: SupernaturalPinLogin,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   resourcesRoute,
-  teamRoute,
   submitCaseRoute,
+  caseGalleryRoute,
+  caseDetailRoute,
+  myCaseRoute,
   adminLoginRoute,
   adminDashboardRoute,
+  adminCasesRoute,
+  supernaturalRoute,
 ]);
 
 const router = createRouter({ routeTree });
@@ -79,13 +121,8 @@ declare module '@tanstack/react-router' {
 
 export default function App() {
   return (
-    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-      <QueryClientProvider client={queryClient}>
-        <AdminProvider>
-          <RouterProvider router={router} />
-          <Toaster />
-        </AdminProvider>
-      </QueryClientProvider>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   );
 }

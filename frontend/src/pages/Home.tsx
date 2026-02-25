@@ -236,10 +236,10 @@ export default function Home() {
                   Get in Touch
                 </Button>
               </a>
-              <Link to="/team">
+              <Link to="/resources">
                 <Button size="lg" variant="outline" className="border-ethereal/40 hover:bg-ethereal/10 hover:border-ethereal/60 transition-all text-base px-8">
-                  <Users className="mr-2 h-5 w-5" />
-                  Meet the Team
+                  <BookOpen className="mr-2 h-5 w-5" />
+                  Our Resources
                 </Button>
               </Link>
             </div>

@@ -10,7 +10,7 @@ export function useInvestigations() {
     queryKey: ['investigations'],
     queryFn: async () => {
       if (!actor) return [];
-      const items = await actor.getAllInvestigations();
+      const items = await actor.getAllInvestigationCases();
       return items.map((item, i) => ({ ...item, id: String(i) }));
     },
     enabled: !!actor && !isFetching,
@@ -156,15 +156,55 @@ export function useDeleteTeamMember() {
 }
 
 // ── Analytics ─────────────────────────────────────────────────────────────────
+// Analytics tracking is handled client-side via localStorage since the backend
+// no longer exposes analytics endpoints.
+
+const ANALYTICS_KEY = 'opi_analytics';
+
+interface AnalyticsStore {
+  pageVisits: Record<string, number>;
+  submissions: Record<string, number>;
+}
+
+function getAnalyticsStore(): AnalyticsStore {
+  try {
+    const raw = localStorage.getItem(ANALYTICS_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch {
+    // ignore
+  }
+  return { pageVisits: {}, submissions: {} };
+}
+
+function saveAnalyticsStore(store: AnalyticsStore) {
+  try {
+    localStorage.setItem(ANALYTICS_KEY, JSON.stringify(store));
+  } catch {
+    // ignore
+  }
+}
+
+export function recordPageVisitLocal(pageName: string) {
+  const store = getAnalyticsStore();
+  store.pageVisits[pageName] = (store.pageVisits[pageName] ?? 0) + 1;
+  saveAnalyticsStore(store);
+}
+
+export function recordFormSubmissionLocal(formType: string) {
+  const store = getAnalyticsStore();
+  store.submissions[formType] = (store.submissions[formType] ?? 0) + 1;
+  saveAnalyticsStore(store);
+}
 
 export function useAnalyticsData() {
-  const { actor, isFetching } = useActor();
-  return useQuery<{ pageVisits: Array<[string, bigint]>; submissions: Array<[string, bigint]> }>({
+  return useQuery<{ pageVisits: Array<[string, number]>; submissions: Array<[string, number]> }>({
     queryKey: ['analytics'],
     queryFn: async () => {
-      if (!actor) throw new Error('Actor not available');
-      return actor.getAggregatedAnalytics();
+      const store = getAnalyticsStore();
+      return {
+        pageVisits: Object.entries(store.pageVisits),
+        submissions: Object.entries(store.submissions),
+      };
     },
-    enabled: !!actor && !isFetching,
   });
 }

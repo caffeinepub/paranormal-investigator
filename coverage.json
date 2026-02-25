@@ -1,130 +1,35 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-25T01:03:02.103Z",
+  "generatedAt": "2026-02-25T06:31:50.282Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 6,
-    "implemented": 3,
+    "total": 1,
+    "implemented": 1,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Add a backend data store and admin authentication system that restricts admin access to a single hardcoded owner email address. The backend must expose a login/verification function that checks the provided email against the stored owner email and returns a session token or access flag. No other email should be granted admin access.",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-2",
-        "summary": "Add a backend-stored, mutable data model for: (1) investigations/cases (title, description, date, location, status), (2) testimonials (author, quote, date), and (3) team members (name, role, bio). Expose CRUD functions for each entity, all protected so only an authenticated admin session can create, update, or delete records. Public read access is allowed.",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-3",
-        "summary": "Add backend analytics tracking: record a page visit event (with page name and timestamp) whenever the frontend reports a visit, and record form submission events (type and timestamp) for case submissions. Expose an admin-only query function that returns aggregated visit counts per page and submission counts.",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-4",
-        "summary": "Add a protected admin login page at route /admin. The page displays an email input form. On submission, it calls the backend authentication function with the entered email. If the email matches the owner email, the user is granted an admin session stored in React state/context and is redirected to the admin dashboard. If the email does not match, an error message is shown. No password is required — email alone is the access credential.",
+        "summary": "Fix the SupernaturalPinLogin page so that PIN authentication does not get stuck on 'verifying access'. The page must perform purely client-side PIN validation against the hardcoded PIN '022025', call the AdminContext login function on success, and immediately redirect to the admin dashboard without waiting on any Internet Identity principal check or async backend call that could hang.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/AdminLogin.tsx",
-          "frontend/src/contexts/AdminContext.tsx",
-          "frontend/src/hooks/useAdmin.ts",
-          "frontend/src/App.tsx",
-          "frontend/src/components/Layout.tsx"
+          "frontend/src/pages/SupernaturalPinLogin.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/pages/AdminLogin.tsx",
-          "frontend/src/contexts/AdminContext.tsx",
-          "frontend/src/hooks/useAdmin.ts",
-          "frontend/src/App.tsx",
-          "frontend/src/components/Layout.tsx"
-        ]
-      },
-      {
-        "id": "REQ-5",
-        "summary": "Build an admin dashboard page at /admin/dashboard, accessible only to authenticated admins. The dashboard must include: (1) a Content Management section with tabbed panels for Investigations, Testimonials, and Team Members — each showing a list of existing records with Edit and Delete buttons, and a form to add new records; (2) an Analytics section displaying page visit counts per page and total form submission counts fetched from the backend.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/AdminDashboard.tsx",
-          "frontend/src/components/admin/InvestigationsManager.tsx",
-          "frontend/src/components/admin/TestimonialsManager.tsx",
-          "frontend/src/components/admin/TeamManager.tsx",
-          "frontend/src/components/admin/AnalyticsPanel.tsx",
-          "frontend/src/hooks/useAdminQueries.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/AdminDashboard.tsx",
-          "frontend/src/components/admin/InvestigationsManager.tsx",
-          "frontend/src/components/admin/TestimonialsManager.tsx",
-          "frontend/src/components/admin/TeamManager.tsx",
-          "frontend/src/components/admin/AnalyticsPanel.tsx",
-          "frontend/src/hooks/useAdminQueries.ts"
-        ]
-      },
-      {
-        "id": "REQ-6",
-        "summary": "Instrument the existing frontend pages (Home, Resources, CaseGallery, SubmitCase, Team) to report a page visit event to the backend analytics function each time those pages are rendered. Also report a form submission event from SubmitCase when a case is submitted.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/hooks/useAnalytics.ts",
-          "frontend/src/pages/Home.tsx",
-          "frontend/src/pages/Resources.tsx",
-          "frontend/src/pages/CaseGallery.tsx",
-          "frontend/src/pages/SubmitCase.tsx",
-          "frontend/src/pages/Team.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/hooks/useAnalytics.ts",
-          "frontend/src/pages/Home.tsx",
-          "frontend/src/pages/Resources.tsx",
-          "frontend/src/pages/SubmitCase.tsx",
-          "frontend/src/pages/Team.tsx"
+          "frontend/src/pages/SupernaturalPinLogin.tsx"
         ]
       }
     ]
   },
   "changedFiles": [
-    "backend/analytics.mo",
-    "backend/authorization/MixinAuthorization.mo",
-    "backend/authorization/access-control.mo",
-    "backend/main.mo",
     "build-request.json",
-    "caffeine.lock.json",
     "feature_evidence.json",
+    "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/App.tsx",
-    "frontend/src/backend.d.ts",
-    "frontend/src/backend.ts",
-    "frontend/src/components/Layout.tsx",
-    "frontend/src/components/admin/AnalyticsPanel.tsx",
-    "frontend/src/components/admin/InvestigationsManager.tsx",
-    "frontend/src/components/admin/TeamManager.tsx",
-    "frontend/src/components/admin/TestimonialsManager.tsx",
-    "frontend/src/contexts/AdminContext.tsx",
-    "frontend/src/declarations/backend.did.d.ts",
-    "frontend/src/declarations/backend.did.js",
-    "frontend/src/hooks/useActor.ts",
-    "frontend/src/hooks/useAdmin.ts",
-    "frontend/src/hooks/useAdminQueries.ts",
-    "frontend/src/hooks/useAnalytics.ts",
-    "frontend/src/hooks/useQueries.ts",
-    "frontend/src/pages/AdminDashboard.tsx",
-    "frontend/src/pages/AdminLogin.tsx",
-    "frontend/src/pages/Home.tsx",
-    "frontend/src/pages/Resources.tsx",
-    "frontend/src/pages/SubmitCase.tsx",
-    "frontend/src/pages/Team.tsx",
-    "frontend/src/utils/urlParams.ts",
+    "frontend/src/components/ProtectedRoute.tsx",
+    "frontend/src/pages/SupernaturalPinLogin.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

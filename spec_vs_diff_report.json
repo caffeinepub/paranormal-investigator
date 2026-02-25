@@ -1,87 +1,30 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-25T01:03:02.100Z",
-  "summary": "The diff implements most of the required features: backend CRUD for investigations/testimonials/team members, analytics tracking, admin login page, admin dashboard with content management and analytics panels, and page instrumentation. However, several notable gaps exist: the backend analytics module does not store timestamps with events (only counts); the analytics store is not declared as stable; the migration file required by constraints is absent; the admin login does not call a backend login function that checks email and returns a session token; the CaseGallery page is not instrumented.",
-  "missing_requirements": [
-    {
-      "id": "REQ-1",
-      "requirement": "Backend must expose a login/verification function that checks the provided email against the stored owner email and returns a session token or access flag.",
-      "reason": "The backend exposes verifyAdmin() which checks the caller's principal via AccessControl, not an email string. There is no stored owner email in the backend and no function that accepts an email and returns a session token. The email check is done entirely client-side in AdminLogin.tsx against a hardcoded constant.",
-      "evidence": [
-        "backend/main.mo",
-        "frontend/src/pages/AdminLogin.tsx"
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "requirement": "Data persists across canister upgrades via stable storage.",
-      "reason": "The investigations, testimonials, teamMembers maps and analytics object are declared as plain let bindings without the stable keyword. No migration file was generated. There is no evidence of stable variable declarations or preupgrade/postupgrade hooks to persist data across upgrades.",
-      "evidence": [
-        "backend/main.mo"
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "requirement": "Page visit events are stored with page name and timestamp; form submission events are stored with type and timestamp.",
-      "reason": "The analytics module only stores aggregated counts in Map<Text, Nat> with no timestamps. The recordPageVisit and recordFormSubmission functions only increment counters and do not store individual events with timestamps.",
-      "evidence": [
-        "backend/analytics.mo",
-        "backend/main.mo"
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "requirement": "Instrument the CaseGallery page to report a page visit event to the backend analytics function.",
-      "reason": "The diff instruments Home, Resources, SubmitCase, and Team pages with trackPageVisit calls, but no changes to a CaseGallery page are present anywhere in the diff.",
-      "evidence": [
-        "frontend/src/pages/Home.tsx",
-        "frontend/src/pages/Resources.tsx",
-        "frontend/src/pages/Team.tsx",
-        "frontend/src/pages/SubmitCase.tsx"
-      ]
-    }
-  ],
+  "generatedAt": "2026-02-25T06:31:50.279Z",
+  "summary": "The diff implements REQ-1 by rewriting SupernaturalPinLogin.tsx to perform purely client-side PIN validation against the hardcoded PIN '022025', call AdminContext login on success, and navigate to the admin dashboard after a short deterministic timeout (50ms). It also fixes ProtectedRoute.tsx to check AdminContext state AND storage directly, preventing the 'verifying access' hang by short-circuiting before any Internet Identity/role-loading logic when the admin session is present.",
+  "missing_requirements": [],
   "hallucinated_features": [
     {
-      "description": "URL parameter utilities including caffeineAdminToken secret parameter handling and hash-based URL parameter parsing.",
-      "reason": "The build request does not mention URL-based admin tokens, caffeineAdminToken, or hash-based routing parameter extraction. The utils/urlParams.ts file and its usage in useActor.ts with getSecretParameter were not requested.",
+      "description": "Too-many-attempts lockout logic in SupernaturalPinLogin: after 3 failed attempts, the error message changes to 'Access denied. Too many failed attempts.' and tracks an attempt counter.",
+      "reason": "REQ-1 only requires that an incorrect PIN shows an error message and does not redirect. No rate-limiting or attempt-counting behaviour was requested.",
       "evidence": [
-        "frontend/src/utils/urlParams.ts",
-        "frontend/src/hooks/useActor.ts"
+        "frontend/src/pages/SupernaturalPinLogin.tsx"
       ]
     },
     {
-      "description": "Internet Identity wallet-based authentication integration via useInternetIdentity hook in useActor.ts.",
-      "reason": "The build request explicitly lists Internet Identity and wallet-based authentication as a non-goal, yet useActor.ts imports and uses useInternetIdentity to create authenticated actors with an identity.",
+      "description": "readAdminSessionFromStorage helper in ProtectedRoute that reads both sessionStorage and localStorage for an admin session key as a synchronous fallback.",
+      "reason": "REQ-1 specifies fixing the SupernaturalPinLogin flow and ensuring AdminContext login state is set correctly. Reading directly from storage in ProtectedRoute is an undocumented implementation detail not mentioned in any requirement or AC.",
       "evidence": [
-        "frontend/src/hooks/useActor.ts"
+        "frontend/src/components/ProtectedRoute.tsx"
       ]
     }
   ],
-  "confidence": 0.75,
+  "confidence": 0.82,
   "changed_files": [
-    "backend/analytics.mo",
-    "backend/main.mo",
-    "frontend/src/App.tsx",
-    "frontend/src/components/Layout.tsx",
-    "frontend/src/components/admin/AnalyticsPanel.tsx",
-    "frontend/src/components/admin/InvestigationsManager.tsx",
-    "frontend/src/components/admin/TeamManager.tsx",
-    "frontend/src/components/admin/TestimonialsManager.tsx",
-    "frontend/src/contexts/AdminContext.tsx",
-    "frontend/src/hooks/useActor.ts",
-    "frontend/src/hooks/useAdmin.ts",
-    "frontend/src/hooks/useAdminQueries.ts",
-    "frontend/src/hooks/useAnalytics.ts",
-    "frontend/src/hooks/useQueries.ts",
-    "frontend/src/pages/AdminDashboard.tsx",
-    "frontend/src/pages/AdminLogin.tsx",
-    "frontend/src/pages/Home.tsx",
-    "frontend/src/pages/Resources.tsx",
-    "frontend/src/pages/SubmitCase.tsx",
-    "frontend/src/pages/Team.tsx",
-    "frontend/src/utils/urlParams.ts",
+    "frontend-file-summaries.txt",
+    "frontend/src/components/ProtectedRoute.tsx",
+    "frontend/src/pages/SupernaturalPinLogin.tsx",
     "project_state.json"
   ]
 }
