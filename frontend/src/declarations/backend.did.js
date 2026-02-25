@@ -19,6 +19,29 @@ export const _CaffeineStorageRefillResult = IDL.Record({
   'success' : IDL.Opt(IDL.Bool),
   'topped_up_amount' : IDL.Opt(IDL.Nat),
 });
+export const UserRole = IDL.Variant({
+  'admin' : IDL.Null,
+  'user' : IDL.Null,
+  'guest' : IDL.Null,
+});
+export const Time = IDL.Int;
+export const Investigation = IDL.Record({
+  'status' : IDL.Text,
+  'title' : IDL.Text,
+  'date' : Time,
+  'description' : IDL.Text,
+  'location' : IDL.Text,
+});
+export const TeamMember = IDL.Record({
+  'bio' : IDL.Text,
+  'name' : IDL.Text,
+  'role' : IDL.Text,
+});
+export const Testimonial = IDL.Record({
+  'date' : Time,
+  'quote' : IDL.Text,
+  'author' : IDL.Text,
+});
 
 export const idlService = IDL.Service({
   '_caffeineStorageBlobIsLive' : IDL.Func(
@@ -47,6 +70,42 @@ export const idlService = IDL.Service({
       [],
     ),
   '_caffeineStorageUpdateGatewayPrincipals' : IDL.Func([], [], []),
+  '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+  'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+  'createInvestigation' : IDL.Func([IDL.Text, Investigation], [], []),
+  'createTeamMember' : IDL.Func([IDL.Text, TeamMember], [], []),
+  'createTestimonial' : IDL.Func([IDL.Text, Testimonial], [], []),
+  'deleteInvestigation' : IDL.Func([IDL.Text], [], []),
+  'deleteTeamMember' : IDL.Func([IDL.Text], [], []),
+  'deleteTestimonial' : IDL.Func([IDL.Text], [], []),
+  'getAggregatedAnalytics' : IDL.Func(
+      [],
+      [
+        IDL.Record({
+          'submissions' : IDL.Vec(IDL.Tuple(IDL.Text, IDL.Nat)),
+          'pageVisits' : IDL.Vec(IDL.Tuple(IDL.Text, IDL.Nat)),
+        }),
+      ],
+      ['query'],
+    ),
+  'getAllInvestigations' : IDL.Func([], [IDL.Vec(Investigation)], ['query']),
+  'getAllTeamMembers' : IDL.Func([], [IDL.Vec(TeamMember)], ['query']),
+  'getAllTestimonials' : IDL.Func([], [IDL.Vec(Testimonial)], ['query']),
+  'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getInvestigation' : IDL.Func(
+      [IDL.Text],
+      [IDL.Opt(Investigation)],
+      ['query'],
+    ),
+  'getTeamMember' : IDL.Func([IDL.Text], [IDL.Opt(TeamMember)], ['query']),
+  'getTestimonial' : IDL.Func([IDL.Text], [IDL.Opt(Testimonial)], ['query']),
+  'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'recordFormSubmission' : IDL.Func([IDL.Text], [], []),
+  'recordPageVisit' : IDL.Func([IDL.Text], [], []),
+  'updateInvestigation' : IDL.Func([IDL.Text, Investigation], [], []),
+  'updateTeamMember' : IDL.Func([IDL.Text, TeamMember], [], []),
+  'updateTestimonial' : IDL.Func([IDL.Text, Testimonial], [], []),
+  'verifyAdmin' : IDL.Func([], [IDL.Bool], []),
 });
 
 export const idlInitArgs = [];
@@ -62,6 +121,29 @@ export const idlFactory = ({ IDL }) => {
   const _CaffeineStorageRefillResult = IDL.Record({
     'success' : IDL.Opt(IDL.Bool),
     'topped_up_amount' : IDL.Opt(IDL.Nat),
+  });
+  const UserRole = IDL.Variant({
+    'admin' : IDL.Null,
+    'user' : IDL.Null,
+    'guest' : IDL.Null,
+  });
+  const Time = IDL.Int;
+  const Investigation = IDL.Record({
+    'status' : IDL.Text,
+    'title' : IDL.Text,
+    'date' : Time,
+    'description' : IDL.Text,
+    'location' : IDL.Text,
+  });
+  const TeamMember = IDL.Record({
+    'bio' : IDL.Text,
+    'name' : IDL.Text,
+    'role' : IDL.Text,
+  });
+  const Testimonial = IDL.Record({
+    'date' : Time,
+    'quote' : IDL.Text,
+    'author' : IDL.Text,
   });
   
   return IDL.Service({
@@ -91,6 +173,42 @@ export const idlFactory = ({ IDL }) => {
         [],
       ),
     '_caffeineStorageUpdateGatewayPrincipals' : IDL.Func([], [], []),
+    '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+    'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+    'createInvestigation' : IDL.Func([IDL.Text, Investigation], [], []),
+    'createTeamMember' : IDL.Func([IDL.Text, TeamMember], [], []),
+    'createTestimonial' : IDL.Func([IDL.Text, Testimonial], [], []),
+    'deleteInvestigation' : IDL.Func([IDL.Text], [], []),
+    'deleteTeamMember' : IDL.Func([IDL.Text], [], []),
+    'deleteTestimonial' : IDL.Func([IDL.Text], [], []),
+    'getAggregatedAnalytics' : IDL.Func(
+        [],
+        [
+          IDL.Record({
+            'submissions' : IDL.Vec(IDL.Tuple(IDL.Text, IDL.Nat)),
+            'pageVisits' : IDL.Vec(IDL.Tuple(IDL.Text, IDL.Nat)),
+          }),
+        ],
+        ['query'],
+      ),
+    'getAllInvestigations' : IDL.Func([], [IDL.Vec(Investigation)], ['query']),
+    'getAllTeamMembers' : IDL.Func([], [IDL.Vec(TeamMember)], ['query']),
+    'getAllTestimonials' : IDL.Func([], [IDL.Vec(Testimonial)], ['query']),
+    'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getInvestigation' : IDL.Func(
+        [IDL.Text],
+        [IDL.Opt(Investigation)],
+        ['query'],
+      ),
+    'getTeamMember' : IDL.Func([IDL.Text], [IDL.Opt(TeamMember)], ['query']),
+    'getTestimonial' : IDL.Func([IDL.Text], [IDL.Opt(Testimonial)], ['query']),
+    'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'recordFormSubmission' : IDL.Func([IDL.Text], [], []),
+    'recordPageVisit' : IDL.Func([IDL.Text], [], []),
+    'updateInvestigation' : IDL.Func([IDL.Text, Investigation], [], []),
+    'updateTeamMember' : IDL.Func([IDL.Text, TeamMember], [], []),
+    'updateTestimonial' : IDL.Func([IDL.Text, Testimonial], [], []),
+    'verifyAdmin' : IDL.Func([], [IDL.Bool], []),
   });
 };
 

@@ -1,10 +1,19 @@
+import { useEffect } from 'react';
 import { BookOpen, Camera, Radio, Zap, Shield, AlertTriangle, FileText, Compass, Sparkles } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
+import { useAnalytics } from '../hooks/useAnalytics';
 
 export default function Resources() {
+  const { trackPageVisit } = useAnalytics();
+
+  useEffect(() => {
+    trackPageVisit('Resources');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const phenomena = [
     {
       icon: BookOpen,
@@ -132,7 +141,7 @@ export default function Resources() {
           Oklahoma Investigation <span className="text-ethereal">Resources</span>
         </h1>
         <p className="text-muted-foreground text-lg max-w-3xl leading-relaxed">
-          Comprehensive guides and information for understanding and investigating paranormal phenomena in Oklahoma. Learn about different types of activity, equipment, and best practices for Oklahoma investigations.
+          Comprehensive guides and information for understanding and investigating paranormal phenomena in Oklahoma.
         </p>
       </div>
 
@@ -167,7 +176,7 @@ export default function Resources() {
                 <div>
                   <CardTitle className="text-2xl font-heading">Types of Paranormal Phenomena in Oklahoma</CardTitle>
                   <CardDescription className="text-base mt-1">
-                    Understanding different categories of paranormal activity and their characteristics in Oklahoma investigations
+                    Understanding different categories of paranormal activity
                   </CardDescription>
                 </div>
               </div>
@@ -215,7 +224,7 @@ export default function Resources() {
                 <div>
                   <CardTitle className="text-2xl font-heading">Investigation Equipment</CardTitle>
                   <CardDescription className="text-base mt-1">
-                    Essential tools for detecting and documenting paranormal activity in Oklahoma
+                    Essential tools for detecting and documenting paranormal activity
                   </CardDescription>
                 </div>
               </div>

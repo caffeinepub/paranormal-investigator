@@ -1,16 +1,20 @@
 import { Outlet, Link } from '@tanstack/react-router';
-import { Ghost, Menu, X, Mail, Moon, Sun } from 'lucide-react';
+import { Ghost, Menu, X, Mail, Moon, Sun, ShieldCheck } from 'lucide-react';
 import { useState } from 'react';
 import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
+import { useAdmin } from '../hooks/useAdmin';
 
 export default function Layout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
+  const { isAdmin } = useAdmin();
 
   const navLinks = [
     { path: '/', label: 'Home' },
+    { path: '/team', label: 'Team' },
     { path: '/resources', label: 'Resources' },
+    { path: '/submit-case', label: 'Submit Case' },
   ];
 
   return (
@@ -22,9 +26,9 @@ export default function Layout() {
             {/* Logo */}
             <Link to="/" className="flex items-center gap-4 hover:opacity-90 transition-opacity group">
               <div className="relative">
-                <img 
-                  src="/assets/generated/logo-ghostbusters-style.dim_400x400.png" 
-                  alt="Oklahoma Paranormal Investigations" 
+                <img
+                  src="/assets/generated/logo-ghostbusters-style.dim_400x400.png"
+                  alt="Oklahoma Paranormal Investigations"
                   className="h-20 w-auto transition-all group-hover:drop-shadow-[0_0_12px_oklch(var(--ethereal)/0.4)]"
                 />
               </div>
@@ -45,7 +49,19 @@ export default function Layout() {
                   <span className="absolute -bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-ethereal to-spectral group-hover:w-full transition-all duration-300" />
                 </Link>
               ))}
-              
+
+              {isAdmin && (
+                <Link
+                  to="/admin/dashboard"
+                  className="text-sm font-medium text-ethereal/80 hover:text-ethereal transition-colors relative group py-2 flex items-center gap-1.5"
+                  activeProps={{ className: 'text-ethereal' }}
+                >
+                  <ShieldCheck className="h-4 w-4" />
+                  Admin
+                  <span className="absolute -bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-ethereal to-spectral group-hover:w-full transition-all duration-300" />
+                </Link>
+              )}
+
               <Button
                 variant="ghost"
                 size="icon"
@@ -69,7 +85,7 @@ export default function Layout() {
                 <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                 <span className="sr-only">Toggle theme</span>
               </Button>
-              
+
               <button
                 className="p-2 hover:bg-accent rounded-lg transition-colors"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -95,6 +111,17 @@ export default function Layout() {
                   {link.label}
                 </Link>
               ))}
+              {isAdmin && (
+                <Link
+                  to="/admin/dashboard"
+                  className="flex items-center gap-2 py-3 px-4 text-sm font-medium text-ethereal/80 hover:text-ethereal hover:bg-accent/50 rounded-lg transition-colors"
+                  activeProps={{ className: 'text-ethereal bg-accent/30' }}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <ShieldCheck className="h-4 w-4" />
+                  Admin Dashboard
+                </Link>
+              )}
             </nav>
           )}
         </div>

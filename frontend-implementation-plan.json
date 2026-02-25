@@ -1,37 +1,125 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Increase logo size in header and update investigations count to 25+",
+  "title": "Add email-restricted admin panel with content management and analytics",
   "requirements": [
     {
-      "id": "REQ-62",
-      "summary": "Increase the size of the Ghostbusters-style logo displayed in the header corner",
+      "id": "REQ-4",
+      "summary": "Add protected admin login page with email-only authentication",
       "acceptanceCriteria": [
-        "Logo in the header corner is visibly larger than current size",
-        "Logo maintains proper aspect ratio and does not overflow container",
-        "Logo size increase is responsive across mobile and desktop viewports"
+        "Admin login page is accessible at /admin",
+        "Entering the correct owner email grants access and redirects to the admin dashboard",
+        "Entering any other email shows an 'Access denied' error message",
+        "Admin session persists during the browser session so the user is not logged out on navigation"
       ],
       "file_operations": [
         {
+          "path": "frontend/src/pages/AdminLogin.tsx",
+          "operation": "create",
+          "description": "Create admin login page with email input form. On submission, call backend verifyAdmin() to check if the entered email matches the configured owner email. Store admin session in React context on success. Display error message on failure. Style consistently with the paranormal theme using ethereal/spectral colors and glow effects."
+        },
+        {
+          "path": "frontend/src/contexts/AdminContext.tsx",
+          "operation": "create",
+          "description": "Create AdminContext provider to manage admin authentication state across the app. Store whether the current session is authenticated as admin, and provide login/logout functions. Persist session state in sessionStorage to maintain authentication during navigation."
+        },
+        {
+          "path": "frontend/src/hooks/useAdmin.ts",
+          "operation": "create",
+          "description": "Create useAdmin hook to access AdminContext. Export isAdmin flag and admin authentication functions for use in components."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register /admin and /admin/dashboard routes in the router configuration. Wrap the app in AdminContext provider to make admin state available throughout the component tree."
+        },
+        {
           "path": "frontend/src/components/Layout.tsx",
           "operation": "modify",
-          "description": "Increase the size of the Ghostbusters-style logo (frontend/public/assets/generated/logo-ghostbusters-style.dim_400x400.png) in the header by modifying the width/height CSS classes or inline styles. Current implementation uses h-12 w-12 classes; increase to h-16 w-16 or similar for desktop and maintain proportional mobile sizing. Ensure the logo maintains aspect ratio and does not overflow its container."
+          "description": "Add conditional Admin Dashboard navigation link in the header that only appears when isAdmin is true (accessed via useAdmin hook)."
         }
       ]
     },
     {
-      "id": "REQ-63",
-      "summary": "Update the investigations count statistics on the Home page to display '25+' instead of '50+'",
+      "id": "REQ-5",
+      "summary": "Build admin dashboard with content management and analytics sections",
       "acceptanceCriteria": [
-        "Statistics section on Home page shows '25+' for investigations count",
-        "Text change is consistent across all instances where '50+' investigations was displayed",
-        "No other numerical statistics are affected by this change"
+        "Unauthenticated users accessing /admin/dashboard are redirected to /admin login page",
+        "Authenticated admin can add, edit, and delete investigations, testimonials, and team members",
+        "Analytics panel shows visit counts per page and total case submissions",
+        "Dashboard matches the existing paranormal/Ghostbusters visual theme"
       ],
       "file_operations": [
         {
+          "path": "frontend/src/pages/AdminDashboard.tsx",
+          "operation": "create",
+          "description": "Create admin dashboard page with two main sections: (1) Content Management with tabs for Investigations, Testimonials, and Team Members - each showing a list of records with Edit/Delete buttons and an Add New form; (2) Analytics section displaying page visit counts and form submission counts fetched from getAggregatedAnalytics(). Use useAdmin hook to check authentication and redirect to /admin if not authenticated. Apply paranormal theme styling with ethereal/spectral colors, glow effects, and shadcn/ui components (Tabs, Card, Button, Input, Textarea)."
+        },
+        {
+          "path": "frontend/src/components/admin/InvestigationsManager.tsx",
+          "operation": "create",
+          "description": "Create InvestigationsManager component for the Investigations tab. Display list of investigations from getAllInvestigations(), with Edit/Delete buttons for each. Include form to add new investigation with fields: title, description, date, location, status. Call createInvestigation(), updateInvestigation(), deleteInvestigation() backend functions. Use shadcn/ui form components and apply paranormal theme styling."
+        },
+        {
+          "path": "frontend/src/components/admin/TestimonialsManager.tsx",
+          "operation": "create",
+          "description": "Create TestimonialsManager component for the Testimonials tab. Display list of testimonials from getAllTestimonials(), with Edit/Delete buttons. Include form to add new testimonial with fields: author, quote, date. Call createTestimonial(), updateTestimonial(), deleteTestimonial() backend functions. Use shadcn/ui form components and apply paranormal theme styling."
+        },
+        {
+          "path": "frontend/src/components/admin/TeamManager.tsx",
+          "operation": "create",
+          "description": "Create TeamManager component for the Team Members tab. Display list of team members from getAllTeamMembers(), with Edit/Delete buttons. Include form to add new team member with fields: name, role, bio. Call createTeamMember(), updateTeamMember(), deleteTeamMember() backend functions. Use shadcn/ui form components and apply paranormal theme styling."
+        },
+        {
+          "path": "frontend/src/components/admin/AnalyticsPanel.tsx",
+          "operation": "create",
+          "description": "Create AnalyticsPanel component to display analytics data. Fetch data from getAggregatedAnalytics() backend function. Display page visit counts per page in a list/table format and total form submission counts. Use shadcn/ui Card and Table components with paranormal theme styling including glow effects on stat numbers."
+        },
+        {
+          "path": "frontend/src/hooks/useAdminQueries.ts",
+          "operation": "create",
+          "description": "Create custom React Query hooks for admin operations: useInvestigations (query for getAllInvestigations), useCreateInvestigation, useUpdateInvestigation, useDeleteInvestigation, useTestimonials (query for getAllTestimonials), useCreateTestimonial, useUpdateTestimonial, useDeleteTestimonial, useTeamMembers (query for getAllTeamMembers), useCreateTeamMember, useUpdateTeamMember, useDeleteTeamMember, useAnalytics (query for getAggregatedAnalytics). Include proper error handling and cache invalidation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Instrument existing frontend pages to report page visits and form submissions",
+      "acceptanceCriteria": [
+        "Each page reports a visit event to the backend on mount",
+        "SubmitCase reports a submission event on successful form submission",
+        "Tracking calls are fire-and-forget and do not block page rendering"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useAnalytics.ts",
+          "operation": "create",
+          "description": "Create useAnalytics hook with two functions: trackPageVisit(pageName) and trackFormSubmission(formType). Both call the corresponding backend functions (recordPageVisit, recordFormSubmission) in a fire-and-forget manner using useActor. Wrap backend calls in try-catch to prevent errors from affecting page rendering."
+        },
+        {
           "path": "frontend/src/pages/Home.tsx",
           "operation": "modify",
-          "description": "Update the investigations count text in the statistics section from '50+' to '25+'. Locate the statistics display area and change only the investigations count value. Verify that other statistics (team members, years of experience, etc.) remain unchanged."
+          "description": "Add useEffect hook that calls trackPageVisit('Home') on component mount using the useAnalytics hook."
+        },
+        {
+          "path": "frontend/src/pages/Resources.tsx",
+          "operation": "modify",
+          "description": "Add useEffect hook that calls trackPageVisit('Resources') on component mount using the useAnalytics hook."
+        },
+        {
+          "path": "frontend/src/pages/CaseGallery.tsx",
+          "operation": "modify",
+          "description": "Implement the CaseGallery page component with a useEffect hook that calls trackPageVisit('CaseGallery') on mount using the useAnalytics hook. Display public cases if any are available from backend."
+        },
+        {
+          "path": "frontend/src/pages/SubmitCase.tsx",
+          "operation": "modify",
+          "description": "Implement the SubmitCase page with a form for case submission. Add useEffect hook that calls trackPageVisit('SubmitCase') on mount. On successful form submission, call trackFormSubmission('case_submission') using the useAnalytics hook. Style with paranormal theme using ethereal/spectral colors."
+        },
+        {
+          "path": "frontend/src/pages/Team.tsx",
+          "operation": "modify",
+          "description": "Implement the Team page component that fetches and displays team members from getAllTeamMembers() backend function. Add useEffect hook that calls trackPageVisit('Team') on mount using the useAnalytics hook. Display team member cards with name, role, and bio. Apply paranormal theme styling with glow effects and use the generated investigator images (frontend/public/assets/generated/investigator-1.dim_400x400.png, frontend/public/assets/generated/investigator-2.dim_400x400.png) as placeholders for team member photos."
         }
       ]
     }

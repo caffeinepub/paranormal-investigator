@@ -10,6 +10,23 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
+export interface Investigation {
+  'status' : string,
+  'title' : string,
+  'date' : Time,
+  'description' : string,
+  'location' : string,
+}
+export interface TeamMember { 'bio' : string, 'name' : string, 'role' : string }
+export interface Testimonial {
+  'date' : Time,
+  'quote' : string,
+  'author' : string,
+}
+export type Time = bigint;
+export type UserRole = { 'admin' : null } |
+  { 'user' : null } |
+  { 'guest' : null };
 export interface _CaffeineStorageCreateCertificateResult {
   'method' : string,
   'blob_hash' : string,
@@ -37,6 +54,35 @@ export interface _SERVICE {
     _CaffeineStorageRefillResult
   >,
   '_caffeineStorageUpdateGatewayPrincipals' : ActorMethod<[], undefined>,
+  '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
+  'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
+  'createInvestigation' : ActorMethod<[string, Investigation], undefined>,
+  'createTeamMember' : ActorMethod<[string, TeamMember], undefined>,
+  'createTestimonial' : ActorMethod<[string, Testimonial], undefined>,
+  'deleteInvestigation' : ActorMethod<[string], undefined>,
+  'deleteTeamMember' : ActorMethod<[string], undefined>,
+  'deleteTestimonial' : ActorMethod<[string], undefined>,
+  'getAggregatedAnalytics' : ActorMethod<
+    [],
+    {
+      'submissions' : Array<[string, bigint]>,
+      'pageVisits' : Array<[string, bigint]>,
+    }
+  >,
+  'getAllInvestigations' : ActorMethod<[], Array<Investigation>>,
+  'getAllTeamMembers' : ActorMethod<[], Array<TeamMember>>,
+  'getAllTestimonials' : ActorMethod<[], Array<Testimonial>>,
+  'getCallerUserRole' : ActorMethod<[], UserRole>,
+  'getInvestigation' : ActorMethod<[string], [] | [Investigation]>,
+  'getTeamMember' : ActorMethod<[string], [] | [TeamMember]>,
+  'getTestimonial' : ActorMethod<[string], [] | [Testimonial]>,
+  'isCallerAdmin' : ActorMethod<[], boolean>,
+  'recordFormSubmission' : ActorMethod<[string], undefined>,
+  'recordPageVisit' : ActorMethod<[string], undefined>,
+  'updateInvestigation' : ActorMethod<[string, Investigation], undefined>,
+  'updateTeamMember' : ActorMethod<[string, TeamMember], undefined>,
+  'updateTestimonial' : ActorMethod<[string, Testimonial], undefined>,
+  'verifyAdmin' : ActorMethod<[], boolean>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

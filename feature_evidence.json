@@ -2,10 +2,14 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-increase-the-size-of-the-ghostbusters-style-logo-displayed-in-the-header-corner-of-the-layout-component-frontend-src-components-layout-tsx",
-      "featureTitle": "Increase the size of the Ghostbusters-style logo displayed in the header corner of the Layout component (frontend/src/components/Layout.tsx)",
+      "featureId": "feature-add-a-protected-admin-login-page-at-route-admin-the-page-displays-an-email-input-form-on-submission-it-calls-the-backend-authentication-function-with-the-entered-email-if-the-email-matches-the-owner-email-the-user-is-granted-an-admin-session-stored-in-react-state-context-and-is-redirected-to-the-admin-dashboard-if-the-email-does-not-match-an-error-message-is-shown-no-password-is-required-email-alone-is-the-access-credential",
+      "featureTitle": "Add a protected admin login page at route /admin. The page displays an email input form. On submission, it calls the backend authentication function with the entered email. If the email matches the owner email, the user is granted an admin session stored in React state/context and is redirected to the admin dashboard. If the email does not match, an error message is shown. No password is required — email alone is the access credential.",
       "files": [
-        "frontend/src/components/Layout.tsx"
+        "frontend/src/App.tsx",
+        "frontend/src/components/Layout.tsx",
+        "frontend/src/contexts/AdminContext.tsx",
+        "frontend/src/hooks/useAdmin.ts",
+        "frontend/src/pages/AdminLogin.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -13,18 +17,24 @@
         "shadcn-ui@1.0.0",
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
       ],
       "testIds": [
-        "REQ-62"
+        "REQ-4"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-update-the-investigations-count-statistics-on-the-home-page-frontend-src-pages-home-tsx-to-display-25-instead-of-50",
-      "featureTitle": "Update the investigations count statistics on the Home page (frontend/src/pages/Home.tsx) to display '25+' instead of '50+'",
+      "featureId": "feature-build-an-admin-dashboard-page-at-admin-dashboard-accessible-only-to-authenticated-admins-the-dashboard-must-include-1-a-content-management-section-with-tabbed-panels-for-investigations-testimonials-and-team-members-each-showing-a-list-of-existing-records-with-edit-and-delete-buttons-and-a-form-to-add-new-records-2-an-analytics-section-displaying-page-visit-counts-per-page-and-total-form-submission-counts-fetched-from-the-backend",
+      "featureTitle": "Build an admin dashboard page at /admin/dashboard, accessible only to authenticated admins. The dashboard must include: (1) a Content Management section with tabbed panels for Investigations, Testimonials, and Team Members — each showing a list of existing records with Edit and Delete buttons, and a form to add new records; (2) an Analytics section displaying page visit counts per page and total form submission counts fetched from the backend.",
       "files": [
-        "frontend/src/pages/Home.tsx"
+        "frontend/src/components/admin/AnalyticsPanel.tsx",
+        "frontend/src/components/admin/InvestigationsManager.tsx",
+        "frontend/src/components/admin/TeamManager.tsx",
+        "frontend/src/components/admin/TestimonialsManager.tsx",
+        "frontend/src/hooks/useAdminQueries.ts",
+        "frontend/src/pages/AdminDashboard.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -32,10 +42,35 @@
         "shadcn-ui@1.0.0",
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
       ],
       "testIds": [
-        "REQ-63"
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-instrument-the-existing-frontend-pages-home-resources-casegallery-submitcase-team-to-report-a-page-visit-event-to-the-backend-analytics-function-each-time-those-pages-are-rendered-also-report-a-form-submission-event-from-submitcase-when-a-case-is-submitted",
+      "featureTitle": "Instrument the existing frontend pages (Home, Resources, CaseGallery, SubmitCase, Team) to report a page visit event to the backend analytics function each time those pages are rendered. Also report a form submission event from SubmitCase when a case is submitted.",
+      "files": [
+        "frontend/src/hooks/useAnalytics.ts",
+        "frontend/src/pages/Home.tsx",
+        "frontend/src/pages/Resources.tsx",
+        "frontend/src/pages/SubmitCase.tsx",
+        "frontend/src/pages/Team.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
       ],
       "confidence": "high"
     }

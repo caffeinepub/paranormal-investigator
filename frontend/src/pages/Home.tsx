@@ -1,10 +1,19 @@
+import { useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Ghost, Eye, Radio, Zap, ArrowRight, Shield, BookOpen, Users, MapPin, Mail, Sparkles, Clock, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { useAnalytics } from '../hooks/useAnalytics';
 
 export default function Home() {
+  const { trackPageVisit } = useAnalytics();
+
+  useEffect(() => {
+    trackPageVisit('Home');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const services = [
     {
       icon: Ghost,
@@ -61,8 +70,7 @@ export default function Home() {
     <div className="w-full">
       {/* Hero Section */}
       <section className="relative min-h-[700px] flex items-center justify-center overflow-hidden">
-        {/* Background Image with Enhanced Overlay */}
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: 'url(/assets/generated/hero-paranormal.dim_1920x1080.png)' }}
         >
@@ -70,13 +78,11 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-background/80" />
         </div>
 
-        {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-ethereal/5 rounded-full blur-3xl animate-float" />
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-spectral/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
         </div>
 
-        {/* Hero Content */}
         <div className="container relative z-10 px-4 lg:px-6 py-24 text-center">
           <div className="mx-auto max-w-4xl space-y-8">
             <div className="inline-block">
@@ -85,14 +91,14 @@ export default function Home() {
                 Oklahoma • Founded 2025
               </Badge>
             </div>
-            
+
             <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-foreground leading-tight">
               Oklahoma's Premier{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-ethereal via-spectral to-phantom glow-text">
                 Paranormal Investigators
               </span>
             </h1>
-            
+
             <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Professional paranormal investigation services exclusively in Oklahoma. We document, analyze, and help you understand supernatural phenomena with scientific rigor and compassion.
             </p>
@@ -104,9 +110,9 @@ export default function Home() {
                   <Mail className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </a>
-              <Link to="/resources">
+              <Link to="/submit-case">
                 <Button size="lg" variant="outline" className="border-ethereal/40 hover:bg-ethereal/10 hover:border-ethereal/60 transition-all text-base px-8 py-6">
-                  View Resources
+                  Submit a Case
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
@@ -154,8 +160,8 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((service, index) => (
-              <Card 
-                key={index} 
+              <Card
+                key={index}
                 className="border-border/50 bg-card/50 backdrop-blur-sm hover:border-ethereal/40 transition-all duration-300 hover:shadow-lg hover:shadow-ethereal/10 group"
               >
                 <CardHeader className="space-y-4">
@@ -188,19 +194,20 @@ export default function Home() {
             </h2>
             <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
               <p>
-                Founded in 2025, Spectral Investigations is Oklahoma's premier paranormal investigation team. We bring scientific methodology and compassionate understanding to every case.
+                Founded in 2025, Oklahoma Paranormal Investigations is Oklahoma's dedicated team of paranormal researchers. We bring scientific methodology and genuine curiosity to every investigation.
               </p>
               <p>
-                Our team combines years of experience with cutting-edge technology to document and analyze unexplained phenomena across Oklahoma. We approach each investigation with an open mind and a commitment to finding the truth.
+                Our team combines expertise in physics, psychology, and traditional paranormal research to provide thorough, credible investigations for Oklahoma residents and businesses.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8">
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
               {features.map((feature, index) => (
-                <div key={index} className="space-y-3">
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-background/80 backdrop-blur-sm">
-                    <feature.icon className="h-6 w-6 text-ethereal" />
+                <div key={index} className="p-6 rounded-2xl bg-background/50 border border-border/50 backdrop-blur-sm space-y-3 text-left hover:border-ethereal/30 transition-all">
+                  <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-ethereal/10">
+                    <feature.icon className="h-5 w-5 text-ethereal" />
                   </div>
-                  <h3 className="font-heading text-base font-semibold">{feature.title}</h3>
+                  <h3 className="font-heading font-semibold text-foreground">{feature.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
                 </div>
               ))}
@@ -212,27 +219,31 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-24 bg-background">
         <div className="container px-4 lg:px-6">
-          <Card className="border-ethereal/30 bg-gradient-to-br from-card via-card to-ethereal/5 shadow-glow">
-            <CardContent className="p-12 text-center space-y-6">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-ethereal/10 mb-4">
-                <Ghost className="h-8 w-8 text-ethereal" />
-              </div>
-              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold">
-                Experiencing Something <span className="text-ethereal">Unexplained</span>?
-              </h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-                Don't face the unknown alone. Our team is ready to help you understand and document your paranormal experience anywhere in Oklahoma.
-              </p>
-              <div className="pt-4">
-                <a href="mailto:paranormal.oklahoma.investigate@gmail.com">
-                  <Button size="lg" className="bg-ethereal hover:bg-ethereal/90 text-background font-semibold group shadow-glow hover:shadow-glow-lg transition-all text-base px-8 py-6">
-                    Contact Us Today
-                    <Mail className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </a>
-              </div>
-            </CardContent>
-          </Card>
+          <div className="max-w-3xl mx-auto text-center space-y-8">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-ethereal/10 border border-ethereal/20 shadow-glow">
+              <Shield className="h-10 w-10 text-ethereal" />
+            </div>
+            <h2 className="font-display text-4xl md:text-5xl font-bold">
+              Ready to Investigate?
+            </h2>
+            <p className="text-muted-foreground text-lg leading-relaxed">
+              Whether you're experiencing unexplained phenomena or simply curious about the paranormal, our Oklahoma team is ready to help. Contact us today for a confidential consultation.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="mailto:paranormal.oklahoma.investigate@gmail.com">
+                <Button size="lg" className="bg-ethereal hover:bg-ethereal/90 text-background font-semibold shadow-glow hover:shadow-glow-lg transition-all text-base px-8">
+                  <Mail className="mr-2 h-5 w-5" />
+                  Get in Touch
+                </Button>
+              </a>
+              <Link to="/team">
+                <Button size="lg" variant="outline" className="border-ethereal/40 hover:bg-ethereal/10 hover:border-ethereal/60 transition-all text-base px-8">
+                  <Users className="mr-2 h-5 w-5" />
+                  Meet the Team
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </div>

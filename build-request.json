@@ -1,54 +1,137 @@
 {
   "kind": "build_request",
-  "title": "Increase logo size in header and update investigations count to 25+",
+  "title": "Add email-restricted admin panel with content management and analytics",
   "projectName": "Oklahoma Paranormal Investigations",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-62",
-      "text": "Increase the size of the Ghostbusters-style logo displayed in the header corner of the Layout component (frontend/src/components/Layout.tsx)",
-      "target": "frontend",
+      "id": "REQ-1",
+      "text": "Add a backend data store and admin authentication system that restricts admin access to a single hardcoded owner email address. The backend must expose a login/verification function that checks the provided email against the stored owner email and returns a session token or access flag. No other email should be granted admin access.",
+      "target": "backend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-recent"
         ],
         "quotes": [
-          "make the logo a bit bigger in the corner"
+          "do all of that with acess to me alone with my email"
         ]
       },
       "acceptanceCriteria": [
-        "Logo in the header corner is visibly larger than current size",
-        "Logo maintains proper aspect ratio and does not overflow container",
-        "Logo size increase is responsive across mobile and desktop viewports"
+        "Only the configured owner email address can authenticate as admin",
+        "Any other email is rejected with an unauthorized error",
+        "A valid session token or access flag is returned on successful login"
       ]
     },
     {
-      "id": "REQ-63",
-      "text": "Update the investigations count statistics on the Home page (frontend/src/pages/Home.tsx) to display '25+' instead of '50+'",
-      "target": "frontend",
+      "id": "REQ-2",
+      "text": "Add a backend-stored, mutable data model for: (1) investigations/cases (title, description, date, location, status), (2) testimonials (author, quote, date), and (3) team members (name, role, bio). Expose CRUD functions for each entity, all protected so only an authenticated admin session can create, update, or delete records. Public read access is allowed.",
+      "target": "backend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-recent"
         ],
         "quotes": [
-          "on the investigations make it say 25+ instead of 50+"
+          "Content management",
+          "add/remove investigations, testimonials, team members"
         ]
       },
       "acceptanceCriteria": [
-        "Statistics section on Home page shows '25+' for investigations count",
-        "Text change is consistent across all instances where '50+' investigations was displayed",
-        "No other numerical statistics are affected by this change"
+        "Investigations, testimonials, and team members can be created, read, updated, and deleted via backend functions",
+        "All write operations require a valid admin session; read operations are public",
+        "Data persists across canister upgrades"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add backend analytics tracking: record a page visit event (with page name and timestamp) whenever the frontend reports a visit, and record form submission events (type and timestamp) for case submissions. Expose an admin-only query function that returns aggregated visit counts per page and submission counts.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-recent"
+        ],
+        "quotes": [
+          "Analytics view — monitor page visits or form submissions"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Page visit events are stored with page name and timestamp",
+        "Form submission events are stored with type and timestamp",
+        "An admin-only query returns total visits per page and total submissions",
+        "Non-admin callers cannot access analytics data"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Add a protected admin login page at route /admin. The page displays an email input form. On submission, it calls the backend authentication function with the entered email. If the email matches the owner email, the user is granted an admin session stored in React state/context and is redirected to the admin dashboard. If the email does not match, an error message is shown. No password is required — email alone is the access credential.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-recent"
+        ],
+        "quotes": [
+          "Password-protected admin login — simple access control so only you can edit",
+          "with acess to me alone with my email"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin login page is accessible at /admin",
+        "Entering the correct owner email grants access and redirects to the admin dashboard",
+        "Entering any other email shows an 'Access denied' error message",
+        "Admin session persists during the browser session so the user is not logged out on navigation"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Build an admin dashboard page at /admin/dashboard, accessible only to authenticated admins. The dashboard must include: (1) a Content Management section with tabbed panels for Investigations, Testimonials, and Team Members — each showing a list of existing records with Edit and Delete buttons, and a form to add new records; (2) an Analytics section displaying page visit counts per page and total form submission counts fetched from the backend.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-recent"
+        ],
+        "quotes": [
+          "Admin dashboard — a protected page where you can edit site content",
+          "Content management — add/remove investigations, testimonials, team members",
+          "Analytics view — monitor page visits or form submissions"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Unauthenticated users accessing /admin/dashboard are redirected to /admin login page",
+        "Authenticated admin can add, edit, and delete investigations, testimonials, and team members",
+        "Analytics panel shows visit counts per page and total case submissions",
+        "Dashboard matches the existing paranormal/Ghostbusters visual theme"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Instrument the existing frontend pages (Home, Resources, CaseGallery, SubmitCase, Team) to report a page visit event to the backend analytics function each time those pages are rendered. Also report a form submission event from SubmitCase when a case is submitted.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-recent"
+        ],
+        "quotes": [
+          "monitor page visits or form submissions"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Each page reports a visit event to the backend on mount",
+        "SubmitCase reports a submission event on successful form submission",
+        "Tracking calls are fire-and-forget and do not block page rendering"
       ]
     }
   ],
   "constraints": [
-    "Do not modify the Ghostbusters-style logo design itself, only adjust its display size in the header",
-    "Only update the investigations count text; do not change other statistics or metrics"
+    "Admin access must be restricted exclusively to the single configured owner email address — no other user can gain admin privileges",
+    "Do not modify files listed in frontend.immutablePaths",
+    "All backend logic must remain in the single main actor (backend/main.mo)",
+    "Migration file must be generated to preserve existing stable state across upgrade"
   ],
   "nonGoals": [
-    "Redesigning the logo graphic",
-    "Changing the layout structure of the header",
-    "Modifying other statistics or numbers on the website"
+    "Multi-user admin roles or team admin accounts",
+    "Password-based authentication (email alone is the credential)",
+    "Internet Identity / wallet-based authentication for admin",
+    "Public user account registration",
+    "Email sending or verification emails"
   ],
   "imageRequirements": {
     "required": [],
