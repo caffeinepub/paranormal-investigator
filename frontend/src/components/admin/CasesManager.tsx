@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CheckCircle2, Trash2, Download, Loader2, ImageIcon, Clock, MapPin, Phone, CheckCheck } from 'lucide-react';
+import { CheckCircle2, Trash2, Download, Loader2, ImageIcon, Clock, MapPin, Phone, CheckCheck, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -15,7 +15,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { useGetAllCases, useMarkCaseResolved, useDeleteCase } from '../../hooks/useCaseQueries';
+import { useGetAllCases, useMarkCaseResolved, useDeleteCase, useInitAdmin } from '../../hooks/useCaseQueries';
+import { useInternetIdentity } from '../../hooks/useInternetIdentity';
+import { useAdminContext } from '../../contexts/AdminContext';
 import type { Case } from '../../backend';
 
 function formatTimestamp(ts: bigint): string {
@@ -200,7 +202,13 @@ function CaseCard({ caseItem }: { caseItem: Case }) {
 }
 
 export default function CasesManager() {
-  const { data: cases, isLoading, error } = useGetAllCases();
+  const { identity } = useInternetIdentity();
+  const { isAdmin: isPinAdmin } = useAdminContext();
+
+  // Trigger admin initialization for Internet Identity users
+  const { isLoading: adminInitLoading, isError: adminInitError } = useInitAdmin();
+
+  const { data: cases, isLoading: casesLoading, error } = useGetAllCases();
   const [filter, setFilter] = useState<'all' | 'open' | 'resolved'>('all');
 
   const filteredCases = (cases ?? []).filter((c) => {
@@ -211,6 +219,10 @@ export default function CasesManager() {
 
   const openCount = (cases ?? []).filter((c) => !c.resolved).length;
   const resolvedCount = (cases ?? []).filter((c) => c.resolved).length;
+
+  // Show initializing state while registering admin principal (II users only)
+  const isInitializing = !!identity && !isPinAdmin && adminInitLoading;
+  const isLoading = isInitializing || casesLoading;
 
   return (
     <div className="space-y-6">
@@ -256,8 +268,16 @@ export default function CasesManager() {
         ))}
       </div>
 
-      {/* Loading */}
-      {isLoading && (
+      {/* Initializing admin */}
+      {isInitializing && (
+        <div className="text-center py-8 text-muted-foreground">
+          <Loader2 className="h-6 w-6 mx-auto mb-3 animate-spin text-ethereal" />
+          <p className="text-sm">Initializing admin access...</p>
+        </div>
+      )}
+
+      {/* Loading cases */}
+      {!isInitializing && casesLoading && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[1, 2, 3, 4].map((i) => (
             <Card key={i} className="border-border/50 bg-card/50">
@@ -273,9 +293,15 @@ export default function CasesManager() {
       )}
 
       {/* Error */}
-      {error && (
-        <div className="text-center py-12 text-destructive">
-          <p className="text-sm">Failed to load cases. You may not have admin permissions.</p>
+      {!isLoading && error && (
+        <div className="text-center py-12 text-destructive bg-destructive/5 rounded-lg border border-destructive/20">
+          <Shield className="h-8 w-8 mx-auto mb-3 opacity-60" />
+          <p className="text-sm font-medium">Failed to load cases</p>
+          <p className="text-xs text-muted-foreground mt-1">
+            {adminInitError
+              ? 'Could not initialize admin access. Please try logging out and back in.'
+              : 'You may not have admin permissions or the backend is unavailable.'}
+          </p>
         </div>
       )}
 

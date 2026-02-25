@@ -62,6 +62,13 @@ export const UserProfile = IDL.Record({
   'name' : IDL.Text,
   'email' : IDL.Text,
 });
+export const CaseStatusChange = IDL.Record({
+  'changedBy' : IDL.Text,
+  'toStatus' : IDL.Text,
+  'fromStatus' : IDL.Text,
+  'timestamp' : Time,
+  'caseId' : IDL.Text,
+});
 export const CaseSummary = IDL.Record({
   'status' : IDL.Text,
   'caseId' : IDL.Text,
@@ -71,6 +78,10 @@ export const CaseSummary = IDL.Record({
 export const CaseLookupResult = IDL.Record({
   'hasCase' : IDL.Bool,
   'caseSummaries' : IDL.Vec(CaseSummary),
+});
+export const AdminCaseResult = IDL.Record({
+  'message' : IDL.Text,
+  'success' : IDL.Bool,
 });
 
 export const idlService = IDL.Service({
@@ -110,6 +121,7 @@ export const idlService = IDL.Service({
   'deleteTeamMember' : IDL.Func([IDL.Text], [], []),
   'deleteTestimonial' : IDL.Func([IDL.Text], [], []),
   'getAdminCredentials' : IDL.Func([], [AdminCredentials], ['query']),
+  'getAdminPrincipal' : IDL.Func([], [IDL.Opt(IDL.Principal)], ['query']),
   'getAllCases' : IDL.Func([], [IDL.Vec(Case)], ['query']),
   'getAllInvestigationCases' : IDL.Func(
       [],
@@ -120,6 +132,12 @@ export const idlService = IDL.Service({
   'getAllTestimonials' : IDL.Func([], [IDL.Vec(Testimonial)], ['query']),
   'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getCaseById' : IDL.Func([IDL.Text], [IDL.Opt(Case)], ['query']),
+  'getCaseStatusChanges' : IDL.Func(
+      [IDL.Text],
+      [IDL.Vec(CaseStatusChange)],
+      ['query'],
+    ),
   'getCasesForUser' : IDL.Func([IDL.Text], [CaseLookupResult], ['query']),
   'getInvestigation' : IDL.Func(
       [IDL.Text],
@@ -133,8 +151,9 @@ export const idlService = IDL.Service({
       [IDL.Opt(UserProfile)],
       ['query'],
     ),
+  'initAdmin' : IDL.Func([], [IDL.Bool], []),
   'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
-  'markCaseResolved' : IDL.Func([IDL.Text], [IDL.Bool], []),
+  'markCaseResolved' : IDL.Func([IDL.Text, IDL.Text], [AdminCaseResult], []),
   'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
   'submitCase' : IDL.Func(
       [IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Opt(ExternalBlob), IDL.Text],
@@ -199,6 +218,13 @@ export const idlFactory = ({ IDL }) => {
     'phenomenaType' : IDL.Text,
   });
   const UserProfile = IDL.Record({ 'name' : IDL.Text, 'email' : IDL.Text });
+  const CaseStatusChange = IDL.Record({
+    'changedBy' : IDL.Text,
+    'toStatus' : IDL.Text,
+    'fromStatus' : IDL.Text,
+    'timestamp' : Time,
+    'caseId' : IDL.Text,
+  });
   const CaseSummary = IDL.Record({
     'status' : IDL.Text,
     'caseId' : IDL.Text,
@@ -208,6 +234,10 @@ export const idlFactory = ({ IDL }) => {
   const CaseLookupResult = IDL.Record({
     'hasCase' : IDL.Bool,
     'caseSummaries' : IDL.Vec(CaseSummary),
+  });
+  const AdminCaseResult = IDL.Record({
+    'message' : IDL.Text,
+    'success' : IDL.Bool,
   });
   
   return IDL.Service({
@@ -247,6 +277,7 @@ export const idlFactory = ({ IDL }) => {
     'deleteTeamMember' : IDL.Func([IDL.Text], [], []),
     'deleteTestimonial' : IDL.Func([IDL.Text], [], []),
     'getAdminCredentials' : IDL.Func([], [AdminCredentials], ['query']),
+    'getAdminPrincipal' : IDL.Func([], [IDL.Opt(IDL.Principal)], ['query']),
     'getAllCases' : IDL.Func([], [IDL.Vec(Case)], ['query']),
     'getAllInvestigationCases' : IDL.Func(
         [],
@@ -257,6 +288,12 @@ export const idlFactory = ({ IDL }) => {
     'getAllTestimonials' : IDL.Func([], [IDL.Vec(Testimonial)], ['query']),
     'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getCaseById' : IDL.Func([IDL.Text], [IDL.Opt(Case)], ['query']),
+    'getCaseStatusChanges' : IDL.Func(
+        [IDL.Text],
+        [IDL.Vec(CaseStatusChange)],
+        ['query'],
+      ),
     'getCasesForUser' : IDL.Func([IDL.Text], [CaseLookupResult], ['query']),
     'getInvestigation' : IDL.Func(
         [IDL.Text],
@@ -270,8 +307,9 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Opt(UserProfile)],
         ['query'],
       ),
+    'initAdmin' : IDL.Func([], [IDL.Bool], []),
     'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
-    'markCaseResolved' : IDL.Func([IDL.Text], [IDL.Bool], []),
+    'markCaseResolved' : IDL.Func([IDL.Text, IDL.Text], [AdminCaseResult], []),
     'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
     'submitCase' : IDL.Func(
         [

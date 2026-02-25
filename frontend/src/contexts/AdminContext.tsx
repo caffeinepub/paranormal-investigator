@@ -30,9 +30,17 @@ function readStoredSession(): { email: string } | null {
 }
 
 export function AdminProvider({ children }: { children: React.ReactNode }) {
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [adminEmail, setAdminEmail] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState(() => {
+    // Initialize synchronously from storage to avoid flash of unauthenticated state
+    const stored = readStoredSession();
+    return !!stored?.email;
+  });
+  const [adminEmail, setAdminEmail] = useState<string | null>(() => {
+    const stored = readStoredSession();
+    return stored?.email ?? null;
+  });
 
+  // Also sync on mount in case storage changed in another tab
   useEffect(() => {
     const stored = readStoredSession();
     if (stored?.email) {
@@ -42,19 +50,21 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = useCallback((email: string) => {
-    setIsAdmin(true);
-    setAdminEmail(email);
     const payload = JSON.stringify({ email });
-    // Write to both so the session survives tab closes and page refreshes
+    // Write to both storages FIRST (synchronously) before updating React state
+    // so that ProtectedRoute's storage check sees the session immediately
     sessionStorage.setItem(SESSION_KEY, payload);
     localStorage.setItem(SESSION_KEY, payload);
+    setIsAdmin(true);
+    setAdminEmail(email);
   }, []);
 
   const logout = useCallback(() => {
-    setIsAdmin(false);
-    setAdminEmail(null);
+    // Clear both storage locations
     sessionStorage.removeItem(SESSION_KEY);
     localStorage.removeItem(SESSION_KEY);
+    setIsAdmin(false);
+    setAdminEmail(null);
   }, []);
 
   return (

@@ -1,23 +1,32 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Fix PIN authentication stuck on 'verifying access'",
+  "title": "Fix admin permissions: auto-assign first logged-in user as admin and fix case loading",
   "requirements": [
     {
-      "id": "REQ-1",
-      "summary": "Fix SupernaturalPinLogin page to perform purely client-side PIN validation against hardcoded PIN '022025', call AdminContext login on success, and immediately redirect to admin dashboard without async backend calls or Internet Identity checks that could hang",
+      "id": "REQ-3",
+      "summary": "Update the frontend CasesManager and related hooks to call the backend admin-init capability on first load when the user is authenticated, ensuring admin status is registered before cases are fetched",
       "acceptanceCriteria": [
-        "Entering PIN '022025' on /supernatural resolves immediately and redirects to the admin dashboard without getting stuck.",
-        "Entering an incorrect PIN shows an error message and does not redirect.",
-        "The 'verifying access' state resolves within a short, deterministic timeout and never hangs indefinitely.",
-        "No Internet Identity or backend actor call blocks the PIN validation flow.",
-        "AdminContext login state is set correctly on successful PIN entry so the dashboard remains accessible."
+        "On first admin login, the frontend triggers the admin-init call before fetching cases.",
+        "Cases load and display successfully in the Case Management panel after the init call.",
+        "The 'Failed to load cases' error banner no longer appears for the assigned admin.",
+        "Subsequent logins by the same admin load cases without re-triggering the init call unnecessarily."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/SupernaturalPinLogin.tsx",
+          "path": "frontend/src/hooks/useCaseQueries.ts",
           "operation": "modify",
-          "description": "Remove any async backend verification calls or Internet Identity principal checks from the PIN validation flow. Implement purely client-side PIN validation: compare the entered PIN against the hardcoded value '022025', immediately call AdminContext.login() on match, and synchronously navigate to /admin/dashboard using the router. On mismatch, show an error message without any async delay. Ensure the 'verifying access' loading state is only shown for a minimal, deterministic duration (e.g., 100-200ms) to provide visual feedback, then resolve immediately. Do not call useActor, backend.verifyAdminCredentials, or any other async backend capability during PIN validation."
+          "description": "Add a new query hook `useInitAdmin` that calls the backend `initAdmin()` capability. This hook should be enabled only when the user is authenticated and the actor is available. The hook will return whether initialization succeeded, allowing components to wait for admin initialization before fetching cases."
+        },
+        {
+          "path": "frontend/src/components/admin/CasesManager.tsx",
+          "operation": "modify",
+          "description": "Update the CasesManager component to call `useInitAdmin()` on mount when the user is authenticated. Ensure the `useGetAllCases` query is only enabled after the init call completes (or if the user is already initialized). Update error handling to distinguish between initialization failures and permission errors. Remove the 'Failed to load cases' error banner for users who have successfully initialized as admin."
+        },
+        {
+          "path": "frontend/src/pages/AdminCases.tsx",
+          "operation": "modify",
+          "description": "Ensure the AdminCases page properly handles the initialization flow by coordinating the useInitAdmin and useGetAllCases hooks. Add loading state handling for the initialization phase. If initialization is in progress, show a loading indicator before attempting to load cases."
         }
       ]
     }

@@ -44,7 +44,7 @@ const EMPTY_FORM: FormState = {
 
 export default function SubmitCase() {
   const { trackPageVisit, trackFormSubmission } = useAnalytics();
-  const { actor } = useActor();
+  const { actor, isFetching: actorLoading } = useActor();
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -53,6 +53,8 @@ export default function SubmitCase() {
 
   useEffect(() => {
     trackPageVisit('SubmitCase');
+    // Reset any stale error state on mount
+    setError('');
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -61,18 +63,30 @@ export default function SubmitCase() {
     setForm(f => ({ ...f, photo: file }));
   };
 
+  const handleFieldChange = <K extends keyof FormState>(key: K, value: FormState[K]) => {
+    setForm(f => ({ ...f, [key]: value }));
+    if (error) setError('');
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
+    // Client-side validation
     if (!form.location.trim()) { setError('Please enter the Oklahoma location.'); return; }
     if (!form.phenomenaType) { setError('Please select the type of phenomena.'); return; }
     if (!form.description.trim()) { setError('Please describe what you experienced.'); return; }
     if (!form.contactName.trim()) { setError('Please enter your name.'); return; }
     if (!form.contactEmail.trim()) { setError('Please enter your email address.'); return; }
 
+    // If actor is still loading, wait — don't show an error yet
+    if (actorLoading) {
+      setError('Still connecting to the backend. Please wait a moment and try again.');
+      return;
+    }
+
     if (!actor) {
-      setError('Unable to connect to the backend. Please try again.');
+      setError('Unable to connect to the backend. Please refresh the page and try again.');
       return;
     }
 
@@ -80,14 +94,12 @@ export default function SubmitCase() {
     setUploadProgress(0);
 
     try {
-      // Build contact info string combining name, email, and optional phone
       const contactInfo = [
         form.contactName.trim(),
         form.contactEmail.trim(),
         form.contactPhone.trim() ? form.contactPhone.trim() : null,
       ].filter(Boolean).join(' | ');
 
-      // Handle optional photo upload
       let photoBlob: ExternalBlob | null = null;
       if (form.photo) {
         const arrayBuffer = await form.photo.arrayBuffer();
@@ -97,7 +109,6 @@ export default function SubmitCase() {
         });
       }
 
-      // Pass ownerEmail (contactEmail) as the 6th required argument
       await actor.submitCase(
         form.location.trim(),
         form.phenomenaType,
@@ -109,6 +120,7 @@ export default function SubmitCase() {
 
       trackFormSubmission('case_submission');
       setSubmitted(true);
+      setError('');
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : String(err);
       console.error('Case submission error:', message);
@@ -131,7 +143,7 @@ export default function SubmitCase() {
             Thank you for reaching out. Our Oklahoma team will review your case and contact you within 48 hours.
           </p>
           <Button
-            onClick={() => { setSubmitted(false); setForm(EMPTY_FORM); }}
+            onClick={() => { setSubmitted(false); setForm(EMPTY_FORM); setError(''); }}
             variant="outline"
             className="border-ethereal/40 hover:bg-ethereal/10 hover:border-ethereal/60"
           >
@@ -173,6 +185,7 @@ export default function SubmitCase() {
           <CardDescription>All information is kept strictly confidential.</CardDescription>
         </CardHeader>
         <CardContent>
+          {/* Only show error when there is one (never on initial load) */}
           {error && (
             <Alert variant="destructive" className="mb-6 border-destructive/50 bg-destructive/10">
               <AlertTriangle className="h-4 w-4" />
@@ -187,13 +200,13 @@ export default function SubmitCase() {
                 Oklahoma Location <span className="text-destructive">*</span>
               </Label>
               <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
                 <Input
                   id="location"
                   value={form.location}
-                  onChange={e => setForm(f => ({ ...f, location: e.target.value }))}
+                  onChange={e => handleFieldChange('location', e.target.value)}
                   placeholder="City, County, or Address in Oklahoma"
-                  className="pl-10 bg-background/50 border-border/60 focus:border-ethereal/60"
+                  className="pl-10 bg-background border-border/60 focus:border-ethereal/60 text-foreground placeholder:text-muted-foreground"
                   disabled={isSubmitting}
                 />
               </div>
@@ -206,10 +219,10 @@ export default function SubmitCase() {
               </Label>
               <Select
                 value={form.phenomenaType}
-                onValueChange={v => setForm(f => ({ ...f, phenomenaType: v }))}
+                onValueChange={v => handleFieldChange('phenomenaType', v)}
                 disabled={isSubmitting}
               >
-                <SelectTrigger className="bg-background/50 border-border/60 focus:border-ethereal/60">
+                <SelectTrigger className="bg-background border-border/60 focus:border-ethereal/60 text-foreground">
                   <SelectValue placeholder="Select phenomena type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -228,10 +241,10 @@ export default function SubmitCase() {
               <Textarea
                 id="description"
                 value={form.description}
-                onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
+                onChange={e => handleFieldChange('description', e.target.value)}
                 placeholder="Describe what you experienced in as much detail as possible. Include dates, times, frequency, and any witnesses..."
                 rows={5}
-                className="bg-background/50 border-border/60 focus:border-ethereal/60 resize-none"
+                className="bg-background border-border/60 focus:border-ethereal/60 resize-none text-foreground placeholder:text-muted-foreground"
                 disabled={isSubmitting}
               />
             </div>
@@ -247,9 +260,9 @@ export default function SubmitCase() {
                   <Input
                     id="contactName"
                     value={form.contactName}
-                    onChange={e => setForm(f => ({ ...f, contactName: e.target.value }))}
+                    onChange={e => handleFieldChange('contactName', e.target.value)}
                     placeholder="Your name"
-                    className="bg-background/50 border-border/60 focus:border-ethereal/60"
+                    className="bg-background border-border/60 focus:border-ethereal/60 text-foreground placeholder:text-muted-foreground"
                     disabled={isSubmitting}
                   />
                 </div>
@@ -261,9 +274,9 @@ export default function SubmitCase() {
                     id="contactEmail"
                     type="email"
                     value={form.contactEmail}
-                    onChange={e => setForm(f => ({ ...f, contactEmail: e.target.value }))}
+                    onChange={e => handleFieldChange('contactEmail', e.target.value)}
                     placeholder="your@email.com"
-                    className="bg-background/50 border-border/60 focus:border-ethereal/60"
+                    className="bg-background border-border/60 focus:border-ethereal/60 text-foreground placeholder:text-muted-foreground"
                     disabled={isSubmitting}
                   />
                 </div>
@@ -273,9 +286,9 @@ export default function SubmitCase() {
                     id="contactPhone"
                     type="tel"
                     value={form.contactPhone}
-                    onChange={e => setForm(f => ({ ...f, contactPhone: e.target.value }))}
+                    onChange={e => handleFieldChange('contactPhone', e.target.value)}
                     placeholder="(555) 000-0000"
-                    className="bg-background/50 border-border/60 focus:border-ethereal/60"
+                    className="bg-background border-border/60 focus:border-ethereal/60 text-foreground placeholder:text-muted-foreground"
                     disabled={isSubmitting}
                   />
                 </div>
@@ -320,12 +333,17 @@ export default function SubmitCase() {
             <Button
               type="submit"
               className="w-full bg-ethereal hover:bg-ethereal/90 text-background font-semibold shadow-glow hover:shadow-glow-lg transition-all py-6 text-base"
-              disabled={isSubmitting}
+              disabled={isSubmitting || actorLoading}
             >
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                   {uploadProgress > 0 ? `Uploading... ${uploadProgress}%` : 'Submitting Case...'}
+                </>
+              ) : actorLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Connecting...
                 </>
               ) : (
                 <>

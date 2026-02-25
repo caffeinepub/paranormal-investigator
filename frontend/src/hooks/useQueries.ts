@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
 import { UserProfile } from '../backend';
 import { useInternetIdentity } from './useInternetIdentity';
+import { useAdminContext } from '../contexts/AdminContext';
 
 export function useGetCallerUserProfile() {
   const { actor, isFetching: actorFetching } = useActor();
@@ -104,12 +105,15 @@ export function useSubmitCase() {
 
 export function useUpdateCaseStatus() {
   const { actor } = useActor();
+  const { adminEmail } = useAdminContext();
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ caseId }: { caseId: string }) => {
+    mutationFn: async ({ caseId, email }: { caseId: string; email?: string }) => {
       if (!actor) throw new Error('Actor not available');
-      return actor.markCaseResolved(caseId);
+      // Use provided email, fall back to stored admin email, then a default
+      const resolvedEmail = email ?? adminEmail ?? 'admin@okpi.local';
+      return actor.markCaseResolved(caseId, resolvedEmail);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['userCases'] });

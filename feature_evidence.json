@@ -2,10 +2,12 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-fix-the-supernaturalpinlogin-page-so-that-pin-authentication-does-not-get-stuck-on-verifying-access-the-page-must-perform-purely-client-side-pin-validation-against-the-hardcoded-pin-022025-call-the-admincontext-login-function-on-success-and-immediately-redirect-to-the-admin-dashboard-without-waiting-on-any-internet-identity-principal-check-or-async-backend-call-that-could-hang",
-      "featureTitle": "Fix the SupernaturalPinLogin page so that PIN authentication does not get stuck on 'verifying access'. The page must perform purely client-side PIN validation against the hardcoded PIN '022025', call the AdminContext login function on success, and immediately redirect to the admin dashboard without waiting on any Internet Identity principal check or async backend call that could hang.",
+      "featureId": "feature-update-the-frontend-casesmanager-and-related-hooks-usecasequeries-ts-to-call-the-backend-admin-init-endpoint-on-first-load-when-the-user-is-authenticated-so-admin-status-is-registered-before-cases-are-fetched-handle-the-case-where-the-init-call-fails-gracefully-without-blocking-the-cases-fetch-for-an-already-registered-admin",
+      "featureTitle": "Update the frontend `CasesManager` and related hooks (`useCaseQueries.ts`) to call the backend admin-init endpoint on first load (when the user is authenticated) so admin status is registered before cases are fetched. Handle the case where the init call fails gracefully without blocking the cases fetch for an already-registered admin.",
       "files": [
-        "frontend/src/pages/SupernaturalPinLogin.tsx"
+        "frontend/src/components/admin/CasesManager.tsx",
+        "frontend/src/hooks/useCaseQueries.ts",
+        "frontend/src/pages/AdminCases.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -17,7 +19,7 @@
         "authorization@4.0.0"
       ],
       "testIds": [
-        "REQ-1"
+        "REQ-3"
       ],
       "confidence": "high"
     }

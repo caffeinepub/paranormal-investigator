@@ -1,39 +1,75 @@
 {
   "kind": "build_request",
-  "title": "Fix PIN authentication stuck on 'verifying access'",
-  "projectName": "Oklahoma Paranormal Investigations",
+  "title": "Fix admin permissions: auto-assign first logged-in user as admin and fix case loading",
   "priority": "high",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Fix the SupernaturalPinLogin page so that PIN authentication does not get stuck on 'verifying access'. The page must perform purely client-side PIN validation against the hardcoded PIN '022025', call the AdminContext login function on success, and immediately redirect to the admin dashboard without waiting on any Internet Identity principal check or async backend call that could hang.",
-      "target": "frontend",
+      "text": "Update the backend to automatically grant admin privileges to the first principal that calls any admin-gated function or a new `initAdmin` update method, if no admin has been registered yet. Store the admin principal in stable state so it persists across upgrades.",
+      "target": "backend",
       "source": {
         "messageIds": [
-          "msg-recent"
+          "msg-auto-assign"
         ],
         "quotes": [
-          "its saying verifying access",
-          "fix it"
+          "auto assin the first user and yes on 2"
         ]
       },
       "acceptanceCriteria": [
-        "Entering PIN '022025' on /supernatural resolves immediately and redirects to the admin dashboard without getting stuck.",
-        "Entering an incorrect PIN shows an error message and does not redirect.",
-        "The 'verifying access' state resolves within a short, deterministic timeout and never hangs indefinitely.",
-        "No Internet Identity or backend actor call blocks the PIN validation flow.",
-        "AdminContext login state is set correctly on successful PIN entry so the dashboard remains accessible."
+        "When no admin principal is stored, the first caller of the admin-init path is recorded as admin.",
+        "Subsequent callers are not granted admin status automatically.",
+        "The admin principal persists across canister upgrades.",
+        "Admin-gated query/update methods return success for the stored admin principal."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Update the backend `getAllCases` (or equivalent admin case-listing) method so it verifies the caller against the stored admin principal and returns all cases without error. Remove or relax any permission check that currently causes the 'Failed to load cases' error for a legitimately assigned admin.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-auto-assign"
+        ],
+        "quotes": [
+          "Failed to load cases",
+          "You may not have admin permissions or the backend is unavailable."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Calling `getAllCases` as the stored admin principal returns the list of cases successfully.",
+        "Calling `getAllCases` as a non-admin principal still returns an authorization error."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Update the frontend `CasesManager` and related hooks (`useCaseQueries.ts`) to call the backend admin-init endpoint on first load (when the user is authenticated) so admin status is registered before cases are fetched. Handle the case where the init call fails gracefully without blocking the cases fetch for an already-registered admin.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-auto-assign"
+        ],
+        "quotes": [
+          "Failed to load cases",
+          "You may not have admin permissions or the backend is unavailable."
+        ]
+      },
+      "acceptanceCriteria": [
+        "On first admin login, the frontend triggers the admin-init call before fetching cases.",
+        "Cases load and display successfully in the Case Management panel after the init call.",
+        "The 'Failed to load cases' error banner no longer appears for the assigned admin.",
+        "Subsequent logins by the same admin load cases without re-triggering the init call unnecessarily."
       ]
     }
   ],
   "constraints": [
-    "PIN validation must remain purely client-side — do not introduce any backend calls into the SupernaturalPinLogin flow.",
-    "Do not modify files under frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or frontend/src/components/ui."
+    "Do not break existing case submission, testimonial, investigation, or team member functionality.",
+    "Admin auto-assignment must only apply to the very first principal — do not allow any caller to self-elevate after the first admin is set.",
+    "Keep all Motoko logic in backend/main.mo."
   ],
   "nonGoals": [
-    "Changing the PIN value from '022025'.",
-    "Adding Internet Identity authentication to the /supernatural route.",
-    "Modifying any other admin pages or backend logic."
+    "Multi-admin support or admin management UI.",
+    "Changing the PIN-based admin login flow in SupernaturalPinLogin.tsx.",
+    "Redesigning the Case Management UI layout."
   ],
   "imageRequirements": {
     "required": [],

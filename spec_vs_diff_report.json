@@ -1,30 +1,41 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-25T06:31:50.279Z",
-  "summary": "The diff implements REQ-1 by rewriting SupernaturalPinLogin.tsx to perform purely client-side PIN validation against the hardcoded PIN '022025', call AdminContext login on success, and navigate to the admin dashboard after a short deterministic timeout (50ms). It also fixes ProtectedRoute.tsx to check AdminContext state AND storage directly, preventing the 'verifying access' hang by short-circuiting before any Internet Identity/role-loading logic when the admin session is present.",
+  "generatedAt": "2026-02-25T07:42:19.628Z",
+  "summary": "All three requirements are implemented in the diff. REQ-1 is addressed in backend/main.mo with stable adminPrincipal, initAdmin(), and assertIsAdmin() auto-assign logic. REQ-2 is addressed by getAllCases using assertIsAdmin. REQ-3 is addressed in useCaseQueries.ts with useInitAdmin hook and dependency chaining, and in CasesManager.tsx. No significant missing requirements or hallucinated features were identified.",
   "missing_requirements": [],
   "hallucinated_features": [
     {
-      "description": "Too-many-attempts lockout logic in SupernaturalPinLogin: after 3 failed attempts, the error message changes to 'Access denied. Too many failed attempts.' and tracks an attempt counter.",
-      "reason": "REQ-1 only requires that an incorrect PIN shows an error message and does not redirect. No rate-limiting or attempt-counting behaviour was requested.",
+      "description": "A migration module (backend/migration.mo) was added to handle canister upgrade state migration.",
+      "reason": "The build request did not request a separate migration module file. REQ-1 only asked for stable state storage in main.mo. The migration.mo file goes beyond what was specified.",
       "evidence": [
-        "frontend/src/pages/SupernaturalPinLogin.tsx"
+        "backend/migration.mo"
       ]
     },
     {
-      "description": "readAdminSessionFromStorage helper in ProtectedRoute that reads both sessionStorage and localStorage for an admin session key as a synchronous fallback.",
-      "reason": "REQ-1 specifies fixing the SupernaturalPinLogin flow and ensuring AdminContext login state is set correctly. Reading directly from storage in ProtectedRoute is an undocumented implementation detail not mentioned in any requirement or AC.",
+      "description": "A dedicated AdminCases page (frontend/src/pages/AdminCases.tsx) was added as a full standalone page with its own case management UI.",
+      "reason": "The build request explicitly listed 'Redesigning the Case Management UI layout' as a non-goal and only asked for updates to CasesManager and useCaseQueries.ts. Adding a new full page was not requested.",
       "evidence": [
-        "frontend/src/components/ProtectedRoute.tsx"
+        "frontend/src/pages/AdminCases.tsx",
+        "frontend-file-summaries.txt"
+      ]
+    },
+    {
+      "description": "getAdminPrincipal() public query method was added to expose the stored admin principal.",
+      "reason": "No requirement asked for a public endpoint to retrieve the admin principal. This was not mentioned in any REQ.",
+      "evidence": [
+        "backend/main.mo"
       ]
     }
   ],
   "confidence": 0.82,
   "changed_files": [
+    "backend/main.mo",
+    "backend/migration.mo",
     "frontend-file-summaries.txt",
-    "frontend/src/components/ProtectedRoute.tsx",
-    "frontend/src/pages/SupernaturalPinLogin.tsx",
+    "frontend/src/components/admin/CasesManager.tsx",
+    "frontend/src/hooks/useCaseQueries.ts",
+    "frontend/src/pages/AdminCases.tsx",
     "project_state.json"
   ]
 }

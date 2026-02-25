@@ -23,6 +23,10 @@ export interface Testimonial {
     quote: string;
     author: string;
 }
+export interface AdminCaseResult {
+    message: string;
+    success: boolean;
+}
 export type Time = bigint;
 export interface Investigation {
     status: string;
@@ -34,6 +38,13 @@ export interface Investigation {
 export interface CaseLookupResult {
     hasCase: boolean;
     caseSummaries: Array<CaseSummary>;
+}
+export interface CaseStatusChange {
+    changedBy: string;
+    toStatus: string;
+    fromStatus: string;
+    timestamp: Time;
+    caseId: string;
 }
 export interface TeamMember {
     bio: string;
@@ -76,19 +87,23 @@ export interface backendInterface {
     deleteTeamMember(id: string): Promise<void>;
     deleteTestimonial(id: string): Promise<void>;
     getAdminCredentials(): Promise<AdminCredentials>;
+    getAdminPrincipal(): Promise<Principal | null>;
     getAllCases(): Promise<Array<Case>>;
     getAllInvestigationCases(): Promise<Array<Investigation>>;
     getAllTeamMembers(): Promise<Array<TeamMember>>;
     getAllTestimonials(): Promise<Array<Testimonial>>;
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
+    getCaseById(caseId: string): Promise<Case | null>;
+    getCaseStatusChanges(caseId: string): Promise<Array<CaseStatusChange>>;
     getCasesForUser(email: string): Promise<CaseLookupResult>;
     getInvestigation(id: string): Promise<Investigation | null>;
     getTeamMember(id: string): Promise<TeamMember | null>;
     getTestimonial(id: string): Promise<Testimonial | null>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
+    initAdmin(): Promise<boolean>;
     isCallerAdmin(): Promise<boolean>;
-    markCaseResolved(caseId: string): Promise<boolean>;
+    markCaseResolved(caseId: string, adminEmail: string): Promise<AdminCaseResult>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
     submitCase(location: string, phenomenaType: string, description: string, contactInfo: string, photo: ExternalBlob | null, ownerEmail: string): Promise<string>;
     updateInvestigation(id: string, investigation: Investigation): Promise<void>;

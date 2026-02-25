@@ -2,6 +2,7 @@ import { RouterProvider, createRouter, createRoute, createRootRoute, Outlet } fr
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 import { useInternetIdentity } from './hooks/useInternetIdentity';
+import { AdminProvider } from './contexts/AdminContext';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Resources from './pages/Resources';
@@ -10,6 +11,7 @@ import CaseGallery from './pages/CaseGallery';
 import CaseDetail from './pages/CaseDetail';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminCases from './pages/AdminCases';
 import CaseFiles from './pages/CaseFiles';
 import MyCase from './pages/MyCase';
 import SupernaturalPinLogin from './pages/SupernaturalPinLogin';
@@ -85,9 +87,17 @@ const adminDashboardRoute = createRoute({
   component: AdminDashboard,
 });
 
+// Dedicated Cases Management page — full table view with detail modal
 const adminCasesRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/admin/cases',
+  component: AdminCases,
+});
+
+// Legacy case files route — kept for backward compatibility
+const caseFilesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/case-files',
   component: CaseFiles,
 });
 
@@ -108,6 +118,7 @@ const routeTree = rootRoute.addChildren([
   adminLoginRoute,
   adminDashboardRoute,
   adminCasesRoute,
+  caseFilesRoute,
   supernaturalRoute,
 ]);
 
@@ -122,7 +133,9 @@ declare module '@tanstack/react-router' {
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <AdminProvider>
+        <RouterProvider router={router} />
+      </AdminProvider>
     </QueryClientProvider>
   );
 }

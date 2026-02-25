@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useInternetIdentity } from '../hooks/useInternetIdentity';
 import { useQueryClient } from '@tanstack/react-query';
-import { Link } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
+import { useAdminContext } from '../contexts/AdminContext';
 import ProtectedRoute from '../components/ProtectedRoute';
 import { UserRole } from '../backend';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { Shield, LogOut, FileText, Search, MessageSquare, BarChart3 } from 'lucide-react';
+import { Shield, LogOut, FileText, Search, MessageSquare, BarChart3, FolderOpen } from 'lucide-react';
 import CasesManager from '../components/admin/CasesManager';
 
 function InvestigationsTab() {
@@ -38,12 +39,17 @@ function AnalyticsTab() {
 
 export default function AdminDashboard() {
   const { identity, clear } = useInternetIdentity();
+  const { logout: adminLogout } = useAdminContext();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('cases');
 
   const handleLogout = async () => {
+    // Clear both PIN session and Internet Identity session
+    adminLogout();
     await clear();
     queryClient.clear();
+    navigate({ to: '/' });
   };
 
   return (
@@ -56,7 +62,7 @@ export default function AdminDashboard() {
               <div className="flex items-center gap-3">
                 <Shield className="h-5 w-5 text-primary" />
                 <span className="font-display font-semibold text-foreground">Admin Dashboard</span>
-                {identity && (
+                {(identity) && (
                   <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-primary/10 text-primary border border-primary/20">
                     Admin
                   </span>
@@ -65,8 +71,8 @@ export default function AdminDashboard() {
               <div className="flex items-center gap-2">
                 <Link to="/admin/cases">
                   <Button variant="ghost" size="sm" className="flex items-center gap-1">
-                    <FileText className="h-4 w-4" />
-                    <span className="hidden sm:inline">Case Files</span>
+                    <FolderOpen className="h-4 w-4" />
+                    <span className="hidden sm:inline">Cases Page</span>
                   </Button>
                 </Link>
                 <Button
@@ -106,6 +112,16 @@ export default function AdminDashboard() {
             </TabsList>
 
             <TabsContent value="cases">
+              {/* Link to dedicated cases page */}
+              <div className="mb-4 flex items-center justify-between">
+                <p className="text-sm text-muted-foreground">Quick overview of recent cases. For full management, use the dedicated Cases page.</p>
+                <Link to="/admin/cases">
+                  <Button variant="outline" size="sm" className="border-ethereal/40 hover:bg-ethereal/10 hover:text-ethereal hover:border-ethereal/60">
+                    <FolderOpen className="h-4 w-4 mr-2" />
+                    Full Cases Page
+                  </Button>
+                </Link>
+              </div>
               <CasesManager />
             </TabsContent>
             <TabsContent value="investigations">

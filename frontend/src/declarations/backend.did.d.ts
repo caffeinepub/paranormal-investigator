@@ -10,6 +10,7 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
+export interface AdminCaseResult { 'message' : string, 'success' : boolean }
 export interface AdminCredentials { 'pin' : string, 'email' : string }
 export interface Case {
   'id' : string,
@@ -25,6 +26,13 @@ export interface Case {
 export interface CaseLookupResult {
   'hasCase' : boolean,
   'caseSummaries' : Array<CaseSummary>,
+}
+export interface CaseStatusChange {
+  'changedBy' : string,
+  'toStatus' : string,
+  'fromStatus' : string,
+  'timestamp' : Time,
+  'caseId' : string,
 }
 export interface CaseSummary {
   'status' : string,
@@ -88,19 +96,23 @@ export interface _SERVICE {
   'deleteTeamMember' : ActorMethod<[string], undefined>,
   'deleteTestimonial' : ActorMethod<[string], undefined>,
   'getAdminCredentials' : ActorMethod<[], AdminCredentials>,
+  'getAdminPrincipal' : ActorMethod<[], [] | [Principal]>,
   'getAllCases' : ActorMethod<[], Array<Case>>,
   'getAllInvestigationCases' : ActorMethod<[], Array<Investigation>>,
   'getAllTeamMembers' : ActorMethod<[], Array<TeamMember>>,
   'getAllTestimonials' : ActorMethod<[], Array<Testimonial>>,
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
+  'getCaseById' : ActorMethod<[string], [] | [Case]>,
+  'getCaseStatusChanges' : ActorMethod<[string], Array<CaseStatusChange>>,
   'getCasesForUser' : ActorMethod<[string], CaseLookupResult>,
   'getInvestigation' : ActorMethod<[string], [] | [Investigation]>,
   'getTeamMember' : ActorMethod<[string], [] | [TeamMember]>,
   'getTestimonial' : ActorMethod<[string], [] | [Testimonial]>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
+  'initAdmin' : ActorMethod<[], boolean>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
-  'markCaseResolved' : ActorMethod<[string], boolean>,
+  'markCaseResolved' : ActorMethod<[string, string], AdminCaseResult>,
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
   'submitCase' : ActorMethod<
     [string, string, string, string, [] | [ExternalBlob], string],

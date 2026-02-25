@@ -1,32 +1,35 @@
 import React, { useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { Shield, Eye, EyeOff, Ghost } from 'lucide-react';
-import { useAdmin } from '../hooks/useAdmin';
+import { useAdminContext } from '../contexts/AdminContext';
 
 const ADMIN_PIN = '022025';
 const ADMIN_EMAIL = 'supernatural@okpi.local';
 
 export default function SupernaturalPinLogin() {
   const navigate = useNavigate();
-  const { login } = useAdmin();
+  // Use AdminContext directly to avoid any hook indirection issues
+  const { login, isAdmin } = useAdminContext();
   const [pin, setPin] = useState('');
   const [showPin, setShowPin] = useState(false);
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [attempts, setAttempts] = useState(0);
+
+  // If already authenticated as admin, redirect immediately
+  if (isAdmin) {
+    navigate({ to: '/admin/dashboard' });
+    return null;
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (pin === ADMIN_PIN) {
-      setIsLoading(true);
+    if (pin.trim() === ADMIN_PIN) {
       setError('');
-      // Call login to set AdminContext state + persist to storage
+      // Synchronously persist session to both storages and update React state
       login(ADMIN_EMAIL);
-      // Use a short timeout to allow React state to propagate before navigating
-      setTimeout(() => {
-        navigate({ to: '/admin/dashboard' });
-      }, 50);
+      // Navigate immediately — ProtectedRoute reads from storage synchronously
+      navigate({ to: '/admin/dashboard' });
     } else {
       const newAttempts = attempts + 1;
       setAttempts(newAttempts);
@@ -43,8 +46,8 @@ export default function SupernaturalPinLogin() {
     <div className="min-h-screen bg-background flex items-center justify-center relative overflow-hidden">
       {/* Background atmosphere */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-ethereal-500/5 blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-spectral-500/5 blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-ethereal/5 blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-spectral/5 blur-3xl" />
       </div>
 
       <div className="relative z-10 w-full max-w-md mx-auto px-6">
@@ -52,8 +55,8 @@ export default function SupernaturalPinLogin() {
         <div className="bg-card border border-border/50 rounded-2xl p-8 shadow-2xl backdrop-blur-sm">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-ethereal-500/10 border border-ethereal-500/30 mb-4">
-              <Ghost className="w-8 h-8 text-ethereal-400" />
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-ethereal/10 border border-ethereal/30 mb-4">
+              <Ghost className="w-8 h-8 text-ethereal" />
             </div>
             <h1 className="text-2xl font-bold font-display text-foreground mb-2">
               Restricted Access
@@ -77,8 +80,7 @@ export default function SupernaturalPinLogin() {
                   placeholder="Enter PIN"
                   maxLength={10}
                   autoFocus
-                  className="w-full bg-background border border-border rounded-lg px-4 py-3 pr-12 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ethereal-500/50 focus:border-ethereal-500/50 transition-all text-center text-xl tracking-[0.5em] font-mono"
-                  disabled={isLoading}
+                  className="w-full bg-background border border-border rounded-lg px-4 py-3 pr-12 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ethereal/50 focus:border-ethereal/50 transition-all text-center text-xl tracking-[0.5em] font-mono"
                 />
                 <button
                   type="button"
@@ -101,20 +103,11 @@ export default function SupernaturalPinLogin() {
 
             <button
               type="submit"
-              disabled={isLoading || pin.length === 0}
-              className="w-full bg-ethereal-600 hover:bg-ethereal-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
+              disabled={pin.length === 0}
+              className="w-full bg-ethereal hover:bg-ethereal/90 disabled:opacity-50 disabled:cursor-not-allowed text-background font-semibold py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
             >
-              {isLoading ? (
-                <>
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  <span>Authenticating...</span>
-                </>
-              ) : (
-                <>
-                  <Shield className="w-4 h-4" />
-                  <span>Authenticate</span>
-                </>
-              )}
+              <Shield className="w-4 h-4" />
+              <span>Authenticate</span>
             </button>
           </form>
 

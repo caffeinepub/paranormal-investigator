@@ -1,20 +1,26 @@
 import React from 'react';
-import { Link } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { useInternetIdentity } from '../hooks/useInternetIdentity';
 import { useQueryClient } from '@tanstack/react-query';
+import { useAdminContext } from '../contexts/AdminContext';
 import CasesManager from '../components/admin/CasesManager';
 import ProtectedRoute from '../components/ProtectedRoute';
 import { UserRole } from '../backend';
-import { Shield, LayoutDashboard, LogOut } from 'lucide-react';
+import { Shield, LayoutDashboard, LogOut, FolderOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function CaseFiles() {
-  const { identity, clear } = useInternetIdentity();
+  const { clear } = useInternetIdentity();
+  const { logout: adminLogout } = useAdminContext();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
+    // Clear both PIN session and Internet Identity session
+    adminLogout();
     await clear();
     queryClient.clear();
+    navigate({ to: '/' });
   };
 
   return (
@@ -27,13 +33,17 @@ export default function CaseFiles() {
               <div className="flex items-center gap-3">
                 <Shield className="h-5 w-5 text-primary" />
                 <span className="font-display font-semibold text-foreground">Case Files</span>
-                {identity && (
-                  <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-primary/10 text-primary border border-primary/20">
-                    Admin
-                  </span>
-                )}
+                <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-primary/10 text-primary border border-primary/20">
+                  Admin
+                </span>
               </div>
               <div className="flex items-center gap-2">
+                <Link to="/admin/cases">
+                  <Button variant="ghost" size="sm" className="flex items-center gap-1">
+                    <FolderOpen className="h-4 w-4" />
+                    <span className="hidden sm:inline">Cases Page</span>
+                  </Button>
+                </Link>
                 <Link to="/admin/dashboard">
                   <Button variant="ghost" size="sm" className="flex items-center gap-1">
                     <LayoutDashboard className="h-4 w-4" />

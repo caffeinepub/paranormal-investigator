@@ -1,12 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Fix the PIN authentication flow on the `/supernatural` page so it never gets stuck on "verifying access".
+**Goal:** Fix admin permissions so the first logged-in user is automatically assigned as admin, and fix the "Failed to load cases" error in the Case Management panel.
 
 **Planned changes:**
-- Rewrite the `SupernaturalPinLogin` component to validate the PIN `022025` purely client-side without any async backend or Internet Identity calls.
-- On successful PIN entry, call the `AdminContext` login function and immediately redirect to the admin dashboard.
-- On incorrect PIN entry, display an error message and stay on the login page.
-- Remove any logic that could cause the "verifying access" state to hang indefinitely.
+- Add an `initAdmin` update method in the backend that records the caller as admin if no admin has been set yet; store the admin principal in stable state so it persists across upgrades
+- Update `getAllCases` (and other admin-gated methods) in the backend to verify the caller against the stored admin principal and return data successfully
+- Update the frontend `CasesManager` and `useCaseQueries.ts` to call the admin-init endpoint on first authenticated load before fetching cases, handling failures gracefully if admin is already registered
 
-**User-visible outcome:** Entering the correct PIN on `/supernatural` immediately redirects to the admin dashboard without getting stuck. Incorrect PINs show an error message instantly.
+**User-visible outcome:** The first user to log into the admin panel is automatically granted admin privileges, and the Case Management panel loads cases successfully without showing the "Failed to load cases" error banner.

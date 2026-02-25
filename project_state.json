@@ -1,24 +1,43 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "New project",
-  "architectural_notes": [],
-  "known_issues": [
-    "PIN authentication gets stuck on 'verifying access' screen and never resolves"
+  "summary": "Case management app on the Internet Computer blockchain with an admin panel for viewing submitted cases. Currently fixing admin permissions so the first logged-in user is auto-assigned as admin and the admin panel loads cases correctly.",
+  "architectural_notes": [
+    "Deployed on Internet Computer blockchain (ICP); cases stored on-chain and available near-instantly after submission",
+    "Admin panel uses principal-based permissions; first logged-in user is auto-assigned admin"
   ],
+  "known_issues": [],
   "isFixRequest": true,
   "existing_features": [
     {
-      "id": "feature-fix-the-supernaturalpinlogin-page-so-that-pin-authentication-does-not-get-stuck-on-verifying-access-the-page-must-perform-purely-client-side-pin-validation-against-the-hardcoded-pin-022025-call-the-admincontext-login-function-on-success-and-immediately-redirect-to-the-admin-dashboard-without-waiting-on-any-internet-identity-principal-check-or-async-backend-call-that-could-hang",
-      "title": "Fix the SupernaturalPinLogin page so that PIN authentication does not get stuck on 'verifying access'. The page must perform purely client-side PIN validation against the hardcoded PIN '022025', call the AdminContext login function on success, and immediately redirect to the admin dashboard without waiting on any Internet Identity principal check or async backend call that could hang.",
+      "id": "feature-update-the-frontend-casesmanager-and-related-hooks-usecasequeries-ts-to-call-the-backend-admin-init-endpoint-on-first-load-when-the-user-is-authenticated-so-admin-status-is-registered-before-cases-are-fetched-handle-the-case-where-the-init-call-fails-gracefully-without-blocking-the-cases-fetch-for-an-already-registered-admin",
+      "title": "Update the frontend `CasesManager` and related hooks (`useCaseQueries.ts`) to call the backend admin-init endpoint on first load (when the user is authenticated) so admin status is registered before cases are fetched. Handle the case where the init call fails gracefully without blocking the cases fetch for an already-registered admin.",
       "reqIds": [
-        "REQ-1"
+        "REQ-3"
       ],
       "version": 1
     }
   ],
-  "new_feature_requests": [],
-  "projectName": "Oklahoma Paranormal Investigations",
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Update the backend to automatically grant admin privileges to the first principal that calls any admin-gated function or a new `initAdmin` update method, if no admin has been registered yet. Store the admin principal in stable state so it persists across upgrades.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Update the backend `getAllCases` (or equivalent admin case-listing) method so it verifies the caller against the stored admin principal and returns all cases without error. Remove or relax any permission check that currently causes the 'Failed to load cases' error for a legitimately assigned admin.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Case Management",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

@@ -1,35 +1,60 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-25T06:31:50.282Z",
+  "generatedAt": "2026-02-25T07:42:19.630Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 1,
+    "total": 3,
     "implemented": 1,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Fix the SupernaturalPinLogin page so that PIN authentication does not get stuck on 'verifying access'. The page must perform purely client-side PIN validation against the hardcoded PIN '022025', call the AdminContext login function on success, and immediately redirect to the admin dashboard without waiting on any Internet Identity principal check or async backend call that could hang.",
+        "summary": "Update the backend to automatically grant admin privileges to the first principal that calls any admin-gated function or a new `initAdmin` update method, if no admin has been registered yet. Store the admin principal in stable state so it persists across upgrades.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Update the backend `getAllCases` (or equivalent admin case-listing) method so it verifies the caller against the stored admin principal and returns all cases without error. Remove or relax any permission check that currently causes the 'Failed to load cases' error for a legitimately assigned admin.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Update the frontend `CasesManager` and related hooks (`useCaseQueries.ts`) to call the backend admin-init endpoint on first load (when the user is authenticated) so admin status is registered before cases are fetched. Handle the case where the init call fails gracefully without blocking the cases fetch for an already-registered admin.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/SupernaturalPinLogin.tsx"
+          "frontend/src/hooks/useCaseQueries.ts",
+          "frontend/src/components/admin/CasesManager.tsx",
+          "frontend/src/pages/AdminCases.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/pages/SupernaturalPinLogin.tsx"
+          "frontend/src/hooks/useCaseQueries.ts",
+          "frontend/src/components/admin/CasesManager.tsx",
+          "frontend/src/pages/AdminCases.tsx"
         ]
       }
     ]
   },
   "changedFiles": [
+    "backend/main.mo",
+    "backend/migration.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/components/ProtectedRoute.tsx",
-    "frontend/src/pages/SupernaturalPinLogin.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/admin/CasesManager.tsx",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useCaseQueries.ts",
+    "frontend/src/pages/AdminCases.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

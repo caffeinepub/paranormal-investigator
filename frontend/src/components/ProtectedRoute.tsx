@@ -1,7 +1,7 @@
 import React from 'react';
 import { useInternetIdentity } from '../hooks/useInternetIdentity';
 import { useUserRole } from '../hooks/useUserRole';
-import { useAdmin } from '../hooks/useAdmin';
+import { useAdminContext } from '../contexts/AdminContext';
 import { UserRole } from '../backend';
 import { Loader2, ShieldX, LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -13,6 +13,7 @@ interface ProtectedRouteProps {
 
 // Read admin session directly from storage as a synchronous fallback
 // to avoid React state timing issues during navigation.
+// Supports both PIN-based admin sessions (via storage) and Internet Identity admin role checks.
 function readAdminSessionFromStorage(): boolean {
   try {
     const SESSION_KEY = 'opi_admin_session';
@@ -35,9 +36,8 @@ function readAdminSessionFromStorage(): boolean {
 export default function ProtectedRoute({ children, requiredRole = UserRole.admin }: ProtectedRouteProps) {
   const { identity, login, loginStatus } = useInternetIdentity();
   const { data: role, isLoading, isFetched } = useUserRole();
-  const { isAdmin: isAdminContext } = useAdmin();
+  const { isAdmin: isAdminContext } = useAdminContext();
 
-  const isAuthenticated = !!identity;
   const isLoggingIn = loginStatus === 'logging-in';
 
   // Check both React context state AND storage directly to handle
@@ -45,12 +45,15 @@ export default function ProtectedRoute({ children, requiredRole = UserRole.admin
   const isAdminByStorage = readAdminSessionFromStorage();
   const isAdminViaPin = isAdminContext || isAdminByStorage;
 
-  // Allow access if authenticated via the email/PIN admin login (AdminContext).
+  // CRITICAL: Allow immediate access if authenticated via PIN (AdminContext/storage).
+  // This must be checked BEFORE any async Internet Identity checks to prevent
+  // PIN-authenticated admins from seeing "pending access" or being redirected.
   if (requiredRole === UserRole.admin && isAdminViaPin) {
     return <>{children}</>;
   }
 
-  // Allow access if authenticated via Internet Identity with the right role.
+  // For Internet Identity authenticated users, check their role
+  const isAuthenticated = !!identity;
   const hasAdminAccess = role === UserRole.admin;
 
   if (!isAuthenticated) {
