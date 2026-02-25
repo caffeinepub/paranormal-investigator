@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.5rem;
+        
+        /* Light mode - Sophisticated paranormal theme */
+        --background: 0.98 0.005 240;
+        --foreground: 0.18 0.015 260;
+        --card: 1.0 0.002 240;
+        --card-foreground: 0.18 0.015 260;
+        --popover: 1.0 0.002 240;
+        --popover-foreground: 0.18 0.015 260;
+        --primary: 0.42 0.12 280;
+        --primary-foreground: 0.98 0.005 240;
+        --secondary: 0.94 0.008 240;
+        --secondary-foreground: 0.18 0.015 260;
+        --muted: 0.94 0.008 240;
+        --muted-foreground: 0.52 0.012 260;
+        --accent: 0.90 0.012 240;
+        --accent-foreground: 0.18 0.015 260;
+        --destructive: 0.58 0.22 28;
+        --destructive-foreground: 0.98 0.005 240;
+        --border: 0.88 0.008 240;
+        --input: 0.88 0.008 240;
+        --ring: 0.42 0.12 280;
+        
+        /* Custom paranormal colors */
+        --ethereal: 0.68 0.14 175;
+        --midnight: 0.28 0.10 260;
+        --spectral: 0.55 0.16 290;
+        --phantom: 0.72 0.10 200;
+        
+        --chart-1: 0.58 0.14 280;
+        --chart-2: 0.62 0.12 175;
+        --chart-3: 0.52 0.10 260;
+        --chart-4: 0.68 0.18 290;
+        --chart-5: 0.72 0.14 200;
+    }
+
+    .dark {
+        /* Dark mode - Deep atmospheric paranormal theme */
+        --background: 0.10 0.025 260;
+        --foreground: 0.96 0.008 175;
+        --card: 0.15 0.030 260;
+        --card-foreground: 0.96 0.008 175;
+        --popover: 0.13 0.028 260;
+        --popover-foreground: 0.96 0.008 175;
+        --primary: 0.68 0.16 175;
+        --primary-foreground: 0.10 0.025 260;
+        --secondary: 0.20 0.035 260;
+        --secondary-foreground: 0.96 0.008 175;
+        --muted: 0.20 0.035 260;
+        --muted-foreground: 0.62 0.08 175;
+        --accent: 0.25 0.045 260;
+        --accent-foreground: 0.96 0.008 175;
+        --destructive: 0.62 0.24 28;
+        --destructive-foreground: 0.96 0.008 175;
+        --border: 0.22 0.032 260;
+        --input: 0.22 0.032 260;
+        --ring: 0.68 0.16 175;
+        
+        /* Custom paranormal colors - enhanced for dark mode */
+        --ethereal: 0.72 0.18 175;
+        --midnight: 0.18 0.12 260;
+        --spectral: 0.60 0.20 290;
+        --phantom: 0.75 0.12 200;
+        
+        --chart-1: 0.58 0.18 280;
+        --chart-2: 0.68 0.16 175;
+        --chart-3: 0.55 0.14 260;
+        --chart-4: 0.72 0.22 290;
+        --chart-5: 0.78 0.16 200;
+    }
+
+    * {
+        @apply border-border;
+    }
+    
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: "rlig" 1, "calt" 1;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+}
+
+@layer utilities {
+    .glow-text {
+        text-shadow: 0 0 24px oklch(var(--ethereal) / 0.4),
+                     0 0 48px oklch(var(--ethereal) / 0.2),
+                     0 0 72px oklch(var(--ethereal) / 0.1);
+    }
+    
+    .glow-text-subtle {
+        text-shadow: 0 0 16px oklch(var(--ethereal) / 0.3),
+                     0 0 32px oklch(var(--ethereal) / 0.15);
+    }
+    
+    .font-display {
+        font-family: 'Playfair Display', 'Georgia', 'Garamond', serif;
+        letter-spacing: -0.025em;
+        font-weight: 700;
+    }
+    
+    .font-heading {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        letter-spacing: -0.02em;
+        font-weight: 600;
+    }
+    
+    .gradient-ethereal {
+        background: linear-gradient(135deg, 
+            oklch(var(--ethereal) / 0.15) 0%, 
+            oklch(var(--spectral) / 0.12) 50%,
+            oklch(var(--phantom) / 0.10) 100%);
+    }
+    
+    .border-glow {
+        box-shadow: 0 0 0 1px oklch(var(--ethereal) / 0.2),
+                    0 0 16px oklch(var(--ethereal) / 0.1);
+    }
+}
+
+/* Custom font imports */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');

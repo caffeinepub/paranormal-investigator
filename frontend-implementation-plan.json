@@ -1,0 +1,39 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Increase logo size in header and update investigations count to 25+",
+  "requirements": [
+    {
+      "id": "REQ-62",
+      "summary": "Increase the size of the Ghostbusters-style logo displayed in the header corner",
+      "acceptanceCriteria": [
+        "Logo in the header corner is visibly larger than current size",
+        "Logo maintains proper aspect ratio and does not overflow container",
+        "Logo size increase is responsive across mobile and desktop viewports"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Increase the size of the Ghostbusters-style logo (frontend/public/assets/generated/logo-ghostbusters-style.dim_400x400.png) in the header by modifying the width/height CSS classes or inline styles. Current implementation uses h-12 w-12 classes; increase to h-16 w-16 or similar for desktop and maintain proportional mobile sizing. Ensure the logo maintains aspect ratio and does not overflow its container."
+        }
+      ]
+    },
+    {
+      "id": "REQ-63",
+      "summary": "Update the investigations count statistics on the Home page to display '25+' instead of '50+'",
+      "acceptanceCriteria": [
+        "Statistics section on Home page shows '25+' for investigations count",
+        "Text change is consistent across all instances where '50+' investigations was displayed",
+        "No other numerical statistics are affected by this change"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Home.tsx",
+          "operation": "modify",
+          "description": "Update the investigations count text in the statistics section from '50+' to '25+'. Locate the statistics display area and change only the investigations count value. Verify that other statistics (team members, years of experience, etc.) remain unchanged."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-increase-the-size-of-the-ghostbusters-style-logo-displayed-in-the-header-corner-of-the-layout-component-frontend-src-components-layout-tsx",
+      "featureTitle": "Increase the size of the Ghostbusters-style logo displayed in the header corner of the Layout component (frontend/src/components/Layout.tsx)",
+      "files": [
+        "frontend/src/components/Layout.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-62"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-investigations-count-statistics-on-the-home-page-frontend-src-pages-home-tsx-to-display-25-instead-of-50",
+      "featureTitle": "Update the investigations count statistics on the Home page (frontend/src/pages/Home.tsx) to display '25+' instead of '50+'",
+      "files": [
+        "frontend/src/pages/Home.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-63"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

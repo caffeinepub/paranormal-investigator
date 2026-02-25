@@ -1,0 +1,22 @@
+{
+  "backend/main.mo": "Main backend actor that includes the MixinStorage module from blob-storage, providing blob storage functionality.",
+  "feature_evidence.json": "Feature evidence report documenting two completed features: increasing the Ghostbusters logo size in Layout.tsx and updating the investigations count from '50+' to '25+' in Home.tsx.",
+  "frontend-file-summaries.txt": "JSON-formatted summaries of frontend files describing the paranormal investigation app's components, pages, hooks, and styling with Ghostbusters theme and Oklahoma focus.",
+  "frontend/index.css": "Tailwind base styles defining CSS custom properties for light and dark themes using OKLCH color space with minimal color values (mostly grayscale).",
+  "frontend/index.html": "HTML entry point with title 'Oklahoma Paranormal Investigations - Spectral Investigations' and root div for React mounting.",
+  "frontend/src/App.tsx": "Main app component configuring TanStack Router with home and resources routes, wrapped in ThemeProvider and QueryClientProvider with Toaster for notifications.",
+  "frontend/src/components/Layout.tsx": "Layout component with sticky header featuring h-20 Ghostbusters logo, navigation links (Home, Resources), theme toggle button, and mobile menu support.",
+  "frontend/src/hooks/useActor.ts": "React Query hook that creates and manages backend actor instances with optional Internet Identity authentication, invalidating dependent queries on actor changes.",
+  "frontend/src/hooks/useInternetIdentity.ts": "React context provider and hook for Internet Identity authentication, managing login state, identity persistence, and AuthClient lifecycle with configurable options.",
+  "frontend/src/hooks/useQueries.ts": "Empty file intended for custom React Query hooks for authenticated backend operations.",
+  "frontend/src/index.css": "Comprehensive Tailwind styles with OKLCH-based paranormal theme colors (ethereal, midnight, spectral, phantom), custom glow utilities, and Playfair Display/Inter font imports.",
+  "frontend/src/main.tsx": "React application entry point rendering App within InternetIdentityProvider and QueryClientProvider wrappers.",
+  "frontend/src/pages/CaseDetail.tsx": "Empty file intended for detailed case view page with authentication requirements.",
+  "frontend/src/pages/CaseGallery.tsx": "Empty file intended for case gallery page displaying user-submitted cases with authentication.",
+  "frontend/src/pages/Home.tsx": "Home page component featuring hero section with background image, services cards (apparitions, sounds, objects, EMF), features section, stats display, and CTA sections for case submission and resources.",
+  "frontend/src/pages/Resources.tsx": "Resources page displaying paranormal phenomena types, investigation equipment details, documentation guidelines, and safety precautions organized in tabs and cards.",
+  "frontend/src/pages/SubmitCase.tsx": "Empty file placeholder for case submission page component.",
+  "frontend/src/pages/Team.tsx": "Empty file placeholder for team page component.",
+  "frontend/tailwind.config.js": "Tailwind CSS configuration with custom color scheme (ethereal, midnight, spectral, phantom), extended shadows (glow effects), custom fonts (Playfair Display, Inter), and animations for paranormal theme.",
+  "project_state.json": "Project state tracking document listing implemented features (home page, case submission form, gallery, resources), architectural notes (Oklahoma-only service, founded 2025), and feature version history."
+}

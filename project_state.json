@@ -1,0 +1,560 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 39,
+  "summary": "Paranormal investigating website serving Oklahoma only, founded 2025",
+  "architectural_notes": [
+    "Service area is explicitly limited to Oklahoma only",
+    "Company founding year is 2025",
+    "Email feature not available - using direct email contact instead of form submission"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-create-a-home-page-that-introduces-the-paranormal-investigation-service-with-sections-for-hero-introduction-about-the-investigation-team-services-offered-and-contact-information",
+      "title": "Create a home page that introduces the paranormal investigation service with sections for: hero introduction, about the investigation team, services offered, and contact information",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-case-submission-form-where-users-can-report-paranormal-activity-including-fields-for-location-type-of-phenomena-description-of-events-contact-details-and-optional-photo-upload-capability",
+      "title": "Implement a case submission form where users can report paranormal activity including fields for: location, type of phenomena, description of events, contact details, and optional photo upload capability",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-case-gallery-page-displaying-submitted-paranormal-cases-with-filtering-options-by-phenomena-type-e-g-apparitions-unexplained-sounds-objects-moving-electromagnetic-anomalies-and-location",
+      "title": "Create a case gallery page displaying submitted paranormal cases with filtering options by phenomena type (e.g., apparitions, unexplained sounds, objects moving, electromagnetic anomalies) and location",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-investigation-resources-page-with-information-about-types-of-paranormal-phenomena-investigation-equipment-and-methods-evidence-documentation-guidelines-and-safety-precautions",
+      "title": "Create an investigation resources page with information about: types of paranormal phenomena, investigation equipment and methods, evidence documentation guidelines, and safety precautions",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-mysterious-atmospheric-visual-design-with-a-dark-color-scheme-using-deep-purples-midnight-blues-and-ethereal-greens-combined-with-vintage-investigation-aesthetics-including-distressed-textures-ghostly-typography-and-subtle-animated-effects-that-evoke-the-paranormal-theme",
+      "title": "Apply a mysterious, atmospheric visual design with a dark color scheme using deep purples, midnight blues, and ethereal greens, combined with vintage investigation aesthetics including distressed textures, ghostly typography, and subtle animated effects that evoke the paranormal theme",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-render-generated-images-as-static-assets-in-frontend-public-assets-generated-including-the-paranormal-investigation-hero-background-and-investigation-team-logo",
+      "title": "Render generated images as static assets in frontend/public/assets/generated including the paranormal investigation hero background and investigation team logo",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-footer-section-in-the-layout-component-to-display-founded-2025-instead-of-any-existing-founding-year-text",
+      "title": "Update the footer section in the Layout component to display 'Founded 2025' instead of any existing founding year text",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-about-the-investigation-team-section-on-the-home-page-to-reflect-that-the-team-has-1-year-of-experience-in-paranormal-investigation",
+      "title": "Update the 'About the Investigation Team' section on the home page to reflect that the team has 1 year of experience in paranormal investigation",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-about-the-investigation-team-section-on-the-home-page-to-indicate-the-team-consists-of-2-or-more-members",
+      "title": "Update the 'About the Investigation Team' section on the home page to indicate the team consists of 2 or more members",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-new-meet-the-team-page-route-accessible-at-team-that-displays-information-about-the-paranormal-investigation-team-members",
+      "title": "Create a new 'Meet the Team' page route accessible at '/team' that displays information about the paranormal investigation team members",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-design-the-meet-the-team-page-to-showcase-individual-team-member-profiles-including-their-name-role-specialty-in-paranormal-investigation-brief-biography-and-profile-photo",
+      "title": "Design the Meet the Team page to showcase individual team member profiles including their name, role/specialty in paranormal investigation, brief biography, and profile photo",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-team-or-meet-the-team-navigation-link-to-the-header-menu-in-the-layout-component-that-routes-to-the-new-team-page",
+      "title": "Add a 'Team' or 'Meet the Team' navigation link to the header menu in the Layout component that routes to the new team page",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-team-route-from-the-app-tsx-router-configuration",
+      "title": "Remove the '/team' route from the App.tsx router configuration",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-team-or-meet-the-team-navigation-link-from-the-layout-component-header-menu",
+      "title": "Remove the 'Team' or 'Meet the Team' navigation link from the Layout component header menu",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-delete-the-frontend-src-pages-team-tsx-file",
+      "title": "Delete the frontend/src/pages/Team.tsx file",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-hero-section-on-the-home-page-to-prominently-display-that-the-paranormal-investigation-service-operates-exclusively-in-oklahoma",
+      "title": "Update the hero section on the Home page to prominently display that the paranormal investigation service operates exclusively in Oklahoma",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-about-the-investigation-team-section-on-the-home-page-to-explicitly-state-the-team-only-investigates-cases-within-oklahoma",
+      "title": "Update the 'About the Investigation Team' section on the Home page to explicitly state the team only investigates cases within Oklahoma",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-services-phenomena-type-cards-on-the-home-page-to-include-text-indicating-these-services-are-available-only-in-oklahoma",
+      "title": "Update the services/phenomena type cards on the Home page to include text indicating these services are available only in Oklahoma",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-prominent-notice-on-the-case-submission-form-submitcase-tsx-stating-that-only-cases-within-oklahoma-will-be-accepted",
+      "title": "Add a prominent notice on the Case Submission form (SubmitCase.tsx) stating that only cases within Oklahoma will be accepted",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-case-gallery-page-casegallery-tsx-to-display-a-header-or-banner-stating-that-all-displayed-cases-are-from-oklahoma-investigations",
+      "title": "Update the Case Gallery page (CaseGallery.tsx) to display a header or banner stating that all displayed cases are from Oklahoma investigations",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-resources-page-resources-tsx-to-include-introductory-text-stating-the-resources-are-specifically-for-paranormal-investigation-in-oklahoma",
+      "title": "Update the Resources page (Resources.tsx) to include introductory text stating the resources are specifically for paranormal investigation in Oklahoma",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-footer-in-the-layout-component-to-display-serving-oklahoma-since-2025-or-similar-text-that-combines-both-the-geographic-area-and-founding-year",
+      "title": "Update the footer in the Layout component to display 'Serving Oklahoma Since 2025' or similar text that combines both the geographic area and founding year",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-header-navigation-area-in-the-layout-component-to-include-a-tagline-or-subtitle-mentioning-oklahoma-s-paranormal-investigators-or-similar-text-that-reinforces-the-oklahoma-only-service-area",
+      "title": "Update the header/navigation area in the Layout component to include a tagline or subtitle mentioning 'Oklahoma's Paranormal Investigators' or similar text that reinforces the Oklahoma-only service area",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-html-document-title-in-index-html-to-include-oklahoma-and-reflect-the-geographic-focus-of-the-paranormal-investigation-service",
+      "title": "Update the HTML document title in index.html to include 'Oklahoma' and reflect the geographic focus of the paranormal investigation service",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-footer-text-in-the-layout-component-frontend-src-components-layout-tsx-to-change-serving-oklahoma-since-2025-to-founded-in-oklahoma-2025-or-similar-text-that-clarifies-oklahoma-as-the-location-where-the-business-was-founded-while-maintaining-the-founding-year-of-2025",
+      "title": "Update the footer text in the Layout component (frontend/src/components/Layout.tsx) to change 'Serving Oklahoma Since 2025' to 'Founded in Oklahoma, 2025' or similar text that clarifies Oklahoma as the location where the business was founded, while maintaining the founding year of 2025",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-hero-section-text-in-frontend-src-pages-home-tsx-to-change-any-instances-of-oklahoma-only-to-just-oklahoma",
+      "title": "Update the hero section text in frontend/src/pages/Home.tsx to change any instances of 'Oklahoma only' to just 'Oklahoma'",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-about-the-investigation-team-section-in-frontend-src-pages-home-tsx-to-replace-oklahoma-only-with-oklahoma",
+      "title": "Update the 'About the Investigation Team' section in frontend/src/pages/Home.tsx to replace 'Oklahoma only' with 'Oklahoma'",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-service-phenomena-type-cards-in-frontend-src-pages-home-tsx-to-replace-oklahoma-only-text-with-oklahoma",
+      "title": "Update service/phenomena type cards in frontend/src/pages/Home.tsx to replace 'Oklahoma only' text with 'Oklahoma'",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-case-submission-notice-in-frontend-src-pages-submitcase-tsx-to-replace-oklahoma-only-with-oklahoma",
+      "title": "Update the case submission notice in frontend/src/pages/SubmitCase.tsx to replace 'Oklahoma only' with 'Oklahoma'",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-introductory-text-in-frontend-src-pages-resources-tsx-to-replace-oklahoma-only-with-oklahoma",
+      "title": "Update the introductory text in frontend/src/pages/Resources.tsx to replace 'Oklahoma only' with 'Oklahoma'",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-internet-identity-authentication-check-on-the-case-gallery-page-frontend-src-pages-casegallery-tsx-to-require-users-to-be-logged-in-before-displaying-any-cases",
+      "title": "Implement Internet Identity authentication check on the Case Gallery page (frontend/src/pages/CaseGallery.tsx) to require users to be logged in before displaying any cases",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-internet-identity-authentication-check-on-the-case-detail-page-frontend-src-pages-casedetail-tsx-to-require-users-to-be-logged-in-before-displaying-case-details",
+      "title": "Implement Internet Identity authentication check on the Case Detail page (frontend/src/pages/CaseDetail.tsx) to require users to be logged in before displaying case details",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-login-logout-button-to-the-header-navigation-in-the-layout-component-frontend-src-components-layout-tsx-that-uses-internet-identity-authentication",
+      "title": "Add a login/logout button to the header navigation in the Layout component (frontend/src/components/Layout.tsx) that uses Internet Identity authentication",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-investigate-the-version-9-deployment-failure-by-checking-for-runtime-errors-authentication-issues-or-broken-functionality-in-the-recently-implemented-internet-identity-authentication-features-on-casegallery-and-casedetail-pages",
+      "title": "Investigate the Version 9 deployment failure by checking for runtime errors, authentication issues, or broken functionality in the recently implemented Internet Identity authentication features on CaseGallery and CaseDetail pages",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-any-authentication-related-errors-in-frontend-src-pages-casegallery-tsx-that-may-be-preventing-the-page-from-loading-or-displaying-cases-for-authenticated-users",
+      "title": "Fix any authentication-related errors in frontend/src/pages/CaseGallery.tsx that may be preventing the page from loading or displaying cases for authenticated users",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-any-authentication-related-errors-in-frontend-src-pages-casedetail-tsx-that-may-be-preventing-the-page-from-loading-or-displaying-case-details-for-authenticated-users",
+      "title": "Fix any authentication-related errors in frontend/src/pages/CaseDetail.tsx that may be preventing the page from loading or displaying case details for authenticated users",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-test-the-complete-authentication-flow-from-login-through-case-viewing-to-ensure-all-recently-implemented-authentication-features-work-together-without-breaking-the-application",
+      "title": "Test the complete authentication flow from login through case viewing to ensure all recently implemented authentication features work together without breaking the application",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-login-logout-button-from-the-header-navigation-in-the-layout-component-frontend-src-components-layout-tsx",
+      "title": "Remove the login/logout button from the header navigation in the Layout component (frontend/src/components/Layout.tsx)",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-cases-route-from-the-app-tsx-router-configuration-that-displays-the-case-gallery",
+      "title": "Remove the '/cases' route from the App.tsx router configuration that displays the case gallery",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-cases-id-route-from-the-app-tsx-router-configuration-that-displays-individual-case-details",
+      "title": "Remove the '/cases/:id' route from the App.tsx router configuration that displays individual case details",
+      "reqIds": [
+        "REQ-45"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-cases-or-case-gallery-navigation-link-from-the-header-menu-in-the-layout-component-frontend-src-components-layout-tsx",
+      "title": "Remove the 'Cases' or 'Case Gallery' navigation link from the header menu in the Layout component (frontend/src/components/Layout.tsx)",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-internetidentityprovider-wrapper-from-the-app-tsx-component",
+      "title": "Remove the InternetIdentityProvider wrapper from the App.tsx component",
+      "reqIds": [
+        "REQ-47"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-submitcase-tsx-page-to-remove-any-navigation-to-the-cases-list-after-successful-case-submission",
+      "title": "Update the SubmitCase.tsx page to remove any navigation to the cases list after successful case submission",
+      "reqIds": [
+        "REQ-48"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-submit-case-route-from-the-app-tsx-router-configuration",
+      "title": "Remove the '/submit-case' route from the App.tsx router configuration",
+      "reqIds": [
+        "REQ-49"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-report-activity-navigation-link-from-the-header-menu-in-the-layout-component-frontend-src-components-layout-tsx",
+      "title": "Remove the 'Report Activity' navigation link from the header menu in the Layout component (frontend/src/components/Layout.tsx)",
+      "reqIds": [
+        "REQ-50"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-home-page-frontend-src-pages-home-tsx-to-add-a-prominent-contact-us-section-displaying-the-email-address-paranormal-oklahoma-investigate-gmail-com-for-users-to-report-paranormal-activity",
+      "title": "Update the Home page (frontend/src/pages/Home.tsx) to add a prominent 'Contact Us' section displaying the email address paranormal.oklahoma.investigate@gmail.com for users to report paranormal activity",
+      "reqIds": [
+        "REQ-51"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-footer-in-the-layout-component-frontend-src-components-layout-tsx-to-display-the-contact-email-paranormal-oklahoma-investigate-gmail-com",
+      "title": "Update the footer in the Layout component (frontend/src/components/Layout.tsx) to display the contact email paranormal.oklahoma.investigate@gmail.com",
+      "reqIds": [
+        "REQ-52"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-investigation-team-logo-image-to-display-est-2025-text-instead-of-the-current-founding-year-format",
+      "title": "Update the investigation team logo image to display 'EST 2025' text instead of the current founding year format",
+      "reqIds": [
+        "REQ-54"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-visual-design-of-the-investigation-team-logo-to-improve-its-overall-appearance-and-aesthetic-quality",
+      "title": "Enhance the visual design of the investigation team logo to improve its overall appearance and aesthetic quality",
+      "reqIds": [
+        "REQ-55"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-render-the-updated-investigation-team-logo-as-a-static-asset-in-frontend-public-assets-generated",
+      "title": "Render the updated investigation team logo as a static asset in frontend/public/assets/generated",
+      "reqIds": [
+        "REQ-56"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-redesign-the-investigation-team-logo-image-with-improved-visual-aesthetics-while-retaining-the-est-2025-text",
+      "title": "Redesign the investigation team logo image with improved visual aesthetics while retaining the 'EST 2025' text",
+      "reqIds": [
+        "REQ-57"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-large-pdf-display-element-from-the-website",
+      "title": "Remove the large PDF display element from the website",
+      "reqIds": [
+        "REQ-58"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-render-the-redesigned-investigation-team-logo-as-a-static-asset-in-frontend-public-assets-generated",
+      "title": "Render the redesigned investigation team logo as a static asset in frontend/public/assets/generated",
+      "reqIds": [
+        "REQ-59"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-redesign-the-investigation-team-logo-in-a-ghostbusters-inspired-style-featuring-bold-iconic-graphic-design-with-the-company-name-oklahoma-paranormal-investigations-or-similar-branding-prominently-incorporated-into-the-logo-design",
+      "title": "Redesign the investigation team logo in a Ghostbusters-inspired style featuring bold, iconic graphic design with the company name 'Oklahoma Paranormal Investigations' or similar branding prominently incorporated into the logo design",
+      "reqIds": [
+        "REQ-60"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-render-the-ghostbusters-style-logo-with-company-name-as-a-static-asset-in-frontend-public-assets-generated",
+      "title": "Render the Ghostbusters-style logo with company name as a static asset in frontend/public/assets/generated",
+      "reqIds": [
+        "REQ-61"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-increase-the-size-of-the-ghostbusters-style-logo-displayed-in-the-header-corner-of-the-layout-component-frontend-src-components-layout-tsx",
+      "title": "Increase the size of the Ghostbusters-style logo displayed in the header corner of the Layout component (frontend/src/components/Layout.tsx)",
+      "reqIds": [
+        "REQ-62"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-investigations-count-statistics-on-the-home-page-frontend-src-pages-home-tsx-to-display-25-instead-of-50",
+      "title": "Update the investigations count statistics on the Home page (frontend/src/pages/Home.tsx) to display '25+' instead of '50+'",
+      "reqIds": [
+        "REQ-63"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create paranormal investigating site",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Build backend data models and storage for paranormal cases including: case ID, submission timestamp, location, phenomena type, description, reporter contact information, investigation status, and associated photo references",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Update all website content to emphasize Oklahoma-only service area and 2025 founding year",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Add interactive map of Oklahoma to the website",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Replace all instances of 'Oklahoma only' with just 'Oklahoma' throughout the website",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Update the header/banner text in frontend/src/pages/CaseGallery.tsx to replace 'Oklahoma only' with 'Oklahoma'",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Remove the Submit a Case form and replace it with contact information displaying paranormal.oklahoma.investigate@gmail.com",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Remove all backend case submission and storage functionality from backend/main.mo, including the submitCase function and case-related data structures",
+      "reqIds": [
+        "REQ-53"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-23",
+      "summary": "Redesign the investigation team logo with further improvements",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-24",
+      "summary": "Remove the large PDF element from the website",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Create a Ghostbusters-style logo incorporating the company name with paranormal investigation theme",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Increase the size of the logo displayed in the header corner",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-27",
+      "summary": "Change the investigations count text from '50+' to '25+' on the website",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Paranormal Investigator",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

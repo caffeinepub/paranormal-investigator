@@ -1,0 +1,57 @@
+{
+  "kind": "build_request",
+  "title": "Increase logo size in header and update investigations count to 25+",
+  "projectName": "Oklahoma Paranormal Investigations",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-62",
+      "text": "Increase the size of the Ghostbusters-style logo displayed in the header corner of the Layout component (frontend/src/components/Layout.tsx)",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "make the logo a bit bigger in the corner"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Logo in the header corner is visibly larger than current size",
+        "Logo maintains proper aspect ratio and does not overflow container",
+        "Logo size increase is responsive across mobile and desktop viewports"
+      ]
+    },
+    {
+      "id": "REQ-63",
+      "text": "Update the investigations count statistics on the Home page (frontend/src/pages/Home.tsx) to display '25+' instead of '50+'",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "on the investigations make it say 25+ instead of 50+"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Statistics section on Home page shows '25+' for investigations count",
+        "Text change is consistent across all instances where '50+' investigations was displayed",
+        "No other numerical statistics are affected by this change"
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not modify the Ghostbusters-style logo design itself, only adjust its display size in the header",
+    "Only update the investigations count text; do not change other statistics or metrics"
+  ],
+  "nonGoals": [
+    "Redesigning the logo graphic",
+    "Changing the layout structure of the header",
+    "Modifying other statistics or numbers on the website"
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}
